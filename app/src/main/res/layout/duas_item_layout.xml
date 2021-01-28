@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+            <variable
+                name="dua"
+                type="com.example.islamicinfoapp.src.main.java.com.model.QuranDbData"/>
+        </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/duas_title"
+            android:id="@+id/dua_item_title"
+            android:layout_marginTop="@dimen/padding_top_bottom"
+            android:layout_marginStart="@dimen/padding_left_right"
+            android:textSize="15dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/urdu_dua"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_top_bottom"
+            android:layout_marginEnd="@dimen/padding_left_right"
+            android:fontFamily="@font/amiri"
+            android:text="@{dua.quranText}"
+            android:textDirection="rtl"
+            android:textSize="20dp" />
+
+<!--        <TextView-->
+<!--            android:id="@+id/translation"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="@dimen/padding_left_right"-->
+<!--            android:layout_marginTop="@dimen/padding_left_right"-->
+<!--            android:gravity="center"-->
+<!--            android:text="@string/english_translation"-->
+<!--            android:textSize="@dimen/help_item_text_size"-->
+<!--            android:textStyle="bold" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/translation_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginLeft="@dimen/padding_left_right"-->
+<!--            android:layout_marginTop="@dimen/padding_top_bottom"-->
+<!--            android:text="@string/english_translation" />-->
+
+    </LinearLayout>
+</layout>

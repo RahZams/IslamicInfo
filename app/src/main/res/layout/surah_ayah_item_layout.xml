@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="surah"
+            type="com.example.islamicinfoapp.src.main.java.com.model.SurahData" />
+        <variable
+            name="surahitem"
+            type="com.example.islamicinfoapp.src.main.java.com.model.SurahAyahItemApiData" />
+    </data>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/bismillah"/>-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/ayah_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/padding_top_bottom"
+            android:layout_marginEnd="@dimen/padding_left_right"
+            android:fontFamily="@font/amiri"
+            android:text=""
+            android:textColor="@color/prayertime_color"
+            android:textDirection="rtl"
+            android:textSize="@dimen/text_size"/>
+
+
+<!--        <TextView-->
+<!--            android:id="@+id/ayah_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginTop="@dimen/padding_top_bottom"-->
+<!--            android:layout_marginEnd="@dimen/padding_left_right"-->
+<!--            android:fontFamily="@font/amiri"-->
+<!--            android:text="@{surahitem.ayahText}"-->
+<!--            android:textDirection="rtl"-->
+<!--            android:textSize="@dimen/text_size"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/ayah_end"-->
+<!--            android:layout_alignParentStart="true"-->
+<!--            android:layout_toRightOf="@+id/ayah_text"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_toEndOf="@+id/ayah_text"-->
+<!--            android:background="@drawable/circle"-->
+<!--            android:text="@{String.valueOf(surahitem.numberInSurah)}"-->
+<!--            android:gravity="center"-->
+<!--            android:textDirection="rtl"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_margin="@dimen/padding_left_right"/>-->
+    </RelativeLayout>
+
+<!--    </LinearLayout>-->
+</layout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".src.main.java.com.view.ContactUsFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/help_title_text"
+        android:text="@string/help_title_text"
+        android:textSize="@dimen/app_info_version_text_size"
+        android:paddingLeft="@dimen/padding_left_right"
+        android:paddingTop="@dimen/padding_top_bottom"
+        android:textStyle="bold"
+        />
+
+    <EditText
+        android:layout_marginTop="@dimen/contact_margin_top"
+        android:layout_width="@dimen/contactus_edittext_width"
+        android:layout_height="@dimen/contactus_edittext_height"
+        android:id="@+id/help_text"
+        android:hint="@string/help_text"
+        android:inputType="textMultiLine"
+        android:background="@drawable/help_edittext_background"
+        android:layout_gravity="center_horizontal"
+        android:gravity="start"
+        android:paddingLeft="@dimen/app_info_text_padding_bottom"
+        android:paddingRight="@dimen/app_info_text_padding_bottom"
+        android:scrollbars="vertical"
+        android:importantForAutofill="no"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/help_button"
+        android:text="@string/contact_button_text"
+        android:layout_marginTop="@dimen/contact_margin_top"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/padding_left_right"
+        android:clickable="false"
+        android:background="@color/darkGrey"/>
+
+</LinearLayout>

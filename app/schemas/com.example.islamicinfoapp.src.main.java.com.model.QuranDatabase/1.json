@@ -1,0 +1,200 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "6e624a2e67a0d5ced2731cc27cc09912",
+    "entities": [
+      {
+        "tableName": "QuranDbData",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`quranText` TEXT, `name` TEXT, `rowid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "quranText",
+            "columnName": "quranText",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rowid",
+            "columnName": "rowid",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "rowid"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "SurahData",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`dataNumber` INTEGER NOT NULL, `surahNameUrdu` TEXT NOT NULL, `surahNameEnglish` TEXT NOT NULL, `numberOfAyahs` INTEGER NOT NULL, `ayahList` TEXT, PRIMARY KEY(`dataNumber`))",
+        "fields": [
+          {
+            "fieldPath": "dataNumber",
+            "columnName": "dataNumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "surahNameUrdu",
+            "columnName": "surahNameUrdu",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "surahNameEnglish",
+            "columnName": "surahNameEnglish",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "numberOfAyahs",
+            "columnName": "numberOfAyahs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ayahList",
+            "columnName": "ayahList",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "dataNumber"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "PrayerTiming",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fajr` TEXT, `sunsrise` TEXT, `dhuhr` TEXT, `asr` TEXT, `sunset` TEXT, `maghrib` TEXT, `isha` TEXT, `imsak` TEXT, `prayerTimeEngDate` TEXT NOT NULL, `hijridate` TEXT, `hijriDay` TEXT, `hijrimonthnumber` INTEGER NOT NULL, `hijrimonthname` TEXT, `hijriyear` TEXT, `city` TEXT, `country` TEXT, PRIMARY KEY(`prayerTimeEngDate`))",
+        "fields": [
+          {
+            "fieldPath": "fajr",
+            "columnName": "fajr",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sunsrise",
+            "columnName": "sunsrise",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dhuhr",
+            "columnName": "dhuhr",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "asr",
+            "columnName": "asr",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sunset",
+            "columnName": "sunset",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "maghrib",
+            "columnName": "maghrib",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isha",
+            "columnName": "isha",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imsak",
+            "columnName": "imsak",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "prayerTimeEngDate",
+            "columnName": "prayerTimeEngDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hijridate",
+            "columnName": "hijridate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hijriDay",
+            "columnName": "hijriDay",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hijrimonthnumber",
+            "columnName": "hijrimonthnumber",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "hijrimonthname",
+            "columnName": "hijrimonthname",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hijriyear",
+            "columnName": "hijriyear",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "city",
+            "columnName": "city",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "country",
+            "columnName": "country",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "prayerTimeEngDate"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e624a2e67a0d5ced2731cc27cc09912')"
+    ]
+  }
+}

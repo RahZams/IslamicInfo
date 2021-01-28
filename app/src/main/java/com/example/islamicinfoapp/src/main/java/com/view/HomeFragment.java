@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
         mPrayerTimeViewModel.mTimingMutableLiveData.observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
-                createArrayListOfPrayerTiming(prayerTiming);
+                adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
             }
         });
     }

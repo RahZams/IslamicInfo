@@ -7,4 +7,7 @@ import java.util.ArrayList;
 public class PrayerTimeAdapter {
     public PrayerTimeAdapter(ArrayList<PrayerTimingItem> mPrayerTimeList) {
     }
+
+    public void updateList(ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
+    }
 }

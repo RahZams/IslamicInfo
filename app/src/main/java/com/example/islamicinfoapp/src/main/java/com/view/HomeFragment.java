@@ -34,6 +34,8 @@ public class HomeFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     private PrayerTimeViewModel mPrayerTimeViewModel;
+    private ArrayList<PrayerTimingItem> mPrayerTimeList = new ArrayList<>();
+    private PrayerTimeAdapter adapter = new PrayerTimeAdapter(mPrayerTimeList);
 
 
     public HomeFragment() {
@@ -72,11 +74,9 @@ public class HomeFragment extends Fragment {
 
     private ArrayList<PrayerTimingItem> createArrayListOfPrayerTiming(PrayerTiming prayerTiming) {
 
-        ArrayList<PrayerTimingItem> mPrayerTimeList = new ArrayList<>();
-
         int imgId = 0;
-        String name;
-        String time;
+        String name = "";
+        String time = "";
         boolean reminderSet = false;
 
         for (int i=0;i<7;i++){
@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
                 default:
                     break;
             }
-            //mPrayerTimeList.add(new PrayerTimingItem(name,time,imgId,reminderSet));
+            mPrayerTimeList.add(new PrayerTimingItem(name,time,imgId,reminderSet));
 
             }
             return mPrayerTimeList;

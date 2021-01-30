@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/padding_top_bottom">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/namazName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/circle"
+            android:drawableStart="@drawable/circle"
             android:layout_weight="1"
             android:text="@string/zikr"
             android:padding="@dimen/padding_top_bottom"
@@ -17,25 +17,31 @@
             android:gravity="start"
             />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="2"
-        android:layout_gravity="end"/>
+<!--    <LinearLayout-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_weight="2"-->
+<!--        android:layout_gravity="end"/>-->
 
     <TextView
+        android:id="@+id/namazTiming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/prayer_time"
         android:padding="@dimen/padding_top_bottom"/>
 
-    <Switch
+    <ImageView
+        android:id="@+id/reminderImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_top_bottom"
-        android:layout_marginLeft="@dimen/contact_margin_top"
-        android:layout_marginRight="@dimen/padding_left_right"
+        android:contentDescription="@string/reminder"
+        android:layout_gravity="end"
+        android:src="@drawable/ic_notifications_off"
+        android:layout_marginStart="@dimen/contact_margin_top"
+        android:layout_marginEnd="@dimen/padding_left_right"
         />
+
 
 <!--    <androidx.cardview.widget.CardView-->
 <!--        android:layout_width="match_parent"-->

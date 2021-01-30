@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(SplashActivity.this, LocationActivity.class);
                 mduasDeleteTask =  new DeleteTask();
                 mduasDeleteTask.execute();
                 startActivity(mainIntent);

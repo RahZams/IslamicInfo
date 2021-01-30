@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
         ButterKnife.bind(this,view);
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
+        mRecyclerView.setAdapter(adapter);
         observeViewModel();
         return view;
     }

@@ -22,18 +22,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.islamicinfoapp.R;
-import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
-import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewModel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -90,6 +86,14 @@ public class LocListener implements LocationListener {
         //boolean exists = mPrayerTimeViewModel.checkIfExists(cityName,countryName,formattedDate);
         //Log.d("date", "getPrayerTimesDataFromApi: " + exists);
         mPrayerTimeViewModel.fetchFromRemote(cityName,countryName);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        mContext.startActivity(intent);
         //mPrayerTimeViewModel.fetchFromDatabase(cityName,countryName,getCurrentDate());
 
         //mPrayerTimeViewModel.fetchRecordCountFromDatabase(cityName, countryName, formattedDate);
@@ -156,7 +160,7 @@ public class LocListener implements LocationListener {
             if (location == null){
                 continue;
             }
-            if (bestLocation == null && location != null){
+            if (bestLocation == null){
                 Log.d("prayer", "findLocation: " + "provider" + provider);
                     bestLocation = location;
             }
@@ -197,33 +201,25 @@ public class LocListener implements LocationListener {
         builder.setIcon(ic_no_network);
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setPositiveButton(buttonText, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (ic_no_network == 0){
-                    requestPermission();
-                }
-                else {
-                    mUtility.redirectingToProvideConnection(context);
-                }
-                dialog.dismiss();
+        builder.setPositiveButton(buttonText, (dialog, which) -> {
+            if (ic_no_network == 0){
+                requestPermission();
             }
+            else {
+                mUtility.redirectingToProvideConnection(context);
+            }
+            dialog.dismiss();
         });
         builder.setCancelable(false);
         AlertDialog alertDialog = builder.create();
-        alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface dialog) {
-                alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
-                        .setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
-            }
-        });
+        alertDialog.setOnShowListener(dialog -> alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+                .setTextColor(mContext.getResources().getColor(R.color.colorPrimary)));
         alertDialog.show();
     }
 
-    public String getCurrentDate() {
-        //Log.d("date", "getCurrentDate: " + Calendar.getInstance().getTimeInMillis());
-        SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy");
-        return sf.format(new Date());
-    }
+//    public String getCurrentDate() {
+//        //Log.d("date", "getCurrentDate: " + Calendar.getInstance().getTimeInMillis());
+//        SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy");
+//        return sf.format(new Date());
+//    }
 }

@@ -8,6 +8,8 @@ import androidx.room.Query;
 import java.util.Date;
 import java.util.List;
 
+import io.reactivex.Completable;
+
 @Dao
 public interface QuranDao {
 
@@ -18,7 +20,7 @@ public interface QuranDao {
     Long insert(SurahData surahData);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long insert(PrayerTiming prayerTiming);
+    Completable insert(PrayerTiming prayerTiming);
 
     @Query("SELECT * FROM QuranDbData WHERE name = :name")
     List<QuranDbData> selectAllDuas(String name);

@@ -16,15 +16,18 @@ import com.example.islamicinfoapp.src.main.java.com.model.QuranApiService;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.utilities.PrayerTimeDeserializer;
 
+import io.reactivex.Completable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class PrayerTimeViewModel extends AndroidViewModel {
+    private static final String TAG = PrayerTimeViewModel.class.getName();
     public MutableLiveData<PrayerTiming> mTimingMutableLiveData = new MutableLiveData<>();
     private QuranApi mQuranApi;
-    private DBTask mdDbTask;
+    //private DBTask mdDbTask;
     private RetrieveTask mRetrieveTask;
     private DbCountTask mDbCountTask;
 
@@ -69,17 +72,18 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
                     @Override
                     public void onNext(PrayerTiming prayerTiming) {
-                        mdDbTask = new DBTask();
-                        Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
+                        //mdDbTask = new DBTask();
+                        Log.d(TAG, "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
                             prayerTiming.setCity(city);
                             prayerTiming.setCountry(country);
-                            mTimingMutableLiveData.setValue(prayerTiming);
-                            mdDbTask.execute(prayerTiming);
+                            insertDataToDb(prayerTiming);
+                            //mTimingMutableLiveData.setValue(prayerTiming);
+                            //mdDbTask.execute(prayerTiming);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("prayer", "onError: " + e.getMessage());
+                        Log.d(TAG, "onError: " + e.getMessage());
                     }
 
                     @Override
@@ -87,6 +91,24 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
                     }
                 });
+    }
+
+    private void insertDataToDb(PrayerTiming prayerTiming) {
+        Completable.fromCallable(() -> QuranDatabase.getInstance(getApplication()).quranDao().insert(prayerTiming))
+        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableCompletableObserver() {
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete: ");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: " + e.getLocalizedMessage());
+                    }
+                });
+
     }
 
     public void fetchFromDatabase(String city,String country,String date){
@@ -113,18 +135,18 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 //    public boolean checkIfExists(String city, String country, String date){
 //        return QuranDatabase.getInstance(getApplication()).quranDao().isExists(city,country,date);
 //    }
-
-    private class DBTask extends AsyncTask<PrayerTiming,Void,Void>{
-
-        @Override
-        protected Void doInBackground(PrayerTiming... prayerTimings) {
-            PrayerTiming prayerTiming = prayerTimings[0];
-            Log.d("prayer", "doInBackground: " + prayerTiming.getCity());
-            long result = QuranDatabase.getInstance(getApplication()).quranDao().insert(prayerTiming);
-            Log.d("prayer", "doInBackground: " + "result " + result);
-            return null;
-        }
-    }
+//
+//    private class DBTask extends AsyncTask<PrayerTiming,Void,Void>{
+//
+//        @Override
+//        protected Void doInBackground(PrayerTiming... prayerTimings) {
+//            PrayerTiming prayerTiming = prayerTimings[0];
+//            Log.d("prayer", "doInBackground: " + prayerTiming.getCity());
+//            long result = QuranDatabase.getInstance(getApplication()).quranDao().insert(prayerTiming);
+//            Log.d("prayer", "doInBackground: " + "result " + result);
+//            return null;
+//        }
+//    }
 
     private class RetrieveTask extends AsyncTask<String,Void,PrayerTiming>{
 

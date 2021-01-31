@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,6 +70,7 @@ public class HomeFragment extends Fragment {
         mPrayerTimeViewModel.mTimingMutableLiveData.observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
+                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
                 adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
             }
         });

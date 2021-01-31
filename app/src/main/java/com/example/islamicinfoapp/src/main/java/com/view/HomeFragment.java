@@ -67,12 +67,10 @@ public class HomeFragment extends Fragment {
     }
 
     private void observeViewModel() {
-        mPrayerTimeViewModel.mTimingMutableLiveData.observe(this, new Observer<PrayerTiming>() {
-            @Override
-            public void onChanged(PrayerTiming prayerTiming) {
-                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
-                adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
-            }
+        Log.d("prayer", "observeViewModel: ");
+        mPrayerTimeViewModel.mTimingMutableLiveData.observe(this, prayerTiming -> {
+            Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
+            adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
         });
     }
 

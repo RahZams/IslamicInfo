@@ -53,7 +53,7 @@ public class PrayerTimeViewModel extends AndroidViewModel {
                     @Override
                     public void onNext(PrayerTiming prayerTiming) {
                         //mdDbTask = new DBTask();
-                        Log.d(TAG, "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
+                        Log.d(TAG, "onNext: " + prayerTiming.getPrayerTimeEngDate());
                         prayerTiming.setCity(city);
                         prayerTiming.setCountry(country);
                         //insertDataToDb(prayerTiming);

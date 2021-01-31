@@ -82,7 +82,7 @@ public class LocListener implements LocationListener {
 
     private void getPrayerTimesDataFromApi(String cityName, String countryName) {
         String formattedDate = mUtility.getCurrentDate();
-        Log.d("prayer", "getPrayerTimesDataFromApi: " + formattedDate + cityName + countryName);
+        Log.d("prayer", "getPrayerTimesDataFromApi: " + cityName + countryName);
         //boolean exists = mPrayerTimeViewModel.checkIfExists(cityName,countryName,formattedDate);
         //Log.d("date", "getPrayerTimesDataFromApi: " + exists);
         mPrayerTimeViewModel.fetchFromRemote(cityName,countryName);

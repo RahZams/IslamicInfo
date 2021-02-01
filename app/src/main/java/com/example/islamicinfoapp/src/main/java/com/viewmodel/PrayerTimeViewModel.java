@@ -18,6 +18,7 @@ import com.example.islamicinfoapp.src.main.java.com.utilities.PrayerTimeDeserial
 
 import io.reactivex.Completable;
 import io.reactivex.Observer;
+import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableCompletableObserver;
@@ -44,34 +45,61 @@ public class PrayerTimeViewModel extends AndroidViewModel {
         mQuranApi.getPrayerTiming(city,country,method)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new Observer<PrayerTiming>() {
+                .subscribeWith(new SingleObserver<PrayerTiming>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(PrayerTiming prayerTiming) {
-                        //mdDbTask = new DBTask();
-                        Log.d(TAG, "onNext: " + prayerTiming.getPrayerTimeEngDate());
+                    public void onSuccess(PrayerTiming prayerTiming) {
                         prayerTiming.setCity(city);
                         prayerTiming.setCountry(country);
-                        //insertDataToDb(prayerTiming);
                         mTimingMutableLiveData.setValue(prayerTiming);
-                        //mdDbTask.execute(prayerTiming);
+                        Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d(TAG, "onError: " + e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
 
                     }
                 });
     }
+
+//    public void fetchFromRemote(String city,String country){
+//        Log.d("prayer", "fetchFromRemote: ");
+//        int method = Integer.parseInt(getApplication().getResources().getString(R.string.prayer_time_calculation_method));
+//        mQuranApi.getPrayerTiming(city,country,method)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeWith(new Observer<PrayerTiming>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(PrayerTiming prayerTiming) {
+//                        //mdDbTask = new DBTask();
+//                        Log.d(TAG, "onNext: " + prayerTiming.getPrayerTimeEngDate());
+//                        prayerTiming.setCity(city);
+//                        prayerTiming.setCountry(country);
+//                        //insertDataToDb(prayerTiming);
+//                        mTimingMutableLiveData.setValue(prayerTiming);
+//                        //mdDbTask.execute(prayerTiming);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.d(TAG, "onError: " + e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+//    }
 
 //    public void fetchFromRemote(String city,String country){
 //        int method = Integer.parseInt(getApplication().getResources().getString(R.string.prayer_time_calculation_method));

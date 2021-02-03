@@ -17,6 +17,7 @@ import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.utilities.PrayerTimeDeserializer;
 
 import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -66,6 +67,31 @@ public class PrayerTimeViewModel extends AndroidViewModel {
                     @Override
                     public void onComplete() {
 
+                    }
+                });
+    }
+
+    private void insertDataToDb(PrayerTiming prayerTiming) {
+        Completable.fromCallable(() -> QuranDatabase.getInstance(getApplication()).quranDao().insert(new PrayerTiming(
+                "fajr","sunrise","dhuhr","asr","sunset","maghrib","isha","imsak",
+                "engdate","hijridate","day",1,"monthname","" +
+                "year")))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete: ");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: " + e.getLocalizedMessage());
                     }
                 });
     }
@@ -126,24 +152,6 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 //                });
 //    }
 
-
-    private void insertDataToDb(PrayerTiming prayerTiming) {
-        Completable.fromCallable(() -> QuranDatabase.getInstance(getApplication()).quranDao().insert(prayerTiming))
-        .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableCompletableObserver() {
-                    @Override
-                    public void onComplete() {
-                        Log.d(TAG, "onComplete: ");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.d(TAG, "onError: " + e.getLocalizedMessage());
-                    }
-                });
-
-    }
 
 //    public void fetchFromDatabase(String city,String country,String date){
 //        mRetrieveTask = new RetrieveTask();

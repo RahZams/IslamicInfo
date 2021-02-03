@@ -16,10 +16,6 @@ public abstract class QuranDatabase extends RoomDatabase {
                     (context,QuranDatabase.class,"QuranDatabase").build();
         }
         return mQuranDatabaseInstance;
-
     }
-
     public abstract QuranDao quranDao();
-
-
 }

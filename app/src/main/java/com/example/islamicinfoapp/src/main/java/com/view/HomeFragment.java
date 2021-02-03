@@ -91,12 +91,13 @@ public class HomeFragment extends Fragment {
 //    }
 
     private void observeViewModel() {
+        Log.d("prayer", "observeViewModel: " + Utility.getCurrentDate());
         QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname,mCountryname,
                 Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
-                Log.d("prayer", "onChanged: " );
-                adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
+                //Log.d("prayer", "onChanged: "  + prayerTiming.getCountry());
+                //adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
             }
         });
     }

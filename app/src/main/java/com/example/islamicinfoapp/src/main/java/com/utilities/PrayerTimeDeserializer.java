@@ -1,5 +1,7 @@
 package com.example.islamicinfoapp.src.main.java.com.utilities;
 
+import android.util.Log;
+
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -30,6 +32,7 @@ public class PrayerTimeDeserializer implements JsonDeserializer {
         int hijrimonthnumber = hijri.get("month").getAsJsonObject().get("number").getAsInt();
         String hijrimonthname = hijri.get("month").getAsJsonObject().get("en").getAsString();
         String hijriyear = hijri.get("year").getAsString();
+        Log.d("prayer", "deserialize: " + hijriyear);
         PrayerTiming prayerTiming = new PrayerTiming(fajr,sunrise,dhuhr,asr,sunset,maghrib,isha,imsak,
                 date,hijridate,hijriday,hijrimonthnumber,hijrimonthname,hijriyear);
 

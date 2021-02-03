@@ -14,8 +14,8 @@ public class PrayerTiming  {
     private String maghrib;
     private String isha;
     private String imsak;
-    @NonNull
-    @PrimaryKey(autoGenerate = false)
+//    @NonNull
+//    @PrimaryKey(autoGenerate = false)
     private String prayerTimeEngDate;
     private String hijridate;
     private String hijriDay;
@@ -24,6 +24,8 @@ public class PrayerTiming  {
     private String hijriyear;
     private String city;
     private String country;
+    @PrimaryKey(autoGenerate = true)
+    private int rowid;
 
     public String getCity() {
         return city;
@@ -79,6 +81,14 @@ public class PrayerTiming  {
 
     public String getDhuhr() {
         return dhuhr;
+    }
+
+    public int getRowid() {
+        return rowid;
+    }
+
+    public void setRowid(int rowid) {
+        this.rowid = rowid;
     }
 
     public void setDhuhr(String dhuhr) {

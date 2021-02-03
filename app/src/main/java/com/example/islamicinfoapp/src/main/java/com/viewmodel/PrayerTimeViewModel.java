@@ -45,22 +45,26 @@ public class PrayerTimeViewModel extends AndroidViewModel {
         mQuranApi.getPrayerTiming(city,country,method)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new SingleObserver<PrayerTiming>() {
+                .subscribe(new Observer<PrayerTiming>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
-                    public void onSuccess(PrayerTiming prayerTiming) {
+                    public void onNext(PrayerTiming prayerTiming) {
                         prayerTiming.setCity(city);
                         prayerTiming.setCountry(country);
                         mTimingMutableLiveData.setValue(prayerTiming);
+                        insertDataToDb(prayerTiming);
                         Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onComplete() {
 
                     }
                 });

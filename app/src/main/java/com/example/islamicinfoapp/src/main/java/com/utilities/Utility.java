@@ -17,7 +17,7 @@ import java.util.Date;
 public class Utility {
     private ConnectivityManager mConnectivityManager;
 
-    public String getCurrentDate() {
+    public static String getCurrentDate() {
         //Log.d("date", "getCurrentDate: " + Calendar.getInstance().getTimeInMillis());
         SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy");
         return sf.format(new Date());

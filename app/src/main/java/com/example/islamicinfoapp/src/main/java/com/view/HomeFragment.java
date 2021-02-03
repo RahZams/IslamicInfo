@@ -14,11 +14,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.FragmentHomeBinding;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
+import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
+import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewModel;
 
 import java.util.ArrayList;
@@ -35,9 +38,16 @@ public class HomeFragment extends Fragment {
     @BindView(R.id.recyclerview)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.city_name)
+    TextView mCityName;
+
+    @BindView(R.id.date_text)
+    TextView mDateView;
+
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private ArrayList<PrayerTimingItem> mPrayerTimeList = new ArrayList<>();
     private PrayerTimeAdapter adapter = new PrayerTimeAdapter(mPrayerTimeList);
+    private String mCityname,mCountryname;
 
 
     public HomeFragment() {
@@ -58,6 +68,8 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,
                 container, false);
+        mCityname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.cityname));
+        mCountryname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.countryname));
         View view = binding.getRoot();
         ButterKnife.bind(this,view);
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
@@ -66,11 +78,26 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+//    private void observeViewModel() {
+//        Log.d("prayer", "observeViewModel: " +
+//                mPrayerTimeViewModel.mTimingMutableLiveData == null ? "null" :
+//                "not null");
+//        mPrayerTimeViewModel.mTimingMutableLiveData.observe(this, prayerTiming -> {
+//            if (prayerTiming != null) {
+//                Log.d("prayer", "onChanged: city" + prayerTiming.getCity() + prayerTiming.getCountry());
+//                adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
+//            }
+//        });
+//    }
+
     private void observeViewModel() {
-        Log.d("prayer", "observeViewModel: ");
-        mPrayerTimeViewModel.mTimingMutableLiveData.observe(this, prayerTiming -> {
-            Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
-            adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
+        QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname,mCountryname,
+                Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
+            @Override
+            public void onChanged(PrayerTiming prayerTiming) {
+                Log.d("prayer", "onChanged: " );
+                adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
+            }
         });
     }
 

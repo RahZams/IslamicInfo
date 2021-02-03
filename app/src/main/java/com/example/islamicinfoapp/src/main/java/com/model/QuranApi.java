@@ -161,7 +161,7 @@ public interface QuranApi {
     Observable<SurahData> getSurahQuraish();
 
     @GET("timingsByCity?")
-    Single<PrayerTiming> getPrayerTiming(@Query("city") String city,
+    Observable<PrayerTiming> getPrayerTiming(@Query("city") String city,
                                           @Query("country") String country,@Query("method") int method);
 
 }

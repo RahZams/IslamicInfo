@@ -93,6 +93,8 @@ public class LocListener implements LocationListener {
         }
 
         Intent intent = new Intent(mContext, MainActivity.class);
+        intent.putExtra(mContext.getString(R.string.cityname),cityName);
+        intent.putExtra(mContext.getString(R.string.countryname),countryName);
         mContext.startActivity(intent);
         //mPrayerTimeViewModel.fetchFromDatabase(cityName,countryName,getCurrentDate());
 

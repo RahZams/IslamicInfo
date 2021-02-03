@@ -1,5 +1,6 @@
 package com.example.islamicinfoapp.src.main.java.com.model;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -41,7 +42,7 @@ public interface QuranDao {
     void deleteAllSurahData();
 
     @Query("SELECT * FROM PrayerTiming WHERE city =:city AND country=:country AND prayerTimeEngDate=:date")
-    PrayerTiming getPrayerTimingOfCity(String city, String country, String date);
+    LiveData<PrayerTiming> getPrayerTimingOfCity(String city, String country, String date);
 
     @Query("DELETE FROM PrayerTiming")
     void deleteAllPrayerTimingData();

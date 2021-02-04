@@ -20,7 +20,7 @@ public interface QuranDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(SurahData surahData);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     Completable insert(PrayerTiming prayerTiming);
 
     @Query("SELECT * FROM QuranDbData WHERE name = :name")
@@ -52,6 +52,12 @@ public interface QuranDao {
 
     @Query("SELECT COUNT(*) FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date")
     int getRecordCount(String city, String country, String date);
+
+    @Query("SELECT COUNT(*) FROM SurahData")
+    LiveData<Integer> getSurahDataCount();
+
+    @Query("SELECT COUNT(*) FROM QuranDbData")
+    LiveData<Integer> getQuranDataCount();
 
 //    @Query("SELECT EXISTS(SELECT * FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date)")
 //    boolean isExists(String city, String country, String date);

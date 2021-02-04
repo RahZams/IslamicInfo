@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 
 public class PrayerTimeDeserializer implements JsonDeserializer {
     @Override
-    public Object deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public PrayerTiming deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject data = json.getAsJsonObject().get("data").getAsJsonObject();
         JsonObject timings = data.get("timings").getAsJsonObject();
@@ -25,7 +25,7 @@ public class PrayerTimeDeserializer implements JsonDeserializer {
         String maghrib = timings.get("Maghrib").getAsString();
         String isha = timings.get("Isha").getAsString();
         String imsak = timings.get("Imsak").getAsString();
-        String date = data.get("date").getAsJsonObject().get("readable").getAsString();
+        String readableDate = data.get("date").getAsJsonObject().get("readable").getAsString();
         JsonObject hijri = data.get("date").getAsJsonObject().get("hijri").getAsJsonObject();
         String hijridate = hijri.get("date").getAsString();
         String hijriday = hijri.get("day").getAsString();
@@ -34,7 +34,7 @@ public class PrayerTimeDeserializer implements JsonDeserializer {
         String hijriyear = hijri.get("year").getAsString();
         Log.d("prayer", "deserialize: " + hijriyear);
         PrayerTiming prayerTiming = new PrayerTiming(fajr,sunrise,dhuhr,asr,sunset,maghrib,isha,imsak,
-                date,hijridate,hijriday,hijrimonthnumber,hijrimonthname,hijriyear);
+                readableDate,hijridate,hijriday,hijrimonthnumber,hijrimonthname,hijriyear);
 
         return prayerTiming;
     }

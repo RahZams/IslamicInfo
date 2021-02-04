@@ -71,6 +71,7 @@ public class LocListener implements LocationListener {
 //            + "getSubLocality" + addresses.get(0).getSubLocality());
                 cityName = addresses.get(0).getLocality();
                 countryName = addresses.get(0).getCountryName();
+                //checkIfDataAvailableInDatabase(cityName,countryName);
                 getPrayerTimesDataFromApi(cityName, countryName);
                 Log.d("prayer", "onLocationChanged: " + cityName + " " + countryName);
                 Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();

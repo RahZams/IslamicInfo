@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -15,6 +16,7 @@ import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.ActivitySplashBinding;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDao;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
+import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.DuasViewModel;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.SurahViewModel;
@@ -38,13 +40,30 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent mainIntent = new Intent(SplashActivity.this, LocationActivity.class);
-                mduasDeleteTask =  new DeleteTask();
-                mduasDeleteTask.execute();
+                checkIfDataAvailableInDatabase();
+//                mduasDeleteTask =  new DeleteTask();
+//                mduasDeleteTask.execute();
                 startActivity(mainIntent);
 
             }
         },10*1000);
 
+    }
+
+    private void checkIfDataAvailableInDatabase() {
+        QuranDatabase.getInstance(this).quranDao().getSurahDataCount().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                Log.d("splash", "onChanged:surah " + integer);
+            }
+        });
+
+        QuranDatabase.getInstance(this).quranDao().getQuranDataCount().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                Log.d("splash", "onChanged: quran" + integer);
+            }
+        });
     }
 
     private class DeleteTask extends AsyncTask<Void, Void, Void> {

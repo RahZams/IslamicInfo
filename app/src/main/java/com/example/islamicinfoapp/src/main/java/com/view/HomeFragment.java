@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     @BindView(R.id.city_name)
-    TextView mCityName;
+    TextView mCityCountryName;
 
     @BindView(R.id.date_text)
     TextView mDateView;
@@ -68,11 +68,12 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,
                 container, false);
-        mCityname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.cityname));
-        mCountryname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.countryname));
         View view = binding.getRoot();
         ButterKnife.bind(this,view);
+        mCityname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.cityname));
+        mCountryname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.countryname));
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
+        mCityCountryName.setText(mCityname + "," + mCountryname);
         mRecyclerView.setAdapter(adapter);
         observeViewModel();
         return view;

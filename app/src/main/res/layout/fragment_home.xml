@@ -18,9 +18,11 @@
             android:layout_gravity="start"
             android:layout_marginStart="@dimen/padding_left_right"
             android:layout_marginTop="@dimen/padding_left_right"
-            android:text="@{prayer.city + ' ' + prayer.country}"
+            android:text="Bangalore"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/app_info_version_text_size" />
+
+<!--        android:text="@{prayer.city + ' ' + prayer.country}"-->
 
         <TextView
             android:id="@+id/date_text"
@@ -29,8 +31,10 @@
             android:layout_gravity="start"
             android:layout_marginStart="@dimen/padding_left_right"
             android:layout_marginTop="@dimen/content_padding"
-            android:text="@{prayer.hijriDay + ' ' + prayer.hijrimonthname + ' ' + prayer.hijriyear}"
+            android:text="date"
             android:textColor="@color/black" />
+
+<!--        "@{prayer.hijriDay + ' ' + prayer.hijrimonthname + ' ' + prayer.hijriyear}"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"

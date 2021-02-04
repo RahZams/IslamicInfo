@@ -86,7 +86,7 @@ public class LocListener implements LocationListener {
 
     private void checkIfDataAvailableInDatabase(String cityName, String countryName) {
         QuranDatabase.getInstance(mContext).quranDao().getRecordCount(cityName,countryName,Utility.getCurrentDate())
-                .observe((LifecycleOwner) this, new Observer<Integer>() {
+                .observe(, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         if (integer == 0){

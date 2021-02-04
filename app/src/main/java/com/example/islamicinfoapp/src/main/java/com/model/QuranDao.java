@@ -51,7 +51,7 @@ public interface QuranDao {
     void deletePrayerTimeData(String date);
 
     @Query("SELECT COUNT(*) FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date")
-    int getRecordCount(String city, String country, String date);
+    LiveData<Integer> getRecordCount(String city, String country, String date);
 
     @Query("SELECT COUNT(*) FROM SurahData")
     LiveData<Integer> getSurahDataCount();

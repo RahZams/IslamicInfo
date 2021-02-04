@@ -55,6 +55,10 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 Log.d("splash", "onChanged:surah " + integer);
+                if (integer == 0){
+                    Log.d("splash", "onChanged: integer is 0");
+                    mSurahViewModel.fetchFromRemote();
+                }
             }
         });
 
@@ -62,6 +66,10 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 Log.d("splash", "onChanged: quran" + integer);
+                if (integer == 0) {
+                    Log.d("splash", "onChanged: integer is 0");
+                    mDuasViewModel.fetchFromRemote();
+                }
             }
         });
     }

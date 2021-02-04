@@ -22,9 +22,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewModel;
 
@@ -71,7 +74,7 @@ public class LocListener implements LocationListener {
 //            + "getSubLocality" + addresses.get(0).getSubLocality());
                 cityName = addresses.get(0).getLocality();
                 countryName = addresses.get(0).getCountryName();
-                //checkIfDataAvailableInDatabase(cityName,countryName);
+                checkIfDataAvailableInDatabase(cityName,countryName);
                 getPrayerTimesDataFromApi(cityName, countryName);
                 Log.d("prayer", "onLocationChanged: " + cityName + " " + countryName);
                 Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
@@ -79,6 +82,18 @@ public class LocListener implements LocationListener {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void checkIfDataAvailableInDatabase(String cityName, String countryName) {
+        QuranDatabase.getInstance(mContext).quranDao().getRecordCount(cityName,countryName,Utility.getCurrentDate())
+                .observe((LifecycleOwner) this, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer integer) {
+                        if (integer == 0){
+                            getPrayerTimesDataFromApi(cityName,countryName);
+                        }
+                    }
+                });
     }
 
     private void getPrayerTimesDataFromApi(String cityName, String countryName) {

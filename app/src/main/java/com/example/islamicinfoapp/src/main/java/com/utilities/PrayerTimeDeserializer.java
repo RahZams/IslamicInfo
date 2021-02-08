@@ -32,10 +32,11 @@ public class PrayerTimeDeserializer implements JsonDeserializer {
         int hijrimonthnumber = hijri.get("month").getAsJsonObject().get("number").getAsInt();
         String hijrimonthname = hijri.get("month").getAsJsonObject().get("en").getAsString();
         String hijriyear = hijri.get("year").getAsString();
-        Log.d("prayer", "deserialize: " + hijriyear);
+        Log.d("prayer", "deserialize: " + fajr + sunrise + dhuhr + asr + sunset + maghrib + isha +
+                imsak + readableDate + hijridate + hijriday + hijrimonthname + hijrimonthnumber + hijriyear);
         PrayerTiming prayerTiming = new PrayerTiming(fajr,sunrise,dhuhr,asr,sunset,maghrib,isha,imsak,
                 readableDate,hijridate,hijriday,hijrimonthnumber,hijrimonthname,hijriyear);
-
+        Log.d("prayer", "deserialize: prayertiming" + prayerTiming.getCity());
         return prayerTiming;
     }
 }

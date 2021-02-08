@@ -28,6 +28,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
+import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewModel;
 
@@ -45,7 +46,7 @@ public class LocListener implements LocationListener {
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private Utility mUtility;
 
-    public LocListener(Context context) {
+    public LocListener(LocationActivity context) {
         this.mContext = context;
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         mPrayerTimeViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(PrayerTimeViewModel.class);
@@ -86,7 +87,7 @@ public class LocListener implements LocationListener {
 
     private void checkIfDataAvailableInDatabase(String cityName, String countryName) {
         QuranDatabase.getInstance(mContext).quranDao().getRecordCount(cityName,countryName,Utility.getCurrentDate())
-                .observe(, new Observer<Integer>() {
+                .observe((LifecycleOwner) mContext, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         if (integer == 0){

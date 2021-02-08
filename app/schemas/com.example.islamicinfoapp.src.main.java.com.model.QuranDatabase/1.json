@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "91c5ba7503892c0f740afb8b753d1e96",
+    "identityHash": "e1fcc6b61b03fb9314a2faa9f6723852",
     "entities": [
       {
         "tableName": "QuranDbData",
@@ -82,73 +82,73 @@
       },
       {
         "tableName": "PrayerTiming",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fajr` TEXT, `sunsrise` TEXT, `dhuhr` TEXT, `asr` TEXT, `sunset` TEXT, `maghrib` TEXT, `isha` TEXT, `imsak` TEXT, `prayerTimeEngDate` TEXT, `hijridate` TEXT, `hijriDay` TEXT, `hijrimonthnumber` INTEGER NOT NULL, `hijrimonthname` TEXT, `hijriyear` TEXT, `city` TEXT, `country` TEXT, `rowid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fajr` TEXT NOT NULL, `sunsrise` TEXT NOT NULL, `dhuhr` TEXT NOT NULL, `asr` TEXT NOT NULL, `sunset` TEXT NOT NULL, `maghrib` TEXT NOT NULL, `isha` TEXT NOT NULL, `imsak` TEXT NOT NULL, `prayerTimeEngDate` TEXT NOT NULL, `hijridate` TEXT NOT NULL, `hijriDay` TEXT NOT NULL, `hijrimonthnumber` INTEGER NOT NULL, `hijrimonthname` TEXT NOT NULL, `hijriyear` TEXT NOT NULL, `city` TEXT, `country` TEXT, `rowid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "fajr",
             "columnName": "fajr",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "sunsrise",
             "columnName": "sunsrise",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "dhuhr",
             "columnName": "dhuhr",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "asr",
             "columnName": "asr",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "sunset",
             "columnName": "sunset",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "maghrib",
             "columnName": "maghrib",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "isha",
             "columnName": "isha",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "imsak",
             "columnName": "imsak",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "prayerTimeEngDate",
             "columnName": "prayerTimeEngDate",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "hijridate",
             "columnName": "hijridate",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "hijriDay",
             "columnName": "hijriDay",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "hijrimonthnumber",
@@ -160,13 +160,13 @@
             "fieldPath": "hijrimonthname",
             "columnName": "hijrimonthname",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "hijriyear",
             "columnName": "hijriyear",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "city",
@@ -200,7 +200,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '91c5ba7503892c0f740afb8b753d1e96')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e1fcc6b61b03fb9314a2faa9f6723852')"
     ]
   }
 }

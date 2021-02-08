@@ -1,9 +1,7 @@
 package com.example.islamicinfoapp.src.main.java.com.viewmodel;
 
 import android.app.Application;
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,10 +17,8 @@ import com.example.islamicinfoapp.src.main.java.com.utilities.PrayerTimeDeserial
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
-import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class PrayerTimeViewModel extends AndroidViewModel {

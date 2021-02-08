@@ -4,7 +4,6 @@ package com.example.islamicinfoapp.src.main.java.com.view;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -97,8 +96,16 @@ public class HomeFragment extends Fragment {
                 Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
-                //Log.d("prayer", "onChanged: "  + prayerTiming.getCountry());
+                //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
+                if (prayerTiming == null){
+                    Log.d("prayer", "onChanged: " + "null");
+                }
+                else if (prayerTiming.equals("")){
+                    Log.d("prayer", "onChanged: " + "not null");
+                }
                 //adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
+
+
             }
         });
     }

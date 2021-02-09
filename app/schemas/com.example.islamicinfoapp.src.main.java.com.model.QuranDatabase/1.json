@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "e1fcc6b61b03fb9314a2faa9f6723852",
+    "identityHash": "caaf436aaeab3f8a980e5d0123c8f2ec",
     "entities": [
       {
         "tableName": "QuranDbData",
@@ -82,7 +82,7 @@
       },
       {
         "tableName": "PrayerTiming",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fajr` TEXT NOT NULL, `sunsrise` TEXT NOT NULL, `dhuhr` TEXT NOT NULL, `asr` TEXT NOT NULL, `sunset` TEXT NOT NULL, `maghrib` TEXT NOT NULL, `isha` TEXT NOT NULL, `imsak` TEXT NOT NULL, `prayerTimeEngDate` TEXT NOT NULL, `hijridate` TEXT NOT NULL, `hijriDay` TEXT NOT NULL, `hijrimonthnumber` INTEGER NOT NULL, `hijrimonthname` TEXT NOT NULL, `hijriyear` TEXT NOT NULL, `city` TEXT, `country` TEXT, `rowid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fajr` TEXT NOT NULL, `sunsrise` TEXT NOT NULL, `dhuhr` TEXT NOT NULL, `asr` TEXT NOT NULL, `sunset` TEXT NOT NULL, `maghrib` TEXT NOT NULL, `isha` TEXT NOT NULL, `imsak` TEXT NOT NULL, `prayerTimeEngDate` TEXT NOT NULL, `hijridate` TEXT NOT NULL, `hijriDay` TEXT NOT NULL, `hijrimonthnumber` INTEGER NOT NULL, `hijrimonthname` TEXT NOT NULL, `hijriyear` TEXT NOT NULL, `city` TEXT, `country` TEXT, PRIMARY KEY(`prayerTimeEngDate`))",
         "fields": [
           {
             "fieldPath": "fajr",
@@ -179,19 +179,13 @@
             "columnName": "country",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "rowid",
-            "columnName": "rowid",
-            "affinity": "INTEGER",
-            "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "rowid"
+            "prayerTimeEngDate"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -200,7 +194,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'e1fcc6b61b03fb9314a2faa9f6723852')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'caaf436aaeab3f8a980e5d0123c8f2ec')"
     ]
   }
 }

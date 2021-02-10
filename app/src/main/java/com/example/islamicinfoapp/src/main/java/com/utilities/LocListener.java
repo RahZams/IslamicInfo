@@ -76,7 +76,8 @@ public class LocListener implements LocationListener {
                 cityName = addresses.get(0).getLocality();
                 countryName = addresses.get(0).getCountryName();
                 checkIfDataAvailableInDatabase(cityName,countryName);
-                getPrayerTimesDataFromApi(cityName, countryName);
+                makeMainActivityCall(cityName,countryName);
+             //   getPrayerTimesDataFromApi(cityName, countryName);
                 Log.d("prayer", "onLocationChanged: " + cityName + " " + countryName);
                 Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
@@ -90,6 +91,7 @@ public class LocListener implements LocationListener {
                 .observe((LifecycleOwner) mContext, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
+                        Log.d("prayer", "onChanged: " + " integer "+ integer);
                         if (integer == 0){
                             getPrayerTimesDataFromApi(cityName,countryName);
                         }
@@ -100,19 +102,9 @@ public class LocListener implements LocationListener {
     private void getPrayerTimesDataFromApi(String cityName, String countryName) {
         String formattedDate = mUtility.getCurrentDate();
         Log.d("prayer", "getPrayerTimesDataFromApi: " + cityName + countryName);
-        //boolean exists = mPrayerTimeViewModel.checkIfExists(cityName,countryName,formattedDate);
+        //boolean exists = mPrayerTimeVewModel.checkIfExists(cityName,countryName,formattedDate);
         //Log.d("date", "getPrayerTimesDataFromApi: " + exists);
         mPrayerTimeViewModel.fetchFromRemote(cityName,countryName);
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        Intent intent = new Intent(mContext, MainActivity.class);
-        intent.putExtra(mContext.getString(R.string.cityname),cityName);
-        intent.putExtra(mContext.getString(R.string.countryname),countryName);
-        mContext.startActivity(intent);
         //mPrayerTimeViewModel.fetchFromDatabase(cityName,countryName,getCurrentDate());
 
         //mPrayerTimeViewModel.fetchRecordCountFromDatabase(cityName, countryName, formattedDate);
@@ -125,6 +117,19 @@ public class LocListener implements LocationListener {
 //            Intent intent = new Intent(mContext, MainActivity.class);
 //            mContext.startActivity(intent);
 //        }
+    }
+
+    private void makeMainActivityCall(String cityName, String countryName) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        intent.putExtra(mContext.getString(R.string.cityname),cityName);
+        intent.putExtra(mContext.getString(R.string.countryname),countryName);
+        mContext.startActivity(intent);
     }
 
     @Override

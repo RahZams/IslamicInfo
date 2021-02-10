@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
         mCityCountryName.setText(mCityname + "," + mCountryname);
         mRecyclerView.setAdapter(adapter);
-        observeViewModel();
+        observeViewModel(mCityname,mCountryname);
         return view;
     }
 
@@ -90,20 +90,19 @@ public class HomeFragment extends Fragment {
 //        });
 //    }
 
-    private void observeViewModel() {
-        Log.d("prayer", "observeViewModel: " + Utility.getCurrentDate());
-        QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname,mCountryname,
+    private void observeViewModel(String mCityname, String mCountryname) {
+        Log.d("prayer", "observeViewModel: " + Utility.getCurrentDate() + mCityname + mCountryname);
+        QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname, mCountryname,
                 Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
+                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
                 //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
-                if (prayerTiming == null){
-                    Log.d("prayer", "onChanged: " + "null");
+                if (prayerTiming != null && !prayerTiming.equals("")){
+                    Log.d("prayer", "observeViewModel onChanged: ");
+                    adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
                 }
-                else if (prayerTiming.equals("")){
-                    Log.d("prayer", "onChanged: " + "not null");
-                }
-                //adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
+
 
 
             }
@@ -174,6 +173,7 @@ public class HomeFragment extends Fragment {
             mPrayerTimeList.add(new PrayerTimingItem(name,time,imgId,reminderSet));
 
             }
+        Log.d("prayer", "createArrayListOfPrayerTiming: " + mPrayerTimeList.size());
             return mPrayerTimeList;
         }
     }

@@ -1,5 +1,6 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,14 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     private ArrayList<PrayerTimingItem> mPrayerTimeList;
 
     public PrayerTimeAdapter(ArrayList<PrayerTimingItem> mPrayerTimeList) {
+        Log.d("prayer", "PrayerTimeAdapter: " + mPrayerTimeList.size());
         this.mPrayerTimeList = mPrayerTimeList;
 
     }
 
     public void updateList(ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
         this.mPrayerTimeList = arrayListOfPrayerTiming;
+        Log.d("prayer", "updateList: "  + mPrayerTimeList.size());
         notifyDataSetChanged();
     }
 

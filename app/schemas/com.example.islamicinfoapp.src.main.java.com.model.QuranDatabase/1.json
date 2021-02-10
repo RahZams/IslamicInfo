@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f5ae2c0368623ea1327d79fcb1451ed4",
+    "identityHash": "caaf436aaeab3f8a980e5d0123c8f2ec",
     "entities": [
       {
         "tableName": "QuranDbData",
@@ -82,14 +82,8 @@
       },
       {
         "tableName": "PrayerTiming",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `fajr` TEXT NOT NULL, `sunsrise` TEXT NOT NULL, `dhuhr` TEXT NOT NULL, `asr` TEXT NOT NULL, `sunset` TEXT NOT NULL, `maghrib` TEXT NOT NULL, `isha` TEXT NOT NULL, `imsak` TEXT NOT NULL, `prayerTimeEngDate` TEXT NOT NULL, `hijridate` TEXT NOT NULL, `hijriDay` TEXT NOT NULL, `hijrimonthnumber` INTEGER NOT NULL, `hijrimonthname` TEXT NOT NULL, `hijriyear` TEXT NOT NULL, `city` TEXT, `country` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`fajr` TEXT NOT NULL, `sunsrise` TEXT NOT NULL, `dhuhr` TEXT NOT NULL, `asr` TEXT NOT NULL, `sunset` TEXT NOT NULL, `maghrib` TEXT NOT NULL, `isha` TEXT NOT NULL, `imsak` TEXT NOT NULL, `prayerTimeEngDate` TEXT NOT NULL, `hijridate` TEXT NOT NULL, `hijriDay` TEXT NOT NULL, `hijrimonthnumber` INTEGER NOT NULL, `hijrimonthname` TEXT NOT NULL, `hijriyear` TEXT NOT NULL, `city` TEXT, `country` TEXT, PRIMARY KEY(`prayerTimeEngDate`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "fajr",
             "columnName": "fajr",
@@ -189,9 +183,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "prayerTimeEngDate"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -200,7 +194,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f5ae2c0368623ea1327d79fcb1451ed4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'caaf436aaeab3f8a980e5d0123c8f2ec')"
     ]
   }
 }

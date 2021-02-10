@@ -50,8 +50,8 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
                     @Override
                     public void onNext(PrayerTiming prayerTiming) {
-                        //prayerTiming.setCity(city);
-                        //prayerTiming.setCountry(country);
+                        prayerTiming.setCity(city);
+                        prayerTiming.setCountry(country);
                         //mTimingMutableLiveData.setValue(prayerTiming);
                         Log.d("MY_APP", "onNext: "+prayerTiming.toString());
                         insertDataToDb(prayerTiming);

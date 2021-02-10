@@ -35,7 +35,7 @@
             android:textColor="@color/black" />
 
 <!--        "@{prayer.hijriDay + ' ' + prayer.hijrimonthname + ' ' + prayer.hijriyear}"-->
-
+9*9
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"

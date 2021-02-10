@@ -10,7 +10,7 @@ public abstract class QuranDatabase extends RoomDatabase {
 
     private static QuranDatabase mQuranDatabaseInstance;
 
-    public static QuranDatabase getInstance(Context context){
+    public static synchronized QuranDatabase getInstance(Context context){
         if (mQuranDatabaseInstance == null){
             mQuranDatabaseInstance = Room.databaseBuilder
                     (context,QuranDatabase.class,"QuranDatabase").build();

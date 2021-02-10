@@ -150,6 +150,7 @@ public class SurahViewModel extends AndroidViewModel {
 //                                Observable<SurahData> surahLuqman, Observable<SurahData> surahKauthar,
 //                                Observable<SurahData> surahInsaan, Observable<SurahData> surahImraan,
 //                                Observable<SurahData> surahIkhlaas, Observable<SurahData> surahHajj,
+//                                Observable<SurahData> surahIkhlaas, Observable<SurahData> surahHajj,
 //                                Observable<SurahData> surahFurqaan, Observable<SurahData> surahFath,
 //                                Observable<SurahData> surahFaatir, Observable<SurahData> surahDhaariyat,
 //                                Observable<SurahData> surahBaqara, Observable<SurahData> surahAttin,

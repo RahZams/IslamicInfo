@@ -19,6 +19,7 @@ import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.observers.SubscriberCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class PrayerTimeViewModel extends AndroidViewModel {
@@ -41,7 +42,7 @@ public class PrayerTimeViewModel extends AndroidViewModel {
         int method = Integer.parseInt(getApplication().getResources().getString(R.string.prayer_time_calculation_method));
         mQuranApi.getPrayerTiming(city,country,method)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.newThread())
                 .subscribe(new Observer<PrayerTiming>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -49,9 +50,10 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
                     @Override
                     public void onNext(PrayerTiming prayerTiming) {
-                        prayerTiming.setCity(city);
-                        prayerTiming.setCountry(country);
-                        mTimingMutableLiveData.setValue(prayerTiming);
+                        //prayerTiming.setCity(city);
+                        //prayerTiming.setCountry(country);
+                        //mTimingMutableLiveData.setValue(prayerTiming);
+                        Log.d("MY_APP", "onNext: "+prayerTiming.toString());
                         insertDataToDb(prayerTiming);
                         Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
                     }
@@ -62,22 +64,20 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
     }
 
     private void insertDataToDb(PrayerTiming prayerTiming) {
-        Completable.fromCallable(() -> QuranDatabase.getInstance(getApplication()).quranDao().insert(new PrayerTiming(
+        /*Completable.fromCallable(() -> QuranDatabase.getInstance(getApplication()).quranDao().insert(new PrayerTiming(
                 "fajr","sunrise","dhuhr","asr","sunset","maghrib","isha","imsak",
-                "engdate","hijridate","day",1,"monthname","" +
+                "engdate","hijridate","day",1,"monthname",
                 "year")))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
@@ -89,7 +89,51 @@ public class PrayerTimeViewModel extends AndroidViewModel {
                     public void onError(Throwable e) {
                         Log.d(TAG, "onError: " + e.getLocalizedMessage());
                     }
-                });
+                });*/
+        Completable completable = QuranDatabase.getInstance(getApplication()).quranDao().insert(prayerTiming);
+        completable.subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d("MY_APP","onComplete observer");
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+            }
+        });
+        /*Log.d("MY_APP","inside InsertToDB:"+prayerTiming.toString());
+        Completable.fromRunnable(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("MY_APP","Inside run... Before insert");
+                QuranDatabase.getInstance(getApplication()).quranDao().insert(prayerTiming);
+                Log.d("MY_APP","Inside run after insert");
+            }
+        })
+        .subscribeOn(Schedulers.io())
+        .observeOn(Schedulers.newThread())
+        .subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d("MY_APP","OnComplete...!!!");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        });*/
     }
 
 //    public void fetchFromRemote(String city,String country){

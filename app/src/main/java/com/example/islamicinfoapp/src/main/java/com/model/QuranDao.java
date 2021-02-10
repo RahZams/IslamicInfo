@@ -20,7 +20,7 @@ public interface QuranDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Long insert(SurahData surahData);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(PrayerTiming prayerTiming);
 
     @Query("SELECT * FROM QuranDbData WHERE name = :name")

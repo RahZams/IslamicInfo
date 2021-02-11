@@ -59,7 +59,9 @@ public class LocListener implements LocationListener {
         if (location == null){
             cityName = mContext.getResources().getString(R.string.default_city);
             countryName = mContext.getResources().getString(R.string.default_country);
-            getPrayerTimesDataFromApi(cityName, countryName);
+            checkIfDataAvailableInDatabase(cityName,countryName);
+            //getPrayerTimesDataFromApi(cityName, countryName);
+            makeMainActivityCall(cityName,countryName);
         }
         //Log.d("prayer", "onLocationChanged: " + location.toString());
         else {

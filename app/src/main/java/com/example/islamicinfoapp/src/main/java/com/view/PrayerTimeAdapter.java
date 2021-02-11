@@ -36,6 +36,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     @NonNull
     @Override
     public PrayerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("prayer", "onCreateViewHolder: ");
 //        View view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.prayertime_item,parent,false);
 //        return new PrayerItemViewHolder(view);
         PrayertimeItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.prayertime_item,
@@ -45,10 +46,10 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     @Override
     public void onBindViewHolder(@NonNull PrayerItemViewHolder holder, int position) {
-        holder.mNamazName.setText(mPrayerTimeList.get(position).getmNamazName());
-        holder.mNamazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
+        holder.binding.namazName.setText(mPrayerTimeList.get(position).getmNamazName());
+        holder.binding.namazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
         ,0,0,0);
-        holder.mNamazTime.setText(mPrayerTimeList.get(position).getmNamazTime());
+        holder.binding.namazTiming.setText(mPrayerTimeList.get(position).getmNamazTime());
 
     }
 
@@ -66,12 +67,13 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
         public PrayerItemViewHolder(@NonNull PrayertimeItemBinding binding) {
             super(binding.getRoot());
+            this.binding = binding;
 //            mNamazName = itemView.findViewById(R.id.namazName);
 //            mNamazTime = itemView.findViewById(R.id.namazTiming);
 //            mReminder = itemView.findViewById(R.id.reminderImage);
-            mNamazName = binding.namazName;
-            mNamazTime = binding.namazTiming;
-            mReminder = binding.reminderImage;
+//            mNamazName = binding.namazName;
+//            mNamazTime = binding.namazTiming;
+//            mReminder = binding.reminderImage;
         }
     }
 }

@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment {
                 Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
-                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
+//                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
                 //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
                 if (prayerTiming != null && !prayerTiming.equals("")){
                     Log.d("prayer", "observeViewModel onChanged: ");

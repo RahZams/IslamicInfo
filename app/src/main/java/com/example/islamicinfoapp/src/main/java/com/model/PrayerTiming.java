@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class PrayerTiming {
-//    @PrimaryKey(autoGenerate = true)
-//    private int id;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     @NonNull
     private String fajr;
     @NonNull
@@ -24,7 +24,7 @@ public class PrayerTiming {
     private String isha;
     @NonNull
     private String imsak;
-    @PrimaryKey(autoGenerate = false)
+//    @PrimaryKey(autoGenerate = false)
     @NonNull
     private String prayerTimeEngDate;
     @NonNull
@@ -39,40 +39,6 @@ public class PrayerTiming {
     private String hijriyear;
     private String city;
     private String country;
-//        @NonNull
-//        @PrimaryKey(autoGenerate = true)
-//        private int rowid;
-//
-//
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-
-    @Override
-    public String toString() {
-        return "PrayerTiming{" +
-                "fajr='" + fajr + '\'' +
-                ", sunsrise='" + sunsrise + '\'' +
-                ", dhuhr='" + dhuhr + '\'' +
-                ", asr='" + asr + '\'' +
-                ", sunset='" + sunset + '\'' +
-                ", maghrib='" + maghrib + '\'' +
-                ", isha='" + isha + '\'' +
-                ", imsak='" + imsak + '\'' +
-                ", prayerTimeEngDate='" + prayerTimeEngDate + '\'' +
-                ", hijridate='" + hijridate + '\'' +
-                ", hijriDay='" + hijriDay + '\'' +
-                ", hijrimonthnumber=" + hijrimonthnumber +
-                ", hijrimonthname='" + hijrimonthname + '\'' +
-                ", hijriyear='" + hijriyear + '\'' +
-                ", city='" + city + '\'' +
-                ", country='" + country + '\'' +
-                '}';
-    }
 
     public String getCity() {
         return city;
@@ -110,6 +76,14 @@ public class PrayerTiming {
         this.hijriyear = hijriyear;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getFajr() {
         return fajr;
     }
@@ -129,14 +103,6 @@ public class PrayerTiming {
     public String getDhuhr() {
         return dhuhr;
     }
-
-//        public int getRowid() {
-//            return rowid;
-//        }
-//
-//        public void setRowid(int rowid) {
-//            this.rowid = rowid;
-//        }
 
     public void setDhuhr(String dhuhr) {
         this.dhuhr = dhuhr;
@@ -228,6 +194,29 @@ public class PrayerTiming {
 
     public void setHijriyear(String hijriyear) {
         this.hijriyear = hijriyear;
+    }
+
+
+    @Override
+    public String toString() {
+        return "PrayerTiming{" +
+                "fajr='" + fajr + '\'' +
+                ", sunsrise='" + sunsrise + '\'' +
+                ", dhuhr='" + dhuhr + '\'' +
+                ", asr='" + asr + '\'' +
+                ", sunset='" + sunset + '\'' +
+                ", maghrib='" + maghrib + '\'' +
+                ", isha='" + isha + '\'' +
+                ", imsak='" + imsak + '\'' +
+                ", prayerTimeEngDate='" + prayerTimeEngDate + '\'' +
+                ", hijridate='" + hijridate + '\'' +
+                ", hijriDay='" + hijriDay + '\'' +
+                ", hijrimonthnumber=" + hijrimonthnumber +
+                ", hijrimonthname='" + hijrimonthname + '\'' +
+                ", hijriyear='" + hijriyear + '\'' +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                '}';
     }
 }
 

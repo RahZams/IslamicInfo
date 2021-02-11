@@ -1,98 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/padding_top_bottom">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    <data>-->
+
+<!--        <variable-->
+<!--            name="prayer"-->
+<!--            type="com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming" />-->
+<!--    </data>-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/padding_top_bottom"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/namazName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/circle"
             android:layout_weight="1"
-            android:text="@string/zikr"
-            android:padding="@dimen/padding_top_bottom"
+            android:drawableStart="@drawable/circle"
             android:drawablePadding="@dimen/contact_margin_top"
             android:gravity="start"
-            />
+            android:padding="@dimen/padding_top_bottom"
+            android:text="@string/zikr" />
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_weight="2"-->
-<!--        android:layout_gravity="end"/>-->
+        <!--    <LinearLayout-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_weight="2"-->
+        <!--        android:layout_gravity="end"/>-->
 
-    <TextView
-        android:id="@+id/namazTiming"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/prayer_time"
-        android:padding="@dimen/padding_top_bottom"/>
+        <TextView
+            android:id="@+id/namazTiming"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_top_bottom"
+            android:text="@string/prayer_time" />
 
-    <ImageView
-        android:id="@+id/reminderImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_top_bottom"
-        android:contentDescription="@string/reminder"
-        android:layout_gravity="end"
-        android:src="@drawable/ic_notifications_off"
-        android:layout_marginStart="@dimen/contact_margin_top"
-        android:layout_marginEnd="@dimen/padding_left_right"
-        />
+        <ImageView
+            android:id="@+id/reminderImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginStart="@dimen/contact_margin_top"
+            android:layout_marginEnd="@dimen/padding_left_right"
+            android:contentDescription="@string/reminder"
+            android:padding="@dimen/padding_top_bottom"
+            android:src="@drawable/ic_notifications_off" />
 
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:id="@+id/card_view"-->
-<!--        app:cardUseCompatPadding="true"-->
-<!--        android:elevation="@dimen/padding_top_bottom"-->
-<!--        app:cardCornerRadius="@dimen/padding_top_bottom"-->
-<!--        app:cardBackgroundColor="@color/prayertime_item_color"-->
-<!--        app:contentPadding="@dimen/content_padding"/>-->
+        <!--    <androidx.cardview.widget.CardView-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:id="@+id/card_view"-->
+        <!--        app:cardUseCompatPadding="true"-->
+        <!--        android:elevation="@dimen/padding_top_bottom"-->
+        <!--        app:cardCornerRadius="@dimen/padding_top_bottom"-->
+        <!--        app:cardBackgroundColor="@color/prayertime_item_color"-->
+        <!--        app:contentPadding="@dimen/content_padding"/>-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center_vertical"-->
-<!--            android:orientation="horizontal">-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:gravity="center_vertical"-->
+        <!--            android:orientation="horizontal">-->
 
-<!--        <ImageView-->
-<!--            android:layout_width="@dimen/imageview_width_height"-->
-<!--            android:layout_height="@dimen/imageview_width_height"-->
-<!--            android:id="@+id/imageview"/>-->
+        <!--        <ImageView-->
+        <!--            android:layout_width="@dimen/imageview_width_height"-->
+        <!--            android:layout_height="@dimen/imageview_width_height"-->
+        <!--            android:id="@+id/imageview"/>-->
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/zikr"-->
-<!--            android:layout_margin="@dimen/padding_left_right"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textSize="@dimen/padding_left_right"/>-->
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:text="@string/zikr"-->
+        <!--            android:layout_margin="@dimen/padding_left_right"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:textSize="@dimen/padding_left_right"/>-->
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:gravity="end|center_vertical"/>-->
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:gravity="end|center_vertical"/>-->
 
-<!--            <TextView-->
-<!--                android:id="@+id/prayer_time"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="end|center_vertical"-->
-<!--                android:text="@string/prayer_time"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="@dimen/padding_left_right"-->
-<!--                android:layout_marginLeft="@dimen/padding_left_right"/>-->
+        <!--            <TextView-->
+        <!--                android:id="@+id/prayer_time"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="end|center_vertical"-->
+        <!--                android:text="@string/prayer_time"-->
+        <!--                android:textStyle="bold"-->
+        <!--                android:textSize="@dimen/padding_left_right"-->
+        <!--                android:layout_marginLeft="@dimen/padding_left_right"/>-->
 
-<!--            <Switch-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="end|center_vertical"-->
-<!--                android:id="@+id/reminder_switch"-->
-<!--                android:layout_marginLeft="@dimen/padding_left_right"/>-->
-<!--        </LinearLayout>-->
+        <!--            <Switch-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:layout_gravity="end|center_vertical"-->
+        <!--                android:id="@+id/reminder_switch"-->
+        <!--                android:layout_marginLeft="@dimen/padding_left_right"/>-->
+        <!--        </LinearLayout>-->
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

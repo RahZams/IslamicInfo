@@ -73,6 +73,7 @@ public class HomeFragment extends Fragment {
         mCountryname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.countryname));
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
         mCityCountryName.setText(mCityname + "," + mCountryname);
+        mDateView.setText(Utility.getCurrentDate());
         mRecyclerView.setAdapter(adapter);
         observeViewModel(mCityname,mCountryname);
         return view;

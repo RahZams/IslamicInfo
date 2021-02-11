@@ -73,6 +73,7 @@
     <string name="reminder">ReminderImage</string>
     <string name="cityname">cityname</string>
     <string name="countryname">countryname</string>
+    <string name="today">Today</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

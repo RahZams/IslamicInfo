@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
 
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private ArrayList<PrayerTimingItem> mPrayerTimeList = new ArrayList<>();
-    private PrayerTimeAdapter adapter = new PrayerTimeAdapter(mPrayerTimeList);
+    private PrayerTimeAdapter adapter;
     private String mCityname,mCountryname;
 
 
@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment {
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
         mCityCountryName.setText(mCityname + "," + mCountryname);
         mDateView.setText(Utility.getCurrentDate());
+        adapter = new PrayerTimeAdapter(mPrayerTimeList);
         mRecyclerView.setAdapter(adapter);
         observeViewModel(mCityname,mCountryname);
         return view;

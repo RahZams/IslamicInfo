@@ -50,6 +50,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         holder.binding.namazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
         ,0,0,0);
         holder.binding.namazTiming.setText(mPrayerTimeList.get(position).getmNamazTime());
+        holder.binding.executePendingBindings();
 
     }
 

@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -22,26 +23,23 @@ import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewModel;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class HomeFragment extends Fragment {
-
-    @BindView(R.id.recyclerview)
-    RecyclerView mRecyclerView;
-
-    @BindView(R.id.city_name)
-    TextView mCityCountryName;
-
-    @BindView(R.id.date_text)
-    TextView mDateView;
+//
+//    @BindView(R.id.recyclerview)
+//    RecyclerView mRecyclerView;
+//
+//    @BindView(R.id.city_name)
+//    TextView mCityCountryName;
+//
+//    @BindView(R.id.date_text)
+//    TextView mDateView;
 
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private ArrayList<PrayerTimingItem> mPrayerTimeList = new ArrayList<>();
@@ -68,15 +66,20 @@ public class HomeFragment extends Fragment {
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,
                 container, false);
         View view = binding.getRoot();
-        ButterKnife.bind(this,view);
+//
+//        View view  = inflater.inflate(R.layout.fragment_home,container,false);
+//        ButterKnife.bind(this,view);
         mCityname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.cityname));
         mCountryname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.countryname));
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
-        mCityCountryName.setText(mCityname + "," + mCountryname);
-        mDateView.setText(Utility.getCurrentDate());
+        binding.cityName.setText(mCityname + "," + mCountryname);
+        binding.dateText.setText(Utility.getCurrentDate());
+//        mCityCountryName.setText(mCityname + "," + mCountryname);
+//        mDateView.setText(Utility.getCurrentDate());
         adapter = new PrayerTimeAdapter(mPrayerTimeList);
-        mRecyclerView.setAdapter(adapter);
         observeViewModel(mCityname,mCountryname);
+        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.recyclerview.setAdapter(adapter);
         return view;
     }
 
@@ -104,9 +107,6 @@ public class HomeFragment extends Fragment {
                     Log.d("prayer", "observeViewModel onChanged: ");
                     adapter.updateList(createArrayListOfPrayerTiming(prayerTiming));
                 }
-
-
-
             }
         });
     }
@@ -118,7 +118,10 @@ public class HomeFragment extends Fragment {
         String time = "";
         boolean reminderSet = false;
 
-        for (int i=0;i<7;i++){
+        Log.d("prayer", "createArrayListOfPrayerTiming:before assigning " + mPrayerTimeList.size());
+        mPrayerTimeList.clear();
+
+        for (int i=0;i<6;i++){
             switch (i) {
                 case 0:
                     imgId = R.drawable.fajr;
@@ -148,21 +151,21 @@ public class HomeFragment extends Fragment {
                     reminderSet = false;
                     break;
 
-                case 4:
-                    imgId = R.drawable.sunset;
-                    name = getResources().getString(R.string.sunset);
-                    time = prayerTiming.getSunset();
-                    reminderSet = false;
-                    break;
+//                case 4:
+//                    imgId = R.drawable.sunset;
+//                    name = getResources().getString(R.string.sunset);
+//                    time = prayerTiming.getSunset();
+//                    reminderSet = false;
+//                    break;
 
-                case 5:
+                case 4:
                     imgId = R.drawable.maghrib;
                     name = getResources().getString(R.string.maghrib);
                     time = prayerTiming.getMaghrib();
                     reminderSet = false;
                     break;
 
-                case 6:
+                case 5:
                     imgId = R.drawable.isha;
                     name = getResources().getString(R.string.isha);
                     time = prayerTiming.getIsha();
@@ -173,7 +176,6 @@ public class HomeFragment extends Fragment {
                     break;
             }
             mPrayerTimeList.add(new PrayerTimingItem(name,time,imgId,reminderSet));
-
             }
         Log.d("prayer", "createArrayListOfPrayerTiming: " + mPrayerTimeList.size());
             return mPrayerTimeList;

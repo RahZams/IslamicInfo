@@ -23,7 +23,14 @@ import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewModel;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
 import butterknife.BindView;
 
 
@@ -98,7 +105,7 @@ public class HomeFragment extends Fragment {
     private void observeViewModel(String mCityname, String mCountryname) {
         Log.d("prayer", "observeViewModel: " + Utility.getCurrentDate() + mCityname + mCountryname);
         QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname, mCountryname,
-                Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
+                "18 Feb 2021").observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
 //                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
@@ -126,28 +133,28 @@ public class HomeFragment extends Fragment {
                 case 0:
                     imgId = R.drawable.fajr;
                     name = getResources().getString(R.string.fajr);
-                    time = prayerTiming.getFajr();
+                    time = changeDateFormat(prayerTiming.getFajr());
                     reminderSet = false;
                     break;
 
                 case 1:
                     imgId = R.drawable.sunrise;
                     name = getResources().getString(R.string.sunrise);
-                    time = prayerTiming.getSunsrise();
+                    time = changeDateFormat(prayerTiming.getSunsrise());
                     reminderSet = false;
                     break;
 
                 case 2:
                     imgId = R.drawable.zohr;
                     name = getResources().getString(R.string.dhuhr);
-                    time = prayerTiming.getDhuhr();
+                    time = changeDateFormat(prayerTiming.getDhuhr());
                     reminderSet = false;
                     break;
 
                 case 3:
                     imgId = R.drawable.asr;
                     name = getResources().getString(R.string.asr);
-                    time = prayerTiming.getAsr();
+                    time = changeDateFormat(prayerTiming.getAsr());
                     reminderSet = false;
                     break;
 
@@ -161,14 +168,14 @@ public class HomeFragment extends Fragment {
                 case 4:
                     imgId = R.drawable.maghrib;
                     name = getResources().getString(R.string.maghrib);
-                    time = prayerTiming.getMaghrib();
+                    time = changeDateFormat(prayerTiming.getMaghrib());
                     reminderSet = false;
                     break;
 
                 case 5:
                     imgId = R.drawable.isha;
                     name = getResources().getString(R.string.isha);
-                    time = prayerTiming.getIsha();
+                    time = changeDateFormat(prayerTiming.getIsha());
                     reminderSet = false;
                     break;
 
@@ -180,5 +187,18 @@ public class HomeFragment extends Fragment {
         Log.d("prayer", "createArrayListOfPrayerTiming: " + mPrayerTimeList.size());
             return mPrayerTimeList;
         }
+
+    private String changeDateFormat(String timeData) {
+        Date dateTime;
+        String finalTime = "";
+        try {
+            dateTime = new SimpleDateFormat("hh:mm",Locale.US).parse(timeData);
+            finalTime = new SimpleDateFormat("hh:mm a",Locale.US).format(dateTime);
+            Log.d("prayer", "changeDateFormat: " + finalTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return finalTime;
     }
+}
 

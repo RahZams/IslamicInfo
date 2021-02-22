@@ -106,7 +106,7 @@ public class LocListener implements LocationListener {
         Log.d("prayer", "getPrayerTimesDataFromApi: " + cityName + countryName);
         //boolean exists = mPrayerTimeVewModel.checkIfExists(cityName,countryName,formattedDate);
         //Log.d("date", "getPrayerTimesDataFromApi: " + exists);
-        mPrayerTimeViewModel.fetchFromRemote(cityName,countryName);
+        mPrayerTimeViewModel.fetchFromRemote(cityName,countryName,formattedDate);
         //mPrayerTimeViewModel.fetchFromDatabase(cityName,countryName,getCurrentDate());
 
         //mPrayerTimeViewModel.fetchRecordCountFromDatabase(cityName, countryName, formattedDate);

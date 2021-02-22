@@ -26,6 +26,7 @@ import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewMode
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -105,7 +106,7 @@ public class HomeFragment extends Fragment {
     private void observeViewModel(String mCityname, String mCountryname) {
         Log.d("prayer", "observeViewModel: " + Utility.getCurrentDate() + mCityname + mCountryname);
         QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname, mCountryname,
-                "18 Feb 2021").observe(this, new Observer<PrayerTiming>() {
+                Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
             @Override
             public void onChanged(PrayerTiming prayerTiming) {
 //                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
@@ -192,12 +193,26 @@ public class HomeFragment extends Fragment {
         Date dateTime;
         String finalTime = "";
         try {
-            dateTime = new SimpleDateFormat("hh:mm",Locale.US).parse(timeData);
-            finalTime = new SimpleDateFormat("hh:mm a",Locale.US).format(dateTime);
+            if (!timeData.startsWith("12")) {
+                Log.d("prayer", "changeDateFormat: if");
+                dateTime = new SimpleDateFormat("hh:mm", Locale.ENGLISH).parse(timeData);
+                finalTime = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateTime);
+            }
+            else if (timeData.startsWith("12")){
+                Log.d("prayer", "changeDateFormat: else");
+                finalTime = timeData + " " + "PM";
+            }
             Log.d("prayer", "changeDateFormat: " + finalTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+//            DateTimeFormatter parser = DateTimeFormatter.ofPattern("hh:mm",Locale.ENGLISH);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm aa",Locale.ENGLISH);
+//            LocalTime time = LocalTime.parse(timeData,parser);
+//            finalTime = time.format(formatter);
+//        }
         return finalTime;
     }
 }

@@ -162,6 +162,7 @@ public interface QuranApi {
 
     @GET("timingsByCity?")
     Observable<PrayerTiming> getPrayerTiming(@Query("city") String city,
-                                          @Query("country") String country,@Query("method") int method);
+                                          @Query("country") String country,@Query("method") int method,
+                                             @Query("date_or_timestamp") String date);
 
 }

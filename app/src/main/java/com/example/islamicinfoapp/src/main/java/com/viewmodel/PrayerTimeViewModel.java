@@ -37,7 +37,7 @@ public class PrayerTimeViewModel extends AndroidViewModel {
                 new PrayerTimeDeserializer()).create(QuranApi.class);
     }
 
-    public void fetchFromRemote(String city,String country){
+    public void fetchFromRemote(String city,String country,String date){
         Log.d("prayer", "fetchFromRemote: ");
         int method = Integer.parseInt(getApplication().getResources().getString(R.string.prayer_time_calculation_method));
         mQuranApi.getPrayerTiming(city,country,method)

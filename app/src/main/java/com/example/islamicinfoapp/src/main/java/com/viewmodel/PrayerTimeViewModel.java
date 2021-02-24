@@ -40,7 +40,7 @@ public class PrayerTimeViewModel extends AndroidViewModel {
     public void fetchFromRemote(String city,String country,String date){
         Log.d("prayer", "fetchFromRemote: ");
         int method = Integer.parseInt(getApplication().getResources().getString(R.string.prayer_time_calculation_method));
-        mQuranApi.getPrayerTiming(city,country,method)
+        mQuranApi.getPrayerTiming(city,country,method,date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(new Observer<PrayerTiming>() {

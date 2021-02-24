@@ -1,15 +1,12 @@
 package com.example.islamicinfoapp.src.main.java.com.utilities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.provider.Settings;
 import android.util.Log;
 
-import androidx.appcompat.app.AlertDialog;
-
-import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 
 import java.text.SimpleDateFormat;
@@ -34,5 +31,17 @@ public class Utility {
     public void redirectingToProvideConnection(Context context) {
         Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
         context.startActivity(intent);
+    }
+
+    public boolean checkForLocationConnection(Context context) {
+        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+
+        if(!(lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) && !(lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER))){
+            return false;
+        }
+        else {
+            return true;
+        }
+
     }
 }

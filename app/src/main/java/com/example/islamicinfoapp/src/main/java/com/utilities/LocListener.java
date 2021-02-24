@@ -243,7 +243,7 @@ public class LocListener implements LocationListener {
         alertDialog.show();
     }
 
-//    public String getCurrentDate() {
+//    public String getCurrentDate() {+
 //        //Log.d("date", "getCurrentDate: " + Calendar.getInstance().getTimeInMillis());
 //        SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy");
 //        return sf.format(new Date());

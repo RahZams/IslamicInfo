@@ -41,7 +41,15 @@ public class LocationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mLocListener = new LocListener(LocationActivity.this);
                 if (utility.checkForNetworkAvailibility(LocationActivity.this)){
-                    mLocListener.requestPermission();
+                    if(utility.checkForLocationConnection(LocationActivity.this)){
+                        mLocListener.requestPermission();
+                    }
+                    else{
+                        mLocListener.showAlertDialog(LocationActivity.this,R.drawable.ic_location_off,
+                                getResources().getString(R.string.location_dialog_title),
+                                getResources().getString(R.string.location_alert_message),
+                                getResources().getString(R.string.ok_button_text));
+                    }
                 }
                 else{
                     mLocListener.showAlertDialog(LocationActivity.this,R.drawable.ic_no_network

@@ -74,6 +74,8 @@
     <string name="cityname">cityname</string>
     <string name="countryname">countryname</string>
     <string name="today">Today</string>
+    <string name="location_dialog_title">Location Setting</string>
+    <string name="location_alert_message">Location settings is not enabled</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

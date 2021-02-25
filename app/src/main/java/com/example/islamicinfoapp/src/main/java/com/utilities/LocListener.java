@@ -222,17 +222,17 @@ public class LocListener implements LocationListener {
         }
     }
 
-    public void showAlertDialog(Context context, int ic_no_network, String title, String message, String buttonText){
+    public void showAlertDialog(Context context, int ic_drawable, String title, String message, String buttonText){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setIcon(ic_no_network);
+        builder.setIcon(ic_drawable);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setPositiveButton(buttonText, (dialog, which) -> {
-            if (ic_no_network == 0){
+            if (ic_drawable == 0){
                 requestPermission();
             }
             else {
-                mUtility.redirectingToProvideConnection(context);
+                mUtility.redirectingToProvideConnection(context,ic_drawable);
             }
             dialog.dismiss();
         });

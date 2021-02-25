@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 
 import java.text.SimpleDateFormat;
@@ -28,8 +29,15 @@ public class Utility {
         return mConnectivityManager.getActiveNetworkInfo()!= null && mConnectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
-    public void redirectingToProvideConnection(Context context) {
-        Intent intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+    public void redirectingToProvideConnection(Context context, int ic_drawable) {
+        Intent intent = null;
+        if (ic_drawable == R.drawable.ic_no_network){
+            intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+        }
+        else if (ic_drawable == R.drawable.ic_location_off){
+            intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        }
+
         context.startActivity(intent);
     }
 

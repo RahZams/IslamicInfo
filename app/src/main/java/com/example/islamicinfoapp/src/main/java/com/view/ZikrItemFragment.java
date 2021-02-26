@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class ZikrItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_zikr_item, container, false);
         ButterKnife.bind(this,view);
         if (getArguments() != null){
+            Log.d("zikr", "onCreateView: " + ZikrItemFragmentArgs.fromBundle(getArguments()).getZikrText());
             textView.setText(ZikrItemFragmentArgs.fromBundle(getArguments()).getZikrText());
         }
         return view;

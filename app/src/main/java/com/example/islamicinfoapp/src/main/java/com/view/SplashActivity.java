@@ -53,10 +53,10 @@ public class SplashActivity extends AppCompatActivity {
     private void checkIfDataAvailableInDatabase() {
         QuranDatabase.getInstance(this).quranDao().getSurahDataCount().observe(this, new Observer<Integer>() {
             @Override
-            public void onChanged(Integer integer) {
-                Log.d("splash", "onChanged:surah " + integer);
-                if (integer == 0){
-                    Log.d("splash", "onChanged: integer is 0");
+            public void onChanged(Integer surah_count) {
+                Log.d("splash", "onChanged:surah " + surah_count);
+                if (surah_count != Integer.valueOf(getString(R.string.surah_total_count))){
+                    Log.d("splash", "onChanged: integer is not 30");
                     mSurahViewModel.fetchFromRemote();
                 }
             }

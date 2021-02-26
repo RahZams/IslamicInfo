@@ -10,8 +10,8 @@
         android:id="@+id/zikr_item_title"
         android:layout_marginTop="@dimen/padding_top_bottom"
         android:layout_marginStart="@dimen/padding_left_right"
-        android:textSize="15dp"
-        android:textColor="@color/black"/>
+        android:textSize="@dimen/padding_left_right"
+        android:textColor="@color/colorAccent"/>
 
     <TextView
         android:id="@+id/urdu_dua"
@@ -21,7 +21,8 @@
         android:layout_marginEnd="@dimen/padding_left_right"
         android:fontFamily="@font/amiri"
         android:text="@string/zikr"
+        android:textColor="@color/prayertime_color"
         android:textDirection="rtl"
-        android:textSize="20dp" />
+        android:textSize="@dimen/text_size" />
 
 </LinearLayout>

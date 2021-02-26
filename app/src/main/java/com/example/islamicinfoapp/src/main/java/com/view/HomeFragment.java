@@ -80,7 +80,8 @@ public class HomeFragment extends Fragment {
         mCityname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.cityname));
         mCountryname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.countryname));
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
-        binding.cityName.setText(mCityname + "," + mCountryname);
+        //binding.cityName.setText(mCityname + "," +
+        binding.cityName.setText(mCityname);
         binding.dateText.setText(Utility.getCurrentDate());
 //        mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());

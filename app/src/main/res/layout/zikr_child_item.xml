@@ -8,7 +8,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/zikr_child_item"
         android:padding="@dimen/padding_left_right"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:text="@string/zikr"
-        android:textSize="15sp"/>
+        android:textStyle="bold"
+        android:textSize="@dimen/padding_help_top_bottom"/>
 </LinearLayout>

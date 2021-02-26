@@ -18,17 +18,21 @@ import com.example.islamicinfoapp.src.main.java.com.utilities.SurahDataDeseriali
 
 import java.util.Arrays;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class SurahViewModel extends AndroidViewModel {
-    public MutableLiveData<SurahData> mSurahDataMutableLiveData = new MutableLiveData<>();
+    //public MutableLiveData<SurahData> mSurahDataMutableLiveData = new MutableLiveData<>();
     private QuranApi mQuranApi;
-    private SurahSaveToDBTask mSurahSaveToDBTask;
-    private SurahRetrieveTask mSurahRetrieveTask;
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    //private SurahSaveToDBTask mSurahSaveToDBTask;
+    //private SurahRetrieveTask mSurahRetrieveTask;
 
     public SurahViewModel(@NonNull Application application) {
         super(application);
@@ -75,20 +79,21 @@ public class SurahViewModel extends AndroidViewModel {
                                 Observable<SurahData> surahThree, Observable<SurahData> surahFour,
                                 Observable<SurahData> surahFive, Observable<SurahData> surahSix) {
         Observable.merge(Arrays.asList(surahOne, surahTwo, surahThree, surahFour, surahFive, surahSix))
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
                 .subscribe(new Observer<SurahData>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
+                        mCompositeDisposable.add(d);
                     }
 
                     @Override
                     public void onNext(SurahData surahData) {
                         //Toast.makeText(getApplication(), " on next surah " , Toast.LENGTH_SHORT).show();
                         Log.d("surah", "onNext:surah " + surahData.getDataNumber() + " " + surahData.getSurahNameEnglish());
-                        mSurahSaveToDBTask = new SurahSaveToDBTask();
-                        mSurahSaveToDBTask.execute(surahData);
+//                        mSurahSaveToDBTask = new SurahSaveToDBTask();
+//                        mSurahSaveToDBTask.execute(surahData);
+                        insertDataToDb(surahData);
                     }
 
                     @Override
@@ -104,42 +109,70 @@ public class SurahViewModel extends AndroidViewModel {
                 });
     }
 
-    public void fetchFromDatabase(String surahName) {
-        mSurahRetrieveTask = new SurahRetrieveTask();
-        mSurahRetrieveTask.execute(surahName);
+    private void insertDataToDb(SurahData surahData) {
+        Log.d("surah", "insertDataToDb: ");
 
+        Completable completable = QuranDatabase.getInstance(getApplication()).quranDao().insert(surahData);
+        completable.subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+                mCompositeDisposable.add(d);
+            }
+
+            @Override
+            public void onComplete() {
+                Log.d("surah", "onComplete: ");
+            }
+
+            @Override
+            public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                Log.d("surah", "onError: " + e.getLocalizedMessage() + " " + e.getCause());
+            }
+        });
     }
 
-    private class SurahSaveToDBTask extends AsyncTask<SurahData, Void, Void> {
-
-        @Override
-        protected Void doInBackground(SurahData... surahData) {
-            SurahData mSurahData = surahData[0];
-            Long result = QuranDatabase.getInstance(getApplication()).quranDao().insert(mSurahData);
-            return null;
-        }
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mCompositeDisposable.clear();
     }
 
-    private class SurahRetrieveTask extends AsyncTask<String, Void, SurahData> {
+    //    public void fetchFromDatabase(String surahName) {
+//        mSurahRetrieveTask = new SurahRetrieveTask();
+//        //mSurahRetrieveTask.execute(surahName);
+//
+//    }
 
-        @Override
-        protected SurahData doInBackground(String... strings) {
-            String surahName = strings[0];
-            Log.d("surah", "doInBackground: " + surahName);
-            SurahData surahData = QuranDatabase.getInstance(getApplication()).quranDao().getSurahData(surahName);
-            if (surahData != null)
-                return surahData;
-            else
-                return null;
-        }
+//    private class SurahSaveToDBTask extends AsyncTask<SurahData, Void, Void> {
+//
+//        @Override
+//        protected Void doInBackground(SurahData... surahData) {
+//            SurahData mSurahData = surahData[0];
+//            Long result = QuranDatabase.getInstance(getApplication()).quranDao().insert(mSurahData);
+//            return null;
+//        }
+//    }
 
-        @Override
-        protected void onPostExecute(SurahData surahData) {
-            //Log.d("surah", "onPostExecute:SurahRetrieveTask " + surahData.getDataNumber());
-            if (surahData != null)
-                mSurahDataMutableLiveData.setValue(surahData);
-        }
-    }
+//    private class SurahRetrieveTask extends AsyncTask<String, Void, SurahData> {
+//
+//        @Override
+//        protected SurahData doInBackground(String... strings) {
+//            String surahName = strings[0];
+//            Log.d("surah", "doInBackground: " + surahName);
+//            //SurahData surahData = QuranDatabase.getInstance(getApplication()).quranDao().getSurahData(surahName);
+////            if (surahData != null)
+////                return surahData;
+////            else
+//                return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(SurahData surahData) {
+//            //Log.d("surah", "onPostExecute:SurahRetrieveTask " + surahData.getDataNumber());
+//            if (surahData != null)
+//                mSurahDataMutableLiveData.setValue(surahData);
+//        }
+//    }
 
 
 //    private void makeMergeCalls(Observable<SurahData> surahYusuf, Observable<SurahData> surahYunus,

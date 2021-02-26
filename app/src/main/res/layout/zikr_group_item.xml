@@ -9,7 +9,8 @@
         android:id="@+id/zikr_group_item"
         android:padding="@dimen/padding_left_right"
         android:text="@string/zikr"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="@dimen/padding_left_right"
         android:textStyle="bold"
         />
 

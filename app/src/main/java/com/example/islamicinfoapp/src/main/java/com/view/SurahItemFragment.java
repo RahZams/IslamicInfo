@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,9 @@ import android.view.ViewGroup;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.SurahAyahItemLayoutBinding;
+import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.model.SurahAyahItemApiData;
+import com.example.islamicinfoapp.src.main.java.com.model.SurahData;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.SurahViewModel;
 
 import java.util.ArrayList;
@@ -51,22 +54,33 @@ public class SurahItemFragment extends Fragment {
         if (getArguments()!= null){
             mSurahName = SurahItemFragmentArgs.fromBundle(getArguments()).getSurahname();
             Log.d("surah", "onCreateView: " + mSurahName);
-            mSurahViewModel.fetchFromDatabase(mSurahName);
+            //mSurahViewModel.fetchFromDatabase(mSurahName);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setAdapter(surahItemAdapter);
             
-            observeViewModel();
+            observeViewModel(mSurahName);
         }
         return view;
     }
 
-    private void observeViewModel() {
+    private void observeViewModel(String mSurahName) {
         Log.d("surah_item", "observeViewModel: ");
-        mSurahViewModel.mSurahDataMutableLiveData.observe(this,surahData -> {
-            Log.d("surah_item", "observeViewModel: " + surahData);
-            if (surahData!= null){
-                Log.d("surah_item", "observeViewModel: " + "not null");
-                surahItemAdapter.updateList(surahData.getAyahList());
+//        mSurahViewModel.mSurahDataMutableLiveData.observe(this,surahData -> {
+//            Log.d("surah_item", "observeViewModel: " + surahData);
+//            if (surahData!= null){
+//                Log.d("surah_item", "observeViewModel: " + "not null");
+//                surahItemAdapter.updateList(surahData.getAyahList());
+//            }
+//        });
+
+        QuranDatabase.getInstance(getActivity()).quranDao().getSurahData(mSurahName).observe(this, new Observer<SurahData>() {
+            @Override
+            public void onChanged(SurahData surahData) {
+                Log.d("surah_item", "onChanged: ");
+                if (surahData != null){
+                    Log.d("surah_item", "onChanged: " + surahData.toString().length());
+                    surahItemAdapter.updateList(surahData.getAyahList());
+                }
             }
         });
     }

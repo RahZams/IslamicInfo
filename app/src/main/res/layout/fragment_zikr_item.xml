@@ -14,7 +14,8 @@
         android:layout_marginTop="@dimen/padding_top_bottom"
         android:layout_marginEnd="@dimen/padding_left_right"
         android:fontFamily="@font/amiri"
-        android:textSize="20dp"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/prayertime_color"
         android:id="@+id/zikr_item"/>
 
 </FrameLayout>

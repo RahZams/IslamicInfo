@@ -18,6 +18,7 @@ import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.internal.observers.SubscriberCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -26,6 +27,7 @@ public class PrayerTimeViewModel extends AndroidViewModel {
     private static final String TAG = PrayerTimeViewModel.class.getName();
     public MutableLiveData<PrayerTiming> mTimingMutableLiveData = new MutableLiveData<>();
     private QuranApi mQuranApi;
+    private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     //private DBTask mdDbTask;
 //    private RetrieveTask mRetrieveTask;
 //    private DbCountTask mDbCountTask;
@@ -46,6 +48,7 @@ public class PrayerTimeViewModel extends AndroidViewModel {
                 .subscribe(new Observer<PrayerTiming>() {
                     @Override
                     public void onSubscribe(Disposable d) {
+                        mCompositeDisposable.add(d);
                     }
 
                     @Override
@@ -94,20 +97,28 @@ public class PrayerTimeViewModel extends AndroidViewModel {
         completable.subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
-
+                mCompositeDisposable.add(d);
             }
 
             @Override
             public void onComplete() {
-                Log.d("MY_APP","onComplete observer");
+                Log.d("prayer", "onComplete observer");
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
+                Log.d("prayer", "onError: " + "message:" + e.getMessage() + " " + "cause:" + e.getCause());
             }
         });
-        /*Log.d("MY_APP","inside InsertToDB:"+prayerTiming.toString());
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        mCompositeDisposable.clear();
+    }
+
+    /*Log.d("MY_APP","inside InsertToDB:"+prayerTiming.toString());
         Completable.fromRunnable(new Runnable() {
             @Override
             public void run() {
@@ -134,7 +145,7 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
             }
         });*/
-    }
+    //}
 
 //    public void fetchFromRemote(String city,String country){
 //        Log.d("prayer", "fetchFromRemote: ");

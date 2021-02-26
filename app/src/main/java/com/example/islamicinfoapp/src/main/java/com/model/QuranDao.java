@@ -18,7 +18,7 @@ public interface QuranDao {
     Long insert(QuranDbData quranDbData);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Long insert(SurahData surahData);
+    Completable insert(SurahData surahData);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(PrayerTiming prayerTiming);
@@ -30,7 +30,7 @@ public interface QuranDao {
     List<SurahData> getAllSurahs();
 
     @Query("SELECT * FROM SurahData WHERE surahNameEnglish =:surahNameEnglish")
-    SurahData getSurahData(String surahNameEnglish);
+    LiveData<SurahData> getSurahData(String surahNameEnglish);
 
     @Query("DELETE FROM QuranDbData where name =:name")
     void deleteAllQuranData(String name);

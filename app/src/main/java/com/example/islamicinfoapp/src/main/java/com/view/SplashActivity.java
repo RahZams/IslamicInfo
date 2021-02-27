@@ -43,6 +43,7 @@ public class SplashActivity extends AppCompatActivity {
                 checkIfDataAvailableInDatabase();
 //                mduasDeleteTask =  new DeleteTask();
 //                mduasDeleteTask.execute();
+                finish();
                 startActivity(mainIntent);
 
             }

@@ -45,12 +45,14 @@ public class LocListener implements LocationListener {
     public static final int LOCATION_REQUEST_CODE = 1;
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private Utility mUtility;
+    private CallMainActivityCallback callMainActivityCallback;
 
     public LocListener(LocationActivity context) {
         this.mContext = context;
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         mPrayerTimeViewModel = ViewModelProviders.of((FragmentActivity) mContext).get(PrayerTimeViewModel.class);
         mUtility = new Utility();
+        callMainActivityCallback = context;
     }
 
     @Override
@@ -61,7 +63,6 @@ public class LocListener implements LocationListener {
             countryName = mContext.getResources().getString(R.string.default_country);
             checkIfDataAvailableInDatabase(cityName,countryName);
             //getPrayerTimesDataFromApi(cityName, countryName);
-            makeMainActivityCall(cityName,countryName);
         }
         //Log.d("prayer", "onLocationChanged: " + location.toString());
         else {
@@ -78,7 +79,7 @@ public class LocListener implements LocationListener {
                 cityName = addresses.get(0).getLocality();
                 countryName = addresses.get(0).getCountryName();
                 checkIfDataAvailableInDatabase(cityName,countryName);
-                makeMainActivityCall(cityName,countryName);
+                callMainActivityCallback.callMainAcitivity(cityName,countryName);
              //   getPrayerTimesDataFromApi(cityName, countryName);
                 Log.d("prayer", "onLocationChanged: " + cityName + " " + countryName);
                 Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
@@ -121,18 +122,18 @@ public class LocListener implements LocationListener {
 //        }
     }
 
-    private void makeMainActivityCall(String cityName, String countryName) {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        Intent intent = new Intent(mContext, MainActivity.class);
-        intent.putExtra(mContext.getString(R.string.cityname),cityName);
-        intent.putExtra(mContext.getString(R.string.countryname),countryName);
-        mContext.startActivity(intent);
-    }
+//    private void makeMainActivityCall(String cityName, String countryName) {
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Intent intent = new Intent(mContext, MainActivity.class);
+//        intent.putExtra(mContext.getString(R.string.cityname),cityName);
+//        intent.putExtra(mContext.getString(R.string.countryname),countryName);
+//        mContext.startActivity(intent);
+//    }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -248,4 +249,8 @@ public class LocListener implements LocationListener {
 //        SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy");
 //        return sf.format(new Date());
 //    }
+
+    public interface CallMainActivityCallback{
+        void callMainAcitivity(String city,String country);
+    }
 }

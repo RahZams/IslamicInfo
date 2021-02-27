@@ -1,5 +1,6 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.navigation.NavController;
@@ -7,6 +8,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "if action bar available", Toast.LENGTH_SHORT).show();
                     getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     getSupportActionBar().setHomeButtonEnabled(false);
+                    toolbar.setNavigationIcon(null);
                 }
                 //toolbar.setNavigationIcon(null);
                 Toast.makeText(this, "should hide", Toast.LENGTH_SHORT).show();
@@ -63,11 +66,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
+        if (getSupportActionBar() != null){
+            Log.d("main_log", "onSupportNavigateUp: " + "not null");
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayShowHomeEnabled(false);
+        }
+
         return Navigation.findNavController(this,R.id.nav_host_fragment).navigateUp();
+
         //return NavigationUI.navigateUp(navController, (DrawerLayout) null);
     }
 
-//    @Override
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d("main_log", "onBackPressed: ");
+        finish();
+    }
+
+    //    @Override
 //    public void onBackPressed() {
 //        int count = getSupportFragmentManager().getBackStackEntryCount();
 //        Toast.makeText(this, "onback pressed" + "count" + count, Toast.LENGTH_SHORT).show();

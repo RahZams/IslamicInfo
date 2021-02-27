@@ -3,6 +3,8 @@ package com.example.islamicinfoapp.src.main.java.com.view;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -38,7 +40,7 @@ import butterknife.BindView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 //
 //    @BindView(R.id.recyclerview)
 //    RecyclerView mRecyclerView;
@@ -74,7 +76,7 @@ public class HomeFragment extends Fragment {
         FragmentHomeBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,
                 container, false);
         View view = binding.getRoot();
-//
+
 //        View view  = inflater.inflate(R.layout.fragment_home,container,false);
 //        ButterKnife.bind(this,view);
         mCityname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.cityname));
@@ -92,7 +94,8 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-//    private void observeViewModel() {
+
+    //    private void observeViewModel() {
 //        Log.d("prayer", "observeViewModel: " +
 //                mPrayerTimeViewModel.mTimingMutableLiveData == null ? "null" :
 //                "not null");
@@ -216,5 +219,6 @@ public class HomeFragment extends Fragment {
 //        }
         return finalTime;
     }
+
 }
 

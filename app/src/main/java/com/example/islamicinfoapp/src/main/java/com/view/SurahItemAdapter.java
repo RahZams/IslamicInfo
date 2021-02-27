@@ -90,7 +90,6 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
 //        paint.getTextBounds(spanString, 0, spanString.length(), bounds);
 //        final int numlines = (int) Math.ceil(bounds.width())/100;
         holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
-
 //        Rect bounds = new Rect();
 //        Paint textPaint = holder.itemView.ayahText.getPaint();
 //        textPaint.getTextBounds(spanString,0,spanString.length(),bounds);

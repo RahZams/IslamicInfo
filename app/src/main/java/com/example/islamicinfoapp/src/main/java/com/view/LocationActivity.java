@@ -23,7 +23,7 @@ import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class LocationActivity extends AppCompatActivity {
+public class LocationActivity extends AppCompatActivity implements LocListener.CallMainActivityCallback{
 
     @BindView(R.id.location_text)
     Button mLocationText;
@@ -108,4 +108,19 @@ public class LocationActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    public void callMainAcitivity(String city, String country) {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+            intent.putExtra(getString(R.string.cityname),city);
+            intent.putExtra(getString(R.string.countryname),country);
+            finish();
+            startActivity(intent);
+        }
 }

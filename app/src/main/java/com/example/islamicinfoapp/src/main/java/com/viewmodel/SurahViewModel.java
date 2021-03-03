@@ -42,6 +42,7 @@ public class SurahViewModel extends AndroidViewModel {
     }
 
     public void fetchFromRemote() {
+        Log.d("surah", "fetchFromRemote: ");
 //        makeMergeCalls(mQuranApi.getSurahYusuf(),mQuranApi.getSurahYunus(),mQuranApi.getSurahYaseen()
 //        ,mQuranApi.getSurahWaaqia(),mQuranApi.getSurahQadr(),mQuranApi.getSurahNasr(),mQuranApi.getSurahNahl()
 //        ,mQuranApi.getSurahMulk(),mQuranApi.getSurahMuhammad(),mQuranApi.getSurahMaryam(),mQuranApi.getSurahLuqman()
@@ -78,6 +79,7 @@ public class SurahViewModel extends AndroidViewModel {
     private void makeMergeCalls(Observable<SurahData> surahOne, Observable<SurahData> surahTwo,
                                 Observable<SurahData> surahThree, Observable<SurahData> surahFour,
                                 Observable<SurahData> surahFive, Observable<SurahData> surahSix) {
+        Log.d("surah", "makeMergeCalls: " + surahOne);
         Observable.merge(Arrays.asList(surahOne, surahTwo, surahThree, surahFour, surahFive, surahSix))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
@@ -134,7 +136,7 @@ public class SurahViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
-        mCompositeDisposable.clear();
+        //mCompositeDisposable.clear();
     }
 
     //    public void fetchFromDatabase(String surahName) {

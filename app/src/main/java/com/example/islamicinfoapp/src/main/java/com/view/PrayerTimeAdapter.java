@@ -1,22 +1,29 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.PrayertimeItemBinding;
+import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import java.util.ArrayList;
 
 public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.PrayerItemViewHolder> {
 
     private ArrayList<PrayerTimingItem> mPrayerTimeList;
+    private Context mContext;
 
-    public PrayerTimeAdapter(ArrayList<PrayerTimingItem> mPrayerTimeList) {
+    public PrayerTimeAdapter(Context context, ArrayList<PrayerTimingItem> mPrayerTimeList) {
         Log.d("prayer", "PrayerTimeAdapter: " + mPrayerTimeList.size());
+        this.mContext = context;
         this.mPrayerTimeList = mPrayerTimeList;
 
     }
@@ -43,6 +50,35 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        holder.mNamazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
 //                , 0, 0, 0);
         holder.binding.namazTiming.setText(mPrayerTimeList.get(position).getmNamazTime());
+        holder.binding.reminderImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.binding.reminderImage.getDrawable() ==
+                        mContext.getResources().getDrawable(R.drawable.ic_notifications_off)){
+                        holder.binding.reminderImage.setImageDrawable
+                                (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+                        Intent intent = new Intent(mContext, ReminderReceiver.class);
+                    PendingIntent pendingIntent = null;
+                    switch(holder.binding.namazName.getText().toString()){
+                        case mContext.getResources().getString(R.string.fajr):
+
+                            break;
+                        case mContext.getResources().getString(R.string.sunrise):
+                            break;
+                        case mContext.getResources().getString(R.string.dhuhr):
+                            break;
+                        case mContext.getResources().getString(R.string.asr):
+                            break;
+                        case mContext.getResources().getString(R.string.maghrib):
+                            break;
+                        case mContext.getResources().getString(R.string.isha):
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        });
 
     }
 

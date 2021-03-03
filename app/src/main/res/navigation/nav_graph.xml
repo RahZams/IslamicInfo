@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.HomeFragment"
-        android:label="@string/home_title"
-        tools:layout="@layout/fragment_home" />
+        android:label="@string/home_title" />
 
     <fragment
         android:id="@+id/zikrFragment"
@@ -18,13 +17,16 @@
         tools:layout="@layout/fragment_zikr">
         <action
             android:id="@+id/action_zikrFragment_to_surahItemFragment"
-            app:destination="@id/surahItemFragment" />
+            app:destination="@id/surahItemFragment"
+            app:popUpTo="@id/homeFragment"/>
         <action
             android:id="@+id/action_zikrFragment_to_zikrItemFragment"
-            app:destination="@id/zikrItemFragment" />
+            app:destination="@id/zikrItemFragment"
+            app:popUpTo="@id/homeFragment"/>
         <action
             android:id="@+id/action_zikrFragment_to_zikrDuaFragment"
-            app:destination="@id/zikrDuaFragment" />
+            app:destination="@id/zikrDuaFragment"
+            app:popUpTo="@id/zikrFragment"/>
     </fragment>
 
     <fragment

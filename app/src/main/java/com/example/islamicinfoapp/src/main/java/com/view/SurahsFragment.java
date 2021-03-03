@@ -74,7 +74,7 @@ public class SurahsFragment extends Fragment {
                 SurahsFragmentDirections.Action_surahsFragment_to_surahItemFragment action =
                         SurahsFragmentDirections.action_surahsFragment_to_surahItemFragment(mSurahName);
                 navController.navigate(action);
-                //NavigationUI.setupActionBarWithNavController((AppCompatActivity) getActivity(), navController);
+                NavigationUI.setupActionBarWithNavController((AppCompatActivity) getActivity(), navController);
                 return true;
             }
         });

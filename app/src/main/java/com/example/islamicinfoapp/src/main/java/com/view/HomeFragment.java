@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment{
         binding.dateText.setText(Utility.getCurrentDate());
 //        mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());
-        adapter = new PrayerTimeAdapter(mPrayerTimeList);
+        adapter = new PrayerTimeAdapter(getContext(),mPrayerTimeList);
         observeViewModel(mCityname,mCountryname);
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerview.setAdapter(adapter);

@@ -117,7 +117,7 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
 //            });
 //        }
 
-        holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
+        //holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
         spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
                         holder.itemView.ayahText.getLineCount()),spanString.length()-2,
                 spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);

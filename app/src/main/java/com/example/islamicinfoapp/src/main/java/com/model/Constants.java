@@ -7,6 +7,12 @@ public class Constants {
     public static final int ASR_ID = 400;
     public static final int MAGHRIB_ID = 500;
     public static final int ISHA_ID = 600;
-
-
+    public static final String FAJR = "Fajr";
+    public static final String SUNRISE = "Sunrise";
+    public static final String DHUHR = "Dhuhr";
+    public static final String ASR = "Asr";
+    public static final String MAGHRIB = "Maghrib";
+    public static final String ISHA = "Isha";
+    public static final String NOTIFICATION_CHANNEL = "Prayer Times Channel";
+    public static final int NOTIFICATION_ID = 1;
 }

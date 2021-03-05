@@ -77,6 +77,8 @@
     <string name="location_dialog_title">Location Setting</string>
     <string name="location_alert_message">Please verify whether you have enabled location settings</string>
     <string name="surah_total_count">30</string>
+    <string name="notif_channel_name">Prayer Timing Channel</string>
+    <string name="notif_channel_desc">This is prayer timing notification channel</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

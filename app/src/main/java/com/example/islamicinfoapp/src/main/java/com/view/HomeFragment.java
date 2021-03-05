@@ -138,7 +138,7 @@ public class HomeFragment extends Fragment{
                 case 0:
                     imgId = R.drawable.fajr;
                     name = getResources().getString(R.string.fajr);
-                    time = changeDateFormat(prayerTiming.getFajr());
+                    time = Utility.changeDateFormat(prayerTiming.getFajr());
                     reminderSet = false;
                     break;
 

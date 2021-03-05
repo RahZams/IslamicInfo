@@ -120,7 +120,7 @@ public class LocationActivity extends AppCompatActivity implements LocListener.C
             Intent intent = new Intent(LocationActivity.this, MainActivity.class);
             intent.putExtra(getString(R.string.cityname),city);
             intent.putExtra(getString(R.string.countryname),country);
-            finish();
+            LocationActivity.this.finish();
             startActivity(intent);
         }
 }

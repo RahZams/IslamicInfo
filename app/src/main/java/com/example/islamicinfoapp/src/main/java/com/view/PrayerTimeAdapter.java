@@ -102,8 +102,10 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                     Log.d("prayer", "onClick:if ");
                         holder.binding.reminderImage.setImageDrawable
                                 (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+//                    setupReminder(holder.binding.namazName.getText().toString(),
+//                            holder.binding.namazTiming.getText().toString(),pendingIntent);
                     setupReminder(holder.binding.namazName.getText().toString(),
-                            holder.binding.namazTiming.getText().toString(),pendingIntent);
+                            "10:35 PM",pendingIntent);
                 }
                 else if (holder.binding.reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
@@ -129,16 +131,29 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     private void setupReminder(String namazName, String namazTiming, PendingIntent pendingIntent) {
         Log.d("prayer", "setupReminder: " + "time" + namazTiming);
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        namazTiming = Utility.changeDateFormat(namazTiming);
+        //namazTiming = Utility.changeDateFormat(namazTiming);
         Log.d("prayer", "setupReminder: " + namazTiming);
-        String[] timing = namazTiming.split(":");
+        String[] initTiming = namazTiming.split(" ");
+        String[] timing = initTiming[0].split(":");
         Log.d("prayer", "setupReminder: length" + timing.length + timing[0] + timing[1]);
 
         Calendar cal = Calendar.getInstance();
+//        cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timing[0]));
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
+        Log.d("prayer", "setupReminder: " + initTiming[1]);
+//        if (initTiming[1] == "AM"){
+//            cal.set(Calendar.AM_PM, Calendar.AM);
+//        }
+//        else if (initTiming[1] == "PM"){
+//            cal.set(Calendar.AM_PM,Calendar.PM);
+//        }
+
+        Log.d("prayer", "setupReminder: " + cal.get(Calendar.HOUR_OF_DAY) +
+                cal.get(Calendar.MINUTE) + cal.get(Calendar.AM_PM));
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
+        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
     }
 
 

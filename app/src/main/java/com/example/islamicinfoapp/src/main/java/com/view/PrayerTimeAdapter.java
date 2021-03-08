@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     private ArrayList<PrayerTimingItem> mPrayerTimeList;
     private Context mContext;
+    private String mCityName;
 
     public PrayerTimeAdapter(Context context, ArrayList<PrayerTimingItem> mPrayerTimeList) {
         Log.d("prayer", "PrayerTimeAdapter: " + mPrayerTimeList.size());
@@ -35,7 +37,8 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     }
 
-    public void updateList(ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
+    public void updateList(String cityname, ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
+        mCityName = cityname;
         this.mPrayerTimeList = arrayListOfPrayerTiming;
         Log.d("prayer", "updateList: " + mPrayerTimeList.size());
         notifyDataSetChanged();
@@ -65,32 +68,45 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                 PendingIntent pendingIntent = null;
                 switch(holder.binding.namazName.getText().toString()){
                     case Constants.FAJR:
-                        intent.putExtra(mContext.getResources().getString(R.string.fajr),
+                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                                holder.binding.namazName.getText().toString());
+                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
                                 holder.binding.namazTiming.getText().toString());
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
                         break;
                     case Constants.SUNRISE:
-                        intent.putExtra(mContext.getResources().getString(R.string.sunrise),
+                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                                holder.binding.namazName.getText().toString());
+                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
                                 holder.binding.namazTiming.getText().toString());
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
                         break;
                     case Constants.DHUHR:
-                        intent.putExtra(mContext.getResources().getString(R.string.dhuhr),
+                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                                holder.binding.namazName.getText().toString());
+                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
                                 holder.binding.namazTiming.getText().toString());
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
                         break;
                     case Constants.ASR:
-                        intent.putExtra(mContext.getResources().getString(R.string.asr),
+                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                                holder.binding.namazName.getText().toString());
+                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
                                 holder.binding.namazTiming.getText().toString());
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
                         break;
                     case Constants.MAGHRIB:
-                        intent.putExtra(mContext.getResources().getString(R.string.maghrib),
+                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                                holder.binding.namazName.getText().toString());
+                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
                                 holder.binding.namazTiming.getText().toString());
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
                         break;
                     case Constants.ISHA:
-                        intent.putExtra(mContext.getResources().getString(R.string.isha),
+                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                                holder.binding.namazName.getText().toString());
+                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
                                 holder.binding.namazTiming.getText().toString());
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
                         break;
@@ -105,7 +121,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
                     setupReminder(holder.binding.namazName.getText().toString(),
-                            "10:35 PM",pendingIntent);
+                            "11:55 PM",pendingIntent);
                 }
                 else if (holder.binding.reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
@@ -153,7 +169,15 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         Log.d("prayer", "setupReminder: " + cal.get(Calendar.HOUR_OF_DAY) +
                 cal.get(Calendar.MINUTE) + cal.get(Calendar.AM_PM));
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+        }
+        else{
+            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+        }
     }
 
 
@@ -177,7 +201,6 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //            mReminder = binding.reminderImage;
         }
     }
-
 }
 
 

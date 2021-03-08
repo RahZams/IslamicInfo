@@ -79,6 +79,19 @@
     <string name="surah_total_count">30</string>
     <string name="notif_channel_name">Prayer Timing Channel</string>
     <string name="notif_channel_desc">This is prayer timing notification channel</string>
+    <string name="fajr_title_notif">Wake up.Its fajr time in </string>
+    <string name="sunrise_title_notif">Its sunrise time in </string>
+    <string name="dhuhr_title_notif">Its dhuhr time in </string>
+    <string name="asr_title_notif">Its asr time in </string>
+    <string name="maghrib_title_notif">Its maghrib time in </string>
+    <string name="isha_title_notif">Its isha time in </string>
+    <string name="fajr_desc">Let your first conversation be with Allah</string>
+    <string name="dhuhr_desc">Pray for blessed wealth</string>
+    <string name="asr_desc">Earn ticket to Jannah by offering asr prayer</string>
+    <string name="maghrib_desc">Time is short.Pray soon.Pray to have successful children</string>
+    <string name="isha_desc"></string>
+    <string name="namazName">namazName</string>
+    <string name="namazTime">namazTime</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

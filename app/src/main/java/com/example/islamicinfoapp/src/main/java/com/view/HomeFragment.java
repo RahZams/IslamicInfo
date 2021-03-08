@@ -116,7 +116,7 @@ public class HomeFragment extends Fragment{
 //                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
                 //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
                 if (prayerTiming != null && !prayerTiming.equals("")){
-                    Log.d("prayer", "observeViewModel onChanged: ");
+                    Log.d("prayer", "observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
                     adapter.updateList(mCityname,createArrayListOfPrayerTiming(prayerTiming));
                 }
             }

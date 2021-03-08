@@ -40,7 +40,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     public void updateList(String cityname, ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
         mCityName = cityname;
         this.mPrayerTimeList = arrayListOfPrayerTiming;
-        Log.d("prayer", "updateList: " + mPrayerTimeList.size());
+        Log.d("prayer", "updateList: " + mPrayerTimeList.size() + mCityName);
         notifyDataSetChanged();
     }
 
@@ -63,7 +63,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         holder.binding.reminderImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("prayer", "onClick: " + holder.binding.reminderImage.getDrawable());
+                Log.d("prayer", "onClick: " + holder.binding.reminderImage.getDrawable() + mCityName);
                 Intent intent = new Intent(mContext, ReminderReceiver.class);
                 PendingIntent pendingIntent = null;
                 switch(holder.binding.namazName.getText().toString()){
@@ -121,7 +121,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
                     setupReminder(holder.binding.namazName.getText().toString(),
-                            "11:55 PM",pendingIntent);
+                            "12:50 AM",pendingIntent);
                 }
                 else if (holder.binding.reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
@@ -159,12 +159,12 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);
         Log.d("prayer", "setupReminder: " + initTiming[1]);
-//        if (initTiming[1] == "AM"){
-//            cal.set(Calendar.AM_PM, Calendar.AM);
-//        }
-//        else if (initTiming[1] == "PM"){
-//            cal.set(Calendar.AM_PM,Calendar.PM);
-//        }
+        if (initTiming[1] == "AM"){
+            cal.set(Calendar.AM_PM, Calendar.AM);
+        }
+        else if (initTiming[1] == "PM"){
+            cal.set(Calendar.AM_PM,Calendar.PM);
+        }
 
         Log.d("prayer", "setupReminder: " + cal.get(Calendar.HOUR_OF_DAY) +
                 cal.get(Calendar.MINUTE) + cal.get(Calendar.AM_PM));

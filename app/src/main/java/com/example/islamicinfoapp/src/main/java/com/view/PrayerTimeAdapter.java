@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,88 +62,182 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        holder.mNamazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
 //                , 0, 0, 0);
         holder.binding.namazTiming.setText(mPrayerTimeList.get(position).getmNamazTime());
+        assignReminderImage(holder.binding.namazName.getText().toString(),holder.binding.reminderImage);
+
         holder.binding.reminderImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setReminders(holder.binding.namazName.getText().toString(),
+                        holder.binding.namazTiming.getText().toString(),holder.binding.reminderImage);
                 Log.d("prayer", "onClick: " + holder.binding.reminderImage.getDrawable() + mCityName);
-                Intent intent = new Intent(mContext, ReminderReceiver.class);
-                PendingIntent pendingIntent = null;
-                switch(holder.binding.namazName.getText().toString()){
-                    case Constants.FAJR:
-                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                                holder.binding.namazName.getText().toString());
-                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                                holder.binding.namazTiming.getText().toString());
-                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
-                        break;
-                    case Constants.SUNRISE:
-                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                                holder.binding.namazName.getText().toString());
-                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                                holder.binding.namazTiming.getText().toString());
-                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
-                        break;
-                    case Constants.DHUHR:
-                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                                holder.binding.namazName.getText().toString());
-                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                                holder.binding.namazTiming.getText().toString());
-                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
-                        break;
-                    case Constants.ASR:
-                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                                holder.binding.namazName.getText().toString());
-                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                                holder.binding.namazTiming.getText().toString());
-                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
-                        break;
-                    case Constants.MAGHRIB:
-                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                                holder.binding.namazName.getText().toString());
-                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                                holder.binding.namazTiming.getText().toString());
-                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
-                        break;
-                    case Constants.ISHA:
-                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                                holder.binding.namazName.getText().toString());
-                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                                holder.binding.namazTiming.getText().toString());
-                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
-                        break;
-                    default:
-                        break;
-                }
-                if (holder.binding.reminderImage.getDrawable().getConstantState().
-                        equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
-                    Log.d("prayer", "onClick:if ");
-                        holder.binding.reminderImage.setImageDrawable
-                                (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+//                Intent intent = new Intent(mContext, ReminderReceiver.class);
+//                PendingIntent pendingIntent = null;
+//                switch(holder.binding.namazName.getText().toString()){
+//                    case Constants.FAJR:
+//                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                                holder.binding.namazName.getText().toString());
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                                holder.binding.namazTiming.getText().toString());
+//                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
+//                        break;
+//                    case Constants.SUNRISE:
+//                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                                holder.binding.namazName.getText().toString());
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                                holder.binding.namazTiming.getText().toString());
+//                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
+//                        break;
+//                    case Constants.DHUHR:
+//                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                                holder.binding.namazName.getText().toString());
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                                holder.binding.namazTiming.getText().toString());
+//                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
+//                        break;
+//                    case Constants.ASR:
+//                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                                holder.binding.namazName.getText().toString());
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                                holder.binding.namazTiming.getText().toString());
+//                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
+//                        break;
+//                    case Constants.MAGHRIB:
+//                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                                holder.binding.namazName.getText().toString());
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                                holder.binding.namazTiming.getText().toString());
+//                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
+//                        break;
+//                    case Constants.ISHA:
+//                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                                holder.binding.namazName.getText().toString());
+//                        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                                holder.binding.namazTiming.getText().toString());
+//                        pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//                if (holder.binding.reminderImage.getDrawable().getConstantState().
+//                        equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
+//                    Log.d("prayer", "onClick:if ");
+//                        holder.binding.reminderImage.setImageDrawable
+//                                (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+////                    setupReminder(holder.binding.namazName.getText().toString(),
+////                            holder.binding.namazTiming.getText().toString(),pendingIntent);
+//                    SharedPrefsHelper.storeValue(mContext,holder.binding.namazName.getText().toString(),true);
 //                    setupReminder(holder.binding.namazName.getText().toString(),
-//                            holder.binding.namazTiming.getText().toString(),pendingIntent);
-                    SharedPrefsHelper.storeValue(mContext,holder.binding.namazName.getText().toString(),true);
-                    setupReminder(holder.binding.namazName.getText().toString(),
-                            "04:05 PM",pendingIntent);
-                }
-                else if (holder.binding.reminderImage.getDrawable().getConstantState() ==
-                mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
-                    Log.d("prayer", "onClick: else if");
-                    SharedPrefsHelper.storeValue(mContext,holder.binding.namazName.getText().toString(),false);
-                    holder.binding.reminderImage.setImageDrawable
-                            (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
-                    cancelReminder(pendingIntent);
-                }
-                else{
-                    Log.d("prayer", "onClick:else ");
-                }
+//                            "04:05 PM",pendingIntent);
+//                }
+//                else if (holder.binding.reminderImage.getDrawable().getConstantState() ==
+//                mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
+//                    Log.d("prayer", "onClick: else if");
+//                    SharedPrefsHelper.storeValue(mContext,holder.binding.namazName.getText().toString(),false);
+//                    holder.binding.reminderImage.setImageDrawable
+//                            (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
+//                    cancelReminder(pendingIntent);
+//                }
+//                else{
+//                    Log.d("prayer", "onClick:else ");
+//                }
             }
         });
+
+    }
+
+    private void setReminders(String namazName, String namazTiming, ImageView reminderImage) {
+        Log.d("prayer", "setReminders: " + namazName + namazTiming);
+        Intent intent = new Intent(mContext, ReminderReceiver.class);
+        PendingIntent pendingIntent = null;
+        switch(namazName){
+            case Constants.FAJR:
+                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                        namazName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
+                break;
+            case Constants.SUNRISE:
+                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                        namazName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
+                break;
+            case Constants.DHUHR:
+                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                        namazName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
+                break;
+            case Constants.ASR:
+                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                        namazName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
+                break;
+            case Constants.MAGHRIB:
+                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                        namazName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
+                break;
+            case Constants.ISHA:
+                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                        namazName);
+                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
+                break;
+            default:
+                break;
+        }
+        if (reminderImage.getDrawable().getConstantState().
+                equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
+            Log.d("prayer", "onClick:if ");
+            reminderImage.setImageDrawable
+                    (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+//                    setupReminder(holder.binding.namazName.getText().toString(),
+//                            holder.binding.namazTiming.getText().toString(),pendingIntent);
+            SharedPrefsHelper.storeValue(mContext,namazName,true);
+            setupReminder(namazName,
+                    "04:05 PM",pendingIntent);
+        }
+        else if (reminderImage.getDrawable().getConstantState() ==
+                mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
+            Log.d("prayer", "onClick: else if");
+            SharedPrefsHelper.storeValue(mContext,namazName,false);
+            reminderImage.setImageDrawable
+                    (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
+            cancelReminder(pendingIntent);
+        }
+        else{
+            Log.d("prayer", "onClick:else ");
+        }
+
+    }
+
+    private void assignReminderImage(String namazName, ImageView reminderImage) {
+        Log.d("prayer", "assignReminderImage: " + "namazName:" + namazName + SharedPrefsHelper.getValue(namazName));
+
+        if (SharedPrefsHelper.getValue(namazName)){
+            reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+        }
 
     }
 

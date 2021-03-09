@@ -25,4 +25,7 @@ public class SharedPrefsHelper {
             mEditor.putBoolean(key,value);
 
     }
+    public static boolean getValue(String key){
+        return mSharedPreferences.getBoolean(key,false);
+    }
 }

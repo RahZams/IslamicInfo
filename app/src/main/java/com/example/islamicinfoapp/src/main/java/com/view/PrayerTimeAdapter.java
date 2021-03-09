@@ -19,6 +19,7 @@ import com.example.islamicinfoapp.databinding.PrayertimeItemBinding;
 import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
+import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
                         break;
                     case Constants.SUNRISE:
+                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
                         intent.putExtra(mContext.getResources().getString(R.string.namazName),
                                 holder.binding.namazName.getText().toString());
                         intent.putExtra(mContext.getResources().getString(R.string.namazTime),
@@ -83,6 +85,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
                         break;
                     case Constants.DHUHR:
+                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
                         intent.putExtra(mContext.getResources().getString(R.string.namazName),
                                 holder.binding.namazName.getText().toString());
                         intent.putExtra(mContext.getResources().getString(R.string.namazTime),
@@ -90,6 +93,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
                         break;
                     case Constants.ASR:
+                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
                         intent.putExtra(mContext.getResources().getString(R.string.namazName),
                                 holder.binding.namazName.getText().toString());
                         intent.putExtra(mContext.getResources().getString(R.string.namazTime),
@@ -97,6 +101,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
                         break;
                     case Constants.MAGHRIB:
+                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
                         intent.putExtra(mContext.getResources().getString(R.string.namazName),
                                 holder.binding.namazName.getText().toString());
                         intent.putExtra(mContext.getResources().getString(R.string.namazTime),
@@ -104,6 +109,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                         pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
                         break;
                     case Constants.ISHA:
+                        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
                         intent.putExtra(mContext.getResources().getString(R.string.namazName),
                                 holder.binding.namazName.getText().toString());
                         intent.putExtra(mContext.getResources().getString(R.string.namazTime),
@@ -120,12 +126,14 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                                 (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
+                    SharedPrefsHelper.storeValue(mContext,holder.binding.namazName.getText().toString(),true);
                     setupReminder(holder.binding.namazName.getText().toString(),
-                            "12:50 AM",pendingIntent);
+                            "04:05 PM",pendingIntent);
                 }
                 else if (holder.binding.reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
                     Log.d("prayer", "onClick: else if");
+                    SharedPrefsHelper.storeValue(mContext,holder.binding.namazName.getText().toString(),false);
                     holder.binding.reminderImage.setImageDrawable
                             (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
                     cancelReminder(pendingIntent);

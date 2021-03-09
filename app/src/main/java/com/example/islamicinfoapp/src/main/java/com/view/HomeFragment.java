@@ -84,11 +84,11 @@ public class HomeFragment extends Fragment{
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
         //binding.cityName.setText(mCityname + "," +
         binding.cityName.setText(mCityname);
-        binding.dateText.setText(Utility.getCurrentDate());
+        //binding.dateText.setText(Utility.getCurrentDate());
 //        mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());
         adapter = new PrayerTimeAdapter(getContext(),mPrayerTimeList);
-        observeViewModel(mCityname,mCountryname);
+        observeViewModel(mCityname,mCountryname,binding);
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerview.setAdapter(adapter);
         return view;
@@ -107,7 +107,7 @@ public class HomeFragment extends Fragment{
 //        });
 //    }
 
-    private void observeViewModel(String mCityname, String mCountryname) {
+    private void observeViewModel(String mCityname, String mCountryname, FragmentHomeBinding binding) {
         Log.d("prayer", "observeViewModel: " + Utility.getCurrentDate() + mCityname + mCountryname);
         QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname, mCountryname,
                 Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
@@ -117,6 +117,7 @@ public class HomeFragment extends Fragment{
                 //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
                 if (prayerTiming != null && !prayerTiming.equals("")){
                     Log.d("prayer", "observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
+                    binding.dateText.setText(prayerTiming.getPrayerTimeEngDate());
                     adapter.updateList(mCityname,createArrayListOfPrayerTiming(prayerTiming));
                 }
             }

@@ -233,9 +233,9 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     }
 
     private void assignReminderImage(String namazName, ImageView reminderImage) {
-        Log.d("prayer", "assignReminderImage: " + "namazName:" + namazName + SharedPrefsHelper.getValue(namazName));
+        Log.d("prayer", "assignReminderImage: " + "namazName:" + namazName + SharedPrefsHelper.getValue(mContext,namazName));
 
-        if (SharedPrefsHelper.getValue(namazName)){
+        if (SharedPrefsHelper.getValue(mContext,namazName)){
             reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
         }
 

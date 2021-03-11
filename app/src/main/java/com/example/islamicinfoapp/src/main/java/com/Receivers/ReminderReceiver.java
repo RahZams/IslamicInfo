@@ -2,23 +2,14 @@ package com.example.islamicinfoapp.src.main.java.com.Receivers;
 
 import android.app.ActivityManager;
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.renderscript.RenderScript;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.core.view.KeyEventDispatcher;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
@@ -66,8 +57,21 @@ public class ReminderReceiver extends BroadcastReceiver {
                 break;
         }
 
-        checkRunningApp(context);
+        if ((checkRunningApp(context)).equals(context.getResources().getString(R.string.package_name))){
+            createCustomDialog(context,mNamazName,mNamazTime,mCityName,mTitle,mDesc);
+        }
+        else{
+            createNotification(context,mTitle,mDesc);
+        }
+    }
 
+    private void createCustomDialog(Context context, String mNamazName,
+                                    String mNamazTime, String mCityName, String mTitle, String mDesc) {
+
+
+    }
+
+    private void createNotification(Context context, String mTitle, String mDesc) {
         mNotificationManagerCompat = NotificationManagerCompat.from(context);
         Intent startAppIntent = new Intent(context, MainActivity.class);
         startAppIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -87,16 +91,21 @@ public class ReminderReceiver extends BroadcastReceiver {
                 .build();
 
         mNotificationManagerCompat.notify(Constants.NOTIFICATION_ID,notification);
-
     }
 
-    private void checkRunningApp(Context context) {
+    private String checkRunningApp(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(1);
         Log.d("prayer", "checkRunningApp: " + tasks.get(0).baseActivity.getPackageName());
+        return tasks.get(0).baseActivity.getPackageName();
 
-        if (tasks.get(0).baseActivity.getPackageName().equals("com.example.islamicinfoapp")){
-            Log.d("prayer", "checkRunningApp: " + "your app");
-        }
+//        if (tasks.get(0).baseActivity.getPackageName().
+//                equals(context.getResources().getString(R.string.package_name))){
+//            Log.d("prayer", "checkRunningApp: " + "your app");
+//            createNotification()
+//        }
+//        else{
+//
+//        }
     }
 }

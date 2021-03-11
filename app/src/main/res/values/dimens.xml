@@ -19,4 +19,5 @@
     <dimen name="imageview_width_height">60dp</dimen>
     <dimen name="padding_switch_top_bottom">30dp</dimen>
     <dimen name="padding_top">5dp</dimen>
+    <dimen name="dialog_stroke_width">5dp</dimen>
 </resources>

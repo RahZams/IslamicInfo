@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,8 +19,6 @@ import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
-import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -50,8 +46,8 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     @Override
     public PrayerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("prayer", "onCreateViewHolder: ");
-                PrayertimeItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),R.layout.prayertime_item,
-                parent,false);
+                PrayertimeItemBinding binding = DataBindingUtil.inflate(LayoutInflater.
+                                from(parent.getContext()),R.layout.prayertime_item,parent,false);
         return new PrayerItemViewHolder(binding);
     }
 
@@ -216,7 +212,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
             SharedPrefsHelper.storeValue(mContext,namazName,true);
             setupReminder(namazName,
-                    "04:05 PM",pendingIntent);
+                    "12:30 AM",pendingIntent);
         }
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
@@ -262,12 +258,12 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);
         Log.d("prayer", "setupReminder: " + initTiming[1]);
-        if (initTiming[1] == "AM"){
-            cal.set(Calendar.AM_PM, Calendar.AM);
-        }
-        else if (initTiming[1] == "PM"){
-            cal.set(Calendar.AM_PM,Calendar.PM);
-        }
+//        if (initTiming[1] == "AM"){
+//            cal.set(Calendar.AM_PM,0);
+//        }
+//        else if (initTiming[1] == "PM"){
+//            cal.set(Calendar.AM_PM,1);
+//        }
 
         Log.d("prayer", "setupReminder: " + cal.get(Calendar.HOUR_OF_DAY) +
                 cal.get(Calendar.MINUTE) + cal.get(Calendar.AM_PM));

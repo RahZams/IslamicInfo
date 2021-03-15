@@ -1,30 +1,22 @@
 package com.example.islamicinfoapp.src.main.java.com.Receivers;
 
 import android.app.ActivityManager;
-import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+import com.example.islamicinfoapp.src.main.java.com.utilities.AlertDialogActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
 
 import java.util.List;
-
-import javax.xml.xpath.XPathFunctionResolver;
 
 public class ReminderReceiver extends BroadcastReceiver {
     private NotificationManagerCompat mNotificationManagerCompat;
@@ -78,26 +70,32 @@ public class ReminderReceiver extends BroadcastReceiver {
 
     private void createCustomDialog(Context context,
                                     String mNamazTime,String mTitle, String mDesc) {
-        Log.d("prayer", "createCustomDialog: " + mNamazTime + mTitle + mDesc);
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        final View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog,null,false);
-        TextView title = view.findViewById(R.id.dialog_title);
-        ImageView imageView = view.findViewById(R.id.dialog_image);
-        TextView time_text = view.findViewById(R.id.dialog_time_text);
-        TextView desc = view.findViewById(R.id.dialog_desc);
-        title.setText(mTitle);
-        imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_quran));
-        time_text.setText(mNamazTime);
-        desc.setText(mDesc);
-        builder.setView(view);
-        builder.setNeutralButton(context.getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+       Log.d("prayer", "createCustomDialog: " + mNamazTime + mTitle + mDesc);
+       Intent intent = new Intent(context, AlertDialogActivity.class);
+       intent.putExtra(context.getResources().getString(R.string.dialogTitle),mTitle);
+       intent.putExtra(context.getResources().getString(R.string.namazTime),mNamazTime);
+       intent.putExtra(context.getResources().getString(R.string.dialogdesc),mDesc);
+       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       context.startActivity(intent);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        final View view = LayoutInflater.from(context).inflate(R.layout.custom_dialog,null,false);
+//        TextView title = view.findViewById(R.id.dialog_title);
+//        ImageView imageView = view.findViewById(R.id.dialog_image);
+//        TextView time_text = view.findViewById(R.id.dialog_time_text);
+//        TextView desc = view.findViewById(R.id.dialog_desc);
+//        title.setText(mTitle);
+//        imageView.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_quran));
+//        time_text.setText(mNamazTime);
+//        desc.setText(mDesc);
+//        builder.setView(view);
+//        builder.setNeutralButton(context.getResources().getString(R.string.close), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
+//        AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
     }
 
     private void createNotification(Context context, String mTitle, String mDesc) {

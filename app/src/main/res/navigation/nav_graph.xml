@@ -212,6 +212,13 @@
             app:argType="string"
             />
     </fragment>
+<!--    <dialog-->
+<!--        android:id="@+id/notifDialogFragment"-->
+<!--        android:name="com.example.islamicinfoapp.src.main.java.com.view.NotifDialogFragment"-->
+<!--        android:label="fragment_notif_dialog"-->
+<!--        tools:layout="@layout/fragment_notif_dialog">-->
+<!--        <arguments/>-->
+<!--    </dialog>-->
 
     <!--    <navigation-->
 <!--        android:id="@+id/navigation"-->

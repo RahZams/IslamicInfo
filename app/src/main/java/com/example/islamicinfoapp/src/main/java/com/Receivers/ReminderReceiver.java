@@ -74,14 +74,14 @@ public class ReminderReceiver extends BroadcastReceiver {
     private void createCustomDialog(Context context,
                                     String mNamazTime,String mTitle, String mDesc) {
        Log.d("prayer", "createCustomDialog: " + mNamazTime + mTitle + mDesc);
-        NotifDialogFragment dialogFragment = new NotifDialogFragment();
-        dialogFragment.show((MainActivity)context.,"dialog");
-//       Intent intent = new Intent(context, AlertDialogActivity.class);
-//       intent.putExtra(context.getResources().getString(R.string.dialogTitle),mTitle);
-//       intent.putExtra(context.getResources().getString(R.string.namazTime),mNamazTime);
-//       intent.putExtra(context.getResources().getString(R.string.dialogdesc),mDesc);
-//       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//       context.startActivity(intent);
+//        NotifDialogFragment dialogFragment = new NotifDialogFragment();
+//        dialogFragment.show(context.getSupportFragmentManager(),"dialog");
+       Intent intent = new Intent(context, AlertDialogActivity.class);
+       intent.putExtra(context.getResources().getString(R.string.dialogTitle),mTitle);
+       intent.putExtra(context.getResources().getString(R.string.namazTime),mNamazTime);
+       intent.putExtra(context.getResources().getString(R.string.dialogdesc),mDesc);
+       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       context.startActivity(intent);
 
         //Navigation.findNavController((MainActivity)context,R.id.nav_host_fragment).navigate(R.id.notifDialogFragment);
 //        AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -17,10 +17,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".src.main.java.com.utilities.AlertDialogActivity"
+        <activity android:name=".src.main.java.com.view.DialogFragmentActivity"></activity>
+        <activity
+            android:name=".src.main.java.com.utilities.AlertDialogActivity"
             android:launchMode="singleInstance"
-            android:theme="@android:style/Theme.Translucent"></activity>
-        <activity android:name=".src.main.java.com.view.LocationActivity"/>
+            android:theme="@android:style/Theme.Translucent" />
+        <activity android:name=".src.main.java.com.view.LocationActivity" />
         <activity android:name=".src.main.java.com.view.MainActivity" />
         <activity android:name=".src.main.java.com.view.SplashActivity">
             <intent-filter>

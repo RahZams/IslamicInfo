@@ -10,14 +10,11 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
-import com.example.islamicinfoapp.src.main.java.com.utilities.AlertDialogActivity;
+import com.example.islamicinfoapp.src.main.java.com.view.DialogActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
-import com.example.islamicinfoapp.src.main.java.com.view.NotifDialogFragment;
 
 import java.util.List;
 
@@ -76,7 +73,7 @@ public class ReminderReceiver extends BroadcastReceiver {
        Log.d("prayer", "createCustomDialog: " + mNamazTime + mTitle + mDesc);
 //        NotifDialogFragment dialogFragment = new NotifDialogFragment();
 //        dialogFragment.show(context.getSupportFragmentManager(),"dialog");
-       Intent intent = new Intent(context, AlertDialogActivity.class);
+       Intent intent = new Intent(context, DialogActivity.class);
        intent.putExtra(context.getResources().getString(R.string.dialogTitle),mTitle);
        intent.putExtra(context.getResources().getString(R.string.namazTime),mNamazTime);
        intent.putExtra(context.getResources().getString(R.string.dialogdesc),mDesc);

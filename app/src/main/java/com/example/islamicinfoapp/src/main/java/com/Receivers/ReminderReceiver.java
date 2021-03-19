@@ -77,7 +77,7 @@ public class ReminderReceiver extends BroadcastReceiver {
        intent.putExtra(context.getResources().getString(R.string.dialogTitle),mTitle);
        intent.putExtra(context.getResources().getString(R.string.namazTime),mNamazTime);
        intent.putExtra(context.getResources().getString(R.string.dialogdesc),mDesc);
-       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+       intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
        context.startActivity(intent);
 
         //Navigation.findNavController((MainActivity)context,R.id.nav_host_fragment).navigate(R.id.notifDialogFragment);

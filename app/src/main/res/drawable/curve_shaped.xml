@@ -4,8 +4,13 @@
     <solid android:color="@color/white"/>
     <stroke android:color="@color/black"
         android:width="@dimen/dialog_stroke_width"/>
-    <corners android:bottomLeftRadius="@dimen/text_size"
-        android:bottomRightRadius="@dimen/text_size"
-        android:topLeftRadius="@dimen/text_size"
-        android:topRightRadius="@dimen/text_size"/>
+<!--    <corners android:bottomLeftRadius="@dimen/text_size"-->
+<!--        android:bottomRightRadius="@dimen/text_size"-->
+<!--        android:topLeftRadius="@dimen/text_size"-->
+<!--        android:topRightRadius="@dimen/text_size"/>-->
+    <corners android:radius="@dimen/text_size"/>
+    <padding android:top="@dimen/padding_top_bottom"
+        android:bottom="@dimen/padding_top_bottom"
+        android:right="@dimen/padding_top_bottom"
+        android:left="@dimen/padding_top_bottom"/>
 </shape>

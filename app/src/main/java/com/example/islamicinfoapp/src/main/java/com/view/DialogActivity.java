@@ -3,11 +3,13 @@ package com.example.islamicinfoapp.src.main.java.com.view;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.islamicinfoapp.R;
+import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 
 public class DialogActivity extends AppCompatActivity {
     TextView mDialogTitle,mDialogTimeText,mDialogDesc;
@@ -25,9 +28,31 @@ public class DialogActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //setContentView(R.layout.activity_dialog);
+        //getWindow().getDecorView().setBackgroundColor(Color.MAGENTA);
         showAlertDialog();
+        //displayAlertDialog();
+    }
+
+    private void displayAlertDialog(){
+        //before inflating the custom alert dialog layout, we will get the current activity viewgroup
+        ViewGroup viewGroup = findViewById(android.R.id.content);
+
+        //then we will inflate the custom alert dialog xml that we created
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.custom_dialog, viewGroup, false);
+
+
+        //Now we need an AlertDialog.Builder object
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //setting the view of the builder to our custom view that we already inflated
+        builder.setView(dialogView);
+
+        //finally creating the alert dialog and displaying it
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void showAlertDialog() {
@@ -57,9 +82,8 @@ public class DialogActivity extends AppCompatActivity {
             }
         });
         alertDialog = builder.create();
-        alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.curve_shaped));
         alertDialog.show();
+        alertDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.drawable.curve_shaped));
+        alertDialog.getWindow().setGravity(Gravity.BOTTOM);
     }
-
-
 }

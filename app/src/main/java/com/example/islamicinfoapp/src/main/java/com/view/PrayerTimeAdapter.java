@@ -212,7 +212,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
             SharedPrefsHelper.storeValue(mContext,namazName,true);
             setupReminder(namazName,
-                    "5:40 PM",pendingIntent);
+                    "5:15 PM",pendingIntent);
         }
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
@@ -258,15 +258,17 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);
         Log.d("prayer", "setupReminder: " + initTiming[1]);
-//        if (initTiming[1] == "AM"){
-//            cal.set(Calendar.AM_PM,0);
-//        }
-//        else if (initTiming[1] == "PM"){
-//            cal.set(Calendar.AM_PM,1);
-//        }
+        if (initTiming[1].equals("AM")){
+            Log.d("prayer", "setupReminder: " + " if AM");
+            cal.set(Calendar.AM_PM,Calendar.AM);
+        }
+        else if (initTiming[1].equals("PM")){
+            Log.d("prayer", "setupReminder: " + "if PM");
+            cal.set(Calendar.AM_PM,Calendar.PM);
+        }
 
-        Log.d("prayer", "setupReminder: " + cal.get(Calendar.HOUR_OF_DAY) +
-                cal.get(Calendar.MINUTE) + cal.get(Calendar.AM_PM));
+        Log.d("prayer", "setupReminder: " + "hour:" + cal.get(Calendar.HOUR_OF_DAY) +
+                "minute:"+ cal.get(Calendar.MINUTE) + "am/pm:" + cal.get(Calendar.AM_PM));
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);

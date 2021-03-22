@@ -87,10 +87,10 @@
     <string name="maghrib_title_notif">Maghrib time in </string>
     <string name="isha_title_notif">Isha time in </string>
     <string name="fajr_desc">Let your first conversation be with Allah</string>
-    <string name="sunrise_desc">Perform two Rakah Salatul Ishraq to earn good rewards from Allah</string>
-    <string name="dhuhr_desc">Pray for blessed wealth</string>
-    <string name="asr_desc">Earn ticket to Jannah by offering asr prayer</string>
-    <string name="maghrib_desc">Time is short.Pray soon.Pray to have successful children</string>
+    <string name="sunrise_desc">Offer two rakah Salatul Ishraq to earn good rewards from Allah</string>
+    <string name="dhuhr_desc">Offer zuhr namaz for blessed wealth</string>
+    <string name="asr_desc">Offer Asr prayer and earn ticket to Jannah</string>
+    <string name="maghrib_desc">Time is short.Pray soon.Offer maghrib namaz to have successful children</string>
     <string name="isha_desc">Take this oppurtunity to thank Allah for all your blessings and to ask for forgiveness</string>
     <string name="namazName">namazName</string>
     <string name="namazTime">namazTime</string>

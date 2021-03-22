@@ -11,13 +11,15 @@
         android:layout_marginTop="@dimen/padding_top_bottom"
         android:text="@string/fajr_title_notif"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textSize="30dp"
+        android:textSize="@dimen/padding_switch_top_bottom"
+        android:textStyle="bold"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:layout_marginTop="@dimen/padding_top_bottom"
         android:id="@+id/dialog_image"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,27 +30,28 @@
         app:layout_constraintTop_toBottomOf="@+id/dialog_title" />
 
     <TextView
+        android:layout_marginTop="@dimen/padding_top_bottom"
         android:id="@+id/dialog_time_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/prayer_time"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textSize="25dp"
+        android:textSize="@dimen/text_size"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_image" />
 
     <TextView
+        android:layout_marginTop="@dimen/padding_top_bottom"
         android:id="@+id/dialog_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/isha_desc"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textSize="@dimen/padding_left_right"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_time_text" />
@@ -59,10 +62,11 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:text="@string/close"
+        android:layout_marginTop="@dimen/padding_help_top_bottom"
         android:textAlignment="center"
         android:textColor="@color/colorAccent"
         android:textStyle="bold"
-        android:textSize="25dp"
+        android:textSize="@dimen/padding_left_right"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_desc" />

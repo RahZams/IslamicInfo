@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ReminderReceiver extends BroadcastReceiver {
     private NotificationManagerCompat mNotificationManagerCompat;
-    String mNamazName,mNamazTime,mTitle,mDesc,mCityName;
+    String mNamazName,mNamazTime,mTitle,mDesc,mCityName,mDialogTitle;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -32,26 +32,32 @@ public class ReminderReceiver extends BroadcastReceiver {
         switch(mNamazName){
             case Constants.FAJR:
                 mTitle = context.getResources().getString(R.string.fajr_title_notif) + " " + mCityName + " " + mNamazTime;
+                mDialogTitle = context.getResources().getString(R.string.fajr_title_notif) + " " + mCityName;
                 mDesc = context.getResources().getString(R.string.fajr_desc);
                 break;
             case Constants.SUNRISE:
                 mTitle = context.getResources().getString(R.string.sunrise_title_notif) + " " + mCityName + " " + mNamazTime;
+                mDialogTitle = context.getResources().getString(R.string.sunrise_title_notif) + " " + mCityName;
                 mDesc = context.getResources().getString(R.string.sunrise_desc);
                 break;
             case Constants.DHUHR:
                 mTitle = context.getResources().getString(R.string.dhuhr_title_notif) + " " + mCityName + " " + mNamazTime;
+                mDialogTitle = context.getResources().getString(R.string.dhuhr_title_notif) + " " + mCityName;
                 mDesc = context.getResources().getString(R.string.dhuhr_desc);
                 break;
             case Constants.ASR:
                 mTitle = context.getResources().getString(R.string.asr_title_notif) + " " + mCityName + " " + mNamazTime;
+                mDialogTitle = context.getResources().getString(R.string.asr_title_notif) + " " + mCityName;
                 mDesc = context.getResources().getString(R.string.asr_desc);
                 break;
             case Constants.MAGHRIB:
                 mTitle = context.getResources().getString(R.string.maghrib_title_notif) + " " + mCityName + " " + mNamazTime;
+                mDialogTitle = context.getResources().getString(R.string.maghrib_title_notif) + " " + mCityName;
                 mDesc = context.getResources().getString(R.string.maghrib_desc);
                 break;
             case Constants.ISHA:
                 mTitle = context.getResources().getString(R.string.isha_title_notif) + " " + mCityName + " " + mNamazTime;
+                mDialogTitle = context.getResources().getString(R.string.isha_title_notif) + " " + mCityName;
                 mDesc = context.getResources().getString(R.string.isha_desc);
                 break;
             default:
@@ -60,7 +66,7 @@ public class ReminderReceiver extends BroadcastReceiver {
 
         if ((checkRunningApp(context)).equals(context.getResources().getString(R.string.package_name))){
             Log.d("prayer", "onReceive: " + "if");
-            createCustomDialog(context,mNamazTime,mTitle,mDesc);
+            createCustomDialog(context,mNamazTime,mDialogTitle,mDesc);
         }
         else{
             Log.d("prayer", "onReceive: " + "else");
@@ -73,6 +79,7 @@ public class ReminderReceiver extends BroadcastReceiver {
        Log.d("prayer", "createCustomDialog: " + mNamazTime + mTitle + mDesc);
 //        NotifDialogFragment dialogFragment = new NotifDialogFragment();
 //        dialogFragment.show(context.getSupportFragmentManager(),"dialog");
+
        Intent intent = new Intent(context, DialogActivity.class);
        intent.putExtra(context.getResources().getString(R.string.dialogTitle),mTitle);
        intent.putExtra(context.getResources().getString(R.string.namazTime),mNamazTime);

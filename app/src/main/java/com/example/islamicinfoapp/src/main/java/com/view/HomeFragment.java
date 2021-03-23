@@ -4,11 +4,18 @@ package com.example.islamicinfoapp.src.main.java.com.view;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,11 +57,14 @@ public class HomeFragment extends Fragment{
 //
 //    @BindView(R.id.date_text)
 //    TextView mDateView;
+        Toolbar toolbar;
 
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private ArrayList<PrayerTimingItem> mPrayerTimeList = new ArrayList<>();
     private PrayerTimeAdapter adapter;
     private String mCityname,mCountryname;
+    private AppBarConfiguration mAppBarConfig;
+    private NavController mNavController;
 
 
     public HomeFragment() {
@@ -85,7 +95,7 @@ public class HomeFragment extends Fragment{
         //binding.cityName.setText(mCityname + "," +
         binding.cityName.setText(mCityname);
         //binding.dateText.setText(Utility.getCurrentDate());
-//        mCityCountryName.setText(mCityname + "," + mCountryname);
+//   m     mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());
         adapter = new PrayerTimeAdapter(getContext(),mPrayerTimeList);
         observeViewModel(mCityname,mCountryname,binding);
@@ -94,6 +104,18 @@ public class HomeFragment extends Fragment{
         return view;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.d("prayer", "onViewCreated: ");
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,R.id.zikrFragment,
+        R.id.quranFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+        mNavController = NavHostFragment.findNavController(this);
+        NavigationUI.setupWithNavController(toolbar,mNavController,mAppBarConfig);
+
+    }
 
     //    private void observeViewModel() {
 //        Log.d("prayer", "observeViewModel: " +

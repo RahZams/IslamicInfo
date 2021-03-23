@@ -3,10 +3,15 @@ package com.example.islamicinfoapp.src.main.java.com.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
@@ -31,9 +36,13 @@ public class MoreFragment extends Fragment {
     @BindView(R.id.gridview)
     GridView gridView;
 
+   Toolbar toolbar;
+
     int more_images[] = {R.drawable.ic_calendar,R.drawable.ic_settings,R.drawable.ic_help};
     ArrayList<MoreItem> more_item_list;
     String[] more_item_name;
+    private AppBarConfiguration mAppBarConfig;
+    private NavController mNavController;
 
     public MoreFragment() {
         // Required empty public constructor
@@ -73,6 +82,18 @@ public class MoreFragment extends Fragment {
             }
         });
         return view;
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        toolbar = getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,R.id.zikrFragment,
+                R.id.quranFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+        mNavController = NavHostFragment.findNavController(this);
+        NavigationUI.setupWithNavController(toolbar,mNavController,mAppBarConfig);
 
     }
 

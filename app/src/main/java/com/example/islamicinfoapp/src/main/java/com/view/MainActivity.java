@@ -24,24 +24,25 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
 
-    private NavController navController;
-    private AppBarConfiguration appBarConfig;
+   private NavController navController;
+//    private AppBarConfiguration appBarConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         navController = Navigation.findNavController(this,R.id.nav_host_fragment);
-        appBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,
-                R.id.quranFragment,R.id.zikrFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+//      appBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,
+//               R.id.quranFragment,R.id.zikrFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
-        NavigationUI.setupActionBarWithNavController(this,navController,appBarConfig);
+        //NavigationUI.setupWithNavController(toolbar,navController,appBarConfig);
+        //NavigationUI.setupActionBarWithNavController(this,navController,appBarConfig);
 
 
 
@@ -51,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
             || (destination.getId() == R.id.zikrFragment) || (destination.getId() == R.id.pregInfoFragment)
             || (destination.getId() == R.id.moreFragment)){
                 bottomNavigationView.setVisibility(View.VISIBLE);
+//                appBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,
+//                        R.id.quranFragment,R.id.zikrFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+//                NavigationUI.setupWithNavController(toolbar,navController,appBarConfig);
 //                toolbar.setNavigationIcon(null);
 //                navController.popBackStack(destination.getId(),false);
 //                if (getSupportActionBar()!= null) {
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 bottomNavigationView.setVisibility(View.GONE);
+                //NavigationUI.setupWithNavController(toolbar,navController);
 //                if (getSupportActionBar()!= null) {
 ////                getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 ////                getSupportActionBar().setHomeButtonEnabled(true);
@@ -84,10 +89,9 @@ public class MainActivity extends AppCompatActivity {
 //            actionBar.setDisplayHomeAsUpEnabled(false);
 //            actionBar.setDisplayShowHomeEnabled(false);
 //        }
+        return Navigation.findNavController(this,R.id.nav_host_fragment).navigateUp();
 
-        //return Navigation.findNavController(this,R.id.nav_host_fragment).navigateUp();
-
-        return NavigationUI.navigateUp(navController,appBarConfig);
+        //return NavigationUI.navigateUp(navController,appBarConfig);
     }
 
     @Override

@@ -212,7 +212,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
             SharedPrefsHelper.storeValue(mContext,namazName,true);
             setupReminder(namazName,
-                    "5:15 PM",pendingIntent);
+                    "11:12 PM",pendingIntent);
         }
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){

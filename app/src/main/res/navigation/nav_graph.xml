@@ -18,11 +18,11 @@
         <action
             android:id="@+id/action_zikrFragment_to_surahItemFragment"
             app:destination="@id/surahItemFragment"
-            app:popUpTo="@id/homeFragment"/>
+            app:popUpTo="@id/zikrFragment"/>
         <action
             android:id="@+id/action_zikrFragment_to_zikrItemFragment"
             app:destination="@id/zikrItemFragment"
-            app:popUpTo="@id/homeFragment"/>
+            app:popUpTo="@id/zikrFragment"/>
         <action
             android:id="@+id/action_zikrFragment_to_zikrDuaFragment"
             app:destination="@id/zikrDuaFragment"

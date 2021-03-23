@@ -3,11 +3,17 @@ package com.example.islamicinfoapp.src.main.java.com.view;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +49,8 @@ public class ZikrFragment extends Fragment {
     private String mSurahName;
     private DuasViewModel mDuasViewModel;
     private NavController mNavController;
+    private AppBarConfiguration mAppBarConfig;
+    private Toolbar mToolbar;
 
     public ZikrFragment() {
         // Required empty public constructor
@@ -130,6 +138,18 @@ public class ZikrFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mToolbar = getActivity().findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,R.id.zikrFragment,
+                R.id.quranFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+        mNavController = NavHostFragment.findNavController(this);
+        NavigationUI.setupWithNavController(mToolbar,mNavController,mAppBarConfig);
+
     }
 
     private void sendStringArgsToItemFrag(String title, String text) {

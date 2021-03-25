@@ -140,7 +140,7 @@ public class HomeFragment extends Fragment{
                 if (prayerTiming != null && !prayerTiming.equals("")){
                     Log.d("prayer", "observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
                     binding.dateText.setText(prayerTiming.getPrayerTimeEngDate());
-                    adapter.updateList(mCityname,createArrayListOfPrayerTiming(prayerTiming));
+                    adapter.updateList(mCityname,mCountryname,createArrayListOfPrayerTiming(prayerTiming));
                 }
             }
         });

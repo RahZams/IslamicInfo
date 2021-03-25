@@ -19,6 +19,8 @@ import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
+import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -26,7 +28,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     private ArrayList<PrayerTimingItem> mPrayerTimeList;
     private Context mContext;
-    private String mCityName;
+    private String mCityName,mCountryName;
 
     public PrayerTimeAdapter(Context context, ArrayList<PrayerTimingItem> mPrayerTimeList) {
         Log.d("prayer", "PrayerTimeAdapter: " + mPrayerTimeList.size());
@@ -35,8 +37,9 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     }
 
-    public void updateList(String cityname, ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
+    public void updateList(String cityname, String countryname,ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
         mCityName = cityname;
+        mCountryName = countryname;
         this.mPrayerTimeList = arrayListOfPrayerTiming;
         Log.d("prayer", "updateList: " + mPrayerTimeList.size() + mCityName);
         notifyDataSetChanged();
@@ -66,6 +69,9 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                 setReminders(holder.binding.namazName.getText().toString(),
                         holder.binding.namazTiming.getText().toString(),holder.binding.reminderImage);
                 Log.d("prayer", "onClick: " + holder.binding.reminderImage.getDrawable() + mCityName);
+
+                // removed from here and placed it in setReminders method
+
 //                Intent intent = new Intent(mContext, ReminderReceiver.class);
 //                PendingIntent pendingIntent = null;
 //                switch(holder.binding.namazName.getText().toString()){
@@ -149,60 +155,64 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     private void setReminders(String namazName, String namazTiming, ImageView reminderImage) {
         Log.d("prayer", "setReminders: " + namazName + namazTiming);
-        Intent intent = new Intent(mContext, ReminderReceiver.class);
-        PendingIntent pendingIntent = null;
-        switch(namazName){
-            case Constants.FAJR:
-                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                        namazName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                        namazTiming);
-                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
-                break;
-            case Constants.SUNRISE:
-                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                        namazName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                        namazTiming);
-                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
-                break;
-            case Constants.DHUHR:
-                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                        namazName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                        namazTiming);
-                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
-                break;
-            case Constants.ASR:
-                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                        namazName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                        namazTiming);
-                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
-                break;
-            case Constants.MAGHRIB:
-                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                        namazName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                        namazTiming);
-                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
-                break;
-            case Constants.ISHA:
-                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazName),
-                        namazName);
-                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
-                        namazTiming);
-                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
-                break;
-            default:
-                break;
-        }
+        PendingIntent pendingIntent = Utility.createPendingIntent(mContext,namazName,namazTiming,mCityName,mCountryName);
+
+        // placed it in utility class method
+
+//        Intent intent = new Intent(mContext, ReminderReceiver.class);
+//        PendingIntent pendingIntent = null;
+//        switch(namazName){
+//            case Constants.FAJR:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+//                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
+//                break;
+//            case Constants.SUNRISE:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+//                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
+//                break;
+//            case Constants.DHUHR:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+//                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
+//                break;
+//            case Constants.ASR:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+//                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
+//                break;
+//            case Constants.MAGHRIB:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+//                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
+//                break;
+//            case Constants.ISHA:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+//                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
+//                break;
+//            default:
+//                break;
+//        }
         if (reminderImage.getDrawable().getConstantState().
                 equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
             Log.d("prayer", "onClick:if ");
@@ -211,8 +221,8 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
             SharedPrefsHelper.storeValue(mContext,namazName,true);
-            setupReminder(namazName,
-                    "11:12 PM",pendingIntent);
+            Utility.setupReminder(mContext,
+                    "6:30 PM",pendingIntent);
         }
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
@@ -220,7 +230,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
             SharedPrefsHelper.storeValue(mContext,namazName,false);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
-            cancelReminder(pendingIntent);
+            Utility.cancelReminder(mContext,pendingIntent);
         }
         else{
             Log.d("prayer", "onClick:else ");
@@ -237,49 +247,53 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     }
 
-    private void cancelReminder(PendingIntent pendingIntent) {
-        Log.d("prayer", "cancelReminder: ");
-        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
-    }
+    // placed it in utility class methods
 
-    private void setupReminder(String namazName, String namazTiming, PendingIntent pendingIntent) {
-        Log.d("prayer", "setupReminder: " + "time" + namazTiming);
-        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        //namazTiming = Utility.changeDateFormat(namazTiming);
-        Log.d("prayer", "setupReminder: " + namazTiming);
-        String[] initTiming = namazTiming.split(" ");
-        String[] timing = initTiming[0].split(":");
-        Log.d("prayer", "setupReminder: length" + timing.length + timing[0] + timing[1]);
+//    private void cancelReminder(PendingIntent pendingIntent) {
+//        Log.d("prayer", "cancelReminder: ");
+//        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.cancel(pendingIntent);
+//    }
 
-        Calendar cal = Calendar.getInstance();
-//        cal.setTimeInMillis(System.currentTimeMillis());
-        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timing[0]));
-        cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
-        cal.set(Calendar.SECOND,0);
-        Log.d("prayer", "setupReminder: " + initTiming[1]);
-        if (initTiming[1].equals("AM")){
-            Log.d("prayer", "setupReminder: " + " if AM");
-            cal.set(Calendar.AM_PM,Calendar.AM);
-        }
-        else if (initTiming[1].equals("PM")){
-            Log.d("prayer", "setupReminder: " + "if PM");
-            cal.set(Calendar.AM_PM,Calendar.PM);
-        }
+    // placed it in utility class methods
 
-        Log.d("prayer", "setupReminder: " + "hour:" + cal.get(Calendar.HOUR_OF_DAY) +
-                "minute:"+ cal.get(Calendar.MINUTE) + "am/pm:" + cal.get(Calendar.AM_PM));
-        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
-        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-        }
-        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
-        }
-        else{
-            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
-        }
-    }
+//    private void setupReminder(String namazName, String namazTiming, PendingIntent pendingIntent) {
+//        Log.d("prayer", "setupReminder: " + "time" + namazTiming);
+//        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+//        //namazTiming = Utility.changeDateFormat(namazTiming);
+//        Log.d("prayer", "setupReminder: " + namazTiming);
+//        String[] initTiming = namazTiming.split(" ");
+//        String[] timing = initTiming[0].split(":");
+//        Log.d("prayer", "setupReminder: length" + timing.length + timing[0] + timing[1]);
+//
+//        Calendar cal = Calendar.getInstance();
+////        cal.setTimeInMillis(System.currentTimeMillis());
+//        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timing[0]));
+//        cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
+//        cal.set(Calendar.SECOND,0);
+//        Log.d("prayer", "setupReminder: " + initTiming[1]);
+//        if (initTiming[1].equals("AM")){
+//            Log.d("prayer", "setupReminder: " + " if AM");
+//            cal.set(Calendar.AM_PM,Calendar.AM);
+//        }
+//        else if (initTiming[1].equals("PM")){
+//            Log.d("prayer", "setupReminder: " + "if PM");
+//            cal.set(Calendar.AM_PM,Calendar.PM);
+//        }
+//
+//        Log.d("prayer", "setupReminder: " + "hour:" + cal.get(Calendar.HOUR_OF_DAY) +
+//                "minute:"+ cal.get(Calendar.MINUTE) + "am/pm:" + cal.get(Calendar.AM_PM));
+//        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
+//        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+//            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+//        }
+//        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+//            alarmManager.setExact(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+//        }
+//        else{
+//            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+//        }
+//    }
 
 
     @Override

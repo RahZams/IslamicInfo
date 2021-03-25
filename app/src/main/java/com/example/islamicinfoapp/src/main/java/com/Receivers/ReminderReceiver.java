@@ -12,6 +12,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.Services.ReminderService;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.view.DialogActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class ReminderReceiver extends BroadcastReceiver {
     private NotificationManagerCompat mNotificationManagerCompat;
-    String mNamazName,mNamazTime,mTitle,mDesc,mCityName,mDialogTitle;
+    String mNamazName,mNamazTime,mTitle,mDesc,mCityName,mDialogTitle,mCountryName;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -28,6 +29,12 @@ public class ReminderReceiver extends BroadcastReceiver {
         mNamazName = intent.getStringExtra(context.getResources().getString(R.string.namazName));
         mNamazTime = intent.getStringExtra(context.getResources().getString(R.string.namazTime));
         mCityName = intent.getStringExtra(context.getResources().getString(R.string.cityname));
+        mCountryName = intent.getStringExtra(context.getResources().getString(R.string.countryname));
+        Intent serviceIntent = new Intent(context, ReminderService.class);
+        serviceIntent.putExtra(context.getResources().getString(R.string.cityname),mCityName);
+        serviceIntent.putExtra(context.getResources().getString(R.string.countryname),mCountryName);
+        serviceIntent.putExtra(context.getResources().getString(R.string.namazName),mNamazName);
+        context.startService(serviceIntent);
         Log.d("prayer", "onReceive: " + mCityName);
         switch(mNamazName){
             case Constants.FAJR:

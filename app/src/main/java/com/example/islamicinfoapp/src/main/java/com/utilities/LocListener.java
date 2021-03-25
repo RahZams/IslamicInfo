@@ -78,6 +78,8 @@ public class LocListener implements LocationListener {
 //            + "getSubLocality" + addresses.get(0).getSubLocality());
                 cityName = addresses.get(0).getLocality();
                 countryName = addresses.get(0).getCountryName();
+                //getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(Utility.convertStringToDate("03/03/2021")));
+                //getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(Utility.convertStringToDate("30/03/2021")));
                 checkIfDataAvailableInDatabase(cityName,countryName);
                 callMainActivityCallback.callMainAcitivity(cityName,countryName);
              //   getPrayerTimesDataFromApi(cityName, countryName);
@@ -104,7 +106,7 @@ public class LocListener implements LocationListener {
 
     private void getPrayerTimesDataFromApi(String cityName, String countryName,String formattedDate) {
         //String formattedDate = mUtility.getCurrentDate();
-        Log.d("prayer", "getPrayerTimesDataFromApi: " + cityName + countryName);
+        Log.d("prayer", "getPrayerTimesDataFromApi: " + cityName + countryName + formattedDate);
         //boolean exists = mPrayerTimeVewModel.checkIfExists(cityName,countryName,formattedDate);
         //Log.d("date", "getPrayerTimesDataFromApi: " + exists);
         mPrayerTimeViewModel.fetchFromRemote(cityName,countryName,formattedDate);

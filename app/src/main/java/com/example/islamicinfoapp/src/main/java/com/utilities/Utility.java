@@ -1,13 +1,18 @@
 package com.example.islamicinfoapp.src.main.java.com.utilities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 
 import java.text.ParseException;
@@ -32,14 +37,26 @@ public class Utility {
     }
 
     public static String getDateForApi(Date date){
-        SimpleDateFormat sf = new SimpleDateFormat("dd-mm-yyyy",Locale.getDefault());
+        SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
+        Log.d("prayer", "getDateForApi: " + sf.format(date));
         return sf.format(date);
     }
 
-    public static Date getTomorrowDate(){
+    public static String getTomorrowDate(){
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE,1);
-        return c.getTime();
+        return getDateForApi(c.getTime());
+    }
+
+    public static Date convertStringToDate(String dateValue){
+        Date convertedDate = null;
+        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
+        try {
+            convertedDate = sf.parse(dateValue);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return convertedDate;
     }
 
     public boolean checkForNetworkAvailibility(Context context) {
@@ -61,7 +78,6 @@ public class Utility {
 
     public boolean checkForLocationConnection(Context context) {
         LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-
         if(!(lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) && !(lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER))){
             return false;
         }
@@ -101,5 +117,113 @@ public class Utility {
 //            finalTime = time.format(formatter);
 //        }
         return finalTime;
+    }
+
+    public static PendingIntent createPendingIntent(Context mContext, String namazName, String namazTiming, String mCityName,String mCountryName){
+        Intent intent = new Intent(mContext, ReminderReceiver.class);
+        intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+        intent.putExtra(mContext.getResources().getString(R.string.countryname),mCountryName);
+        intent.putExtra(mContext.getResources().getString(R.string.namazName),
+                namazName);
+        intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+                namazTiming);
+        PendingIntent pendingIntent = null;
+        switch(namazName){
+            case Constants.FAJR:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
+                break;
+            case Constants.SUNRISE:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
+                break;
+            case Constants.DHUHR:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
+                break;
+            case Constants.ASR:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
+                break;
+            case Constants.MAGHRIB:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
+                break;
+            case Constants.ISHA:
+//                intent.putExtra(mContext.getResources().getString(R.string.cityname),mCityName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazName),
+//                        namazName);
+//                intent.putExtra(mContext.getResources().getString(R.string.namazTime),
+//                        namazTiming);
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
+                break;
+            default:
+                break;
+        }
+        return pendingIntent;
+    }
+
+    public static void setupReminder(Context mContext,String namazTiming, PendingIntent pendingIntent) {
+        Log.d("prayer", "setupReminder: " + "time" + namazTiming);
+        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        //namazTiming = Utility.changeDateFormat(namazTiming);
+        Log.d("prayer", "setupReminder: " + namazTiming);
+        String[] initTiming = namazTiming.split(" ");
+        String[] timing = initTiming[0].split(":");
+        Log.d("prayer", "setupReminder: length" + timing.length + timing[0] + timing[1]);
+
+        Calendar cal = Calendar.getInstance();
+//        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timing[0]));
+        cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
+        cal.set(Calendar.SECOND,0);
+        Log.d("prayer", "setupReminder: " + initTiming[1]);
+        if (initTiming[1].equals("AM")){
+            Log.d("prayer", "setupReminder: " + " if AM");
+            cal.set(Calendar.AM_PM,Calendar.AM);
+        }
+        else if (initTiming[1].equals("PM")){
+            Log.d("prayer", "setupReminder: " + "if PM");
+            cal.set(Calendar.AM_PM,Calendar.PM);
+        }
+
+        Log.d("prayer", "setupReminder: " + "hour:" + cal.get(Calendar.HOUR_OF_DAY) +
+                "minute:"+ cal.get(Calendar.MINUTE) + "am/pm:" + cal.get(Calendar.AM_PM));
+        //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
+        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+        }
+        else{
+            alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
+        }
+    }
+
+    public static void cancelReminder(Context mContext,PendingIntent pendingIntent) {
+        Log.d("prayer", "cancelReminder: ");
+        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 }

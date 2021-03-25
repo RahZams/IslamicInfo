@@ -90,6 +90,21 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
 //        paint.getTextBounds(spanString, 0, spanString.length(), bounds);
 //        final int numlines = (int) Math.ceil(bounds.width())/100;
         holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
+        holder.itemView.ayahText.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int linecount = holder.itemView.ayahText.getLineCount();
+                Log.d("surah", "onPreDraw: " + linecount);
+                spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
+                                linecount),spanString.length()-2,
+                        spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                holder.itemView.ayahText.setText("");
+                holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
+                holder.itemView.ayahText.setVisibility(View.VISIBLE);
+                return true;
+            }
+        });
+        Log.d("surah", "onBindViewHolder: " + "line count:" + holder.itemView.ayahText.getLineCount());
 //        Rect bounds = new Rect();
 //        Paint textPaint = holder.itemView.ayahText.getPaint();
 //        textPaint.getTextBounds(spanString,0,spanString.length(),bounds);
@@ -118,12 +133,12 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
 //        }
 
         //holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
-        spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
-                        holder.itemView.ayahText.getLineCount()),spanString.length()-2,
-                spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        holder.itemView.ayahText.setText("");
-        holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
-        holder.itemView.ayahText.setVisibility(View.VISIBLE);
+//        spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
+//                        holder.itemView.ayahText.getLineCount()),spanString.length()-2,
+//                spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+//        holder.itemView.ayahText.setText("");
+//        holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
+//        holder.itemView.ayahText.setVisibility(View.VISIBLE);
         //holder.itemView.setSurahitem(mSurahDataAyahs.get(position));
     }
 
@@ -189,13 +204,13 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
                 mCircle.setBounds((int) x, top + 20, (int) x + mCircle.getIntrinsicWidth(),
                        top + 20 + mCircle.getIntrinsicHeight());
             else if(mLineCount == 1)
-                mCircle.setBounds((int) x, top + 85, (int) x + mCircle.getIntrinsicWidth(),
-                        top + 85 + mCircle.getIntrinsicHeight());
+                mCircle.setBounds((int) x, top + 70, (int) x + mCircle.getIntrinsicWidth(),
+                        top + 70 + mCircle.getIntrinsicHeight());
             mCircle.draw(canvas);
             paint.setColor(mContext.getResources().getColor(R.color.colorAccent));
             paint.setStyle(Paint.Style.FILL_AND_STROKE);
             paint.setTextAlign(Paint.Align.CENTER);
-            paint.setTextSize(55);
+            paint.setTextSize(45);
             paint.getTextBounds(text.toString(), 0, text.subSequence(start, end).length(), bounds);
             canvas.drawText(text, start, end, x + mCircle.getIntrinsicWidth()/2f ,
                     y + 2f, paint);

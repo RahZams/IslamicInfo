@@ -3,6 +3,7 @@ package com.example.islamicinfoapp.src.main.java.com.model;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface QuranApi {
@@ -164,5 +165,9 @@ public interface QuranApi {
     Observable<PrayerTiming> getPrayerTiming(@Query("city") String city,
                                           @Query("country") String country,@Query("method") int method,
                                              @Query("date_or_timestamp") String date);
+
+    @GET("timingsByCity/{dateValue}")
+    Observable<PrayerTiming> getPrayerTimings(@Path("dateValue") String dateParam,@Query("city") String city,
+                                              @Query("country") String country,@Query("method") int method);
 
 }

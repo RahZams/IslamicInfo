@@ -90,20 +90,20 @@ public class LocListener implements LocationListener {
     }
 
     private void checkIfDataAvailableInDatabase(String cityName, String countryName) {
-        QuranDatabase.getInstance(mContext).quranDao().getRecordCount(cityName,countryName,Utility.getCurrentDate())
+        QuranDatabase.getInstance(mContext).quranDao().getRecordCount(cityName,countryName,Utility.getDateForDb(new Date()))
                 .observe((LifecycleOwner) mContext, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         Log.d("prayer", "onChanged: " + " integer "+ integer);
                         if (integer == 0){
-                            getPrayerTimesDataFromApi(cityName,countryName);
+                            getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(new Date()));
                         }
                     }
                 });
     }
 
-    private void getPrayerTimesDataFromApi(String cityName, String countryName) {
-        String formattedDate = mUtility.getCurrentDate();
+    private void getPrayerTimesDataFromApi(String cityName, String countryName,String formattedDate) {
+        //String formattedDate = mUtility.getCurrentDate();
         Log.d("prayer", "getPrayerTimesDataFromApi: " + cityName + countryName);
         //boolean exists = mPrayerTimeVewModel.checkIfExists(cityName,countryName,formattedDate);
         //Log.d("date", "getPrayerTimesDataFromApi: " + exists);

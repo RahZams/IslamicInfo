@@ -161,28 +161,28 @@ public class HomeFragment extends Fragment{
                 case 0:
                     imgId = R.drawable.fajr;
                     name = getResources().getString(R.string.fajr);
-                    time = Utility.changeDateFormat(prayerTiming.getFajr());
+                    time = Utility.changeTimeFormat(prayerTiming.getFajr());
                     reminderSet = false;
                     break;
 
                 case 1:
                     imgId = R.drawable.sunrise;
                     name = getResources().getString(R.string.sunrise);
-                    time = changeDateFormat(prayerTiming.getSunsrise());
+                    time = Utility.changeTimeFormat(prayerTiming.getSunsrise());
                     reminderSet = false;
                     break;
 
                 case 2:
                     imgId = R.drawable.zohr;
                     name = getResources().getString(R.string.dhuhr);
-                    time = changeDateFormat(prayerTiming.getDhuhr());
+                    time = Utility.changeTimeFormat(prayerTiming.getDhuhr());
                     reminderSet = false;
                     break;
 
                 case 3:
                     imgId = R.drawable.asr;
                     name = getResources().getString(R.string.asr);
-                    time = changeDateFormat(prayerTiming.getAsr());
+                    time = Utility.changeTimeFormat(prayerTiming.getAsr());
                     reminderSet = false;
                     break;
 
@@ -196,14 +196,14 @@ public class HomeFragment extends Fragment{
                 case 4:
                     imgId = R.drawable.maghrib;
                     name = getResources().getString(R.string.maghrib);
-                    time = changeDateFormat(prayerTiming.getMaghrib());
+                    time = Utility.changeTimeFormat(prayerTiming.getMaghrib());
                     reminderSet = false;
                     break;
 
                 case 5:
                     imgId = R.drawable.isha;
                     name = getResources().getString(R.string.isha);
-                    time = changeDateFormat(prayerTiming.getIsha());
+                    time = Utility.changeTimeFormat(prayerTiming.getIsha());
                     reminderSet = false;
                     break;
 
@@ -216,32 +216,32 @@ public class HomeFragment extends Fragment{
             return mPrayerTimeList;
         }
 
-    private String changeDateFormat(String timeData) {
-        Date dateTime;
-        String finalTime = "";
-        try {
-            if (!timeData.startsWith("12")) {
-                Log.d("prayer", "changeDateFormat: if");
-                dateTime = new SimpleDateFormat("hh:mm", Locale.ENGLISH).parse(timeData);
-                finalTime = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateTime);
-            }
-            else if (timeData.startsWith("12")){
-                Log.d("prayer", "changeDateFormat: else");
-                finalTime = timeData + " " + "PM";
-            }
-            Log.d("prayer", "changeDateFormat: " + finalTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//            DateTimeFormatter parser = DateTimeFormatter.ofPattern("hh:mm",Locale.ENGLISH);
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm aa",Locale.ENGLISH);
-//            LocalTime time = LocalTime.parse(timeData,parser);
-//            finalTime = time.format(formatter);
+//    private String changeDateFormat(String timeData) {
+//        Date dateTime;
+//        String finalTime = "";
+//        try {
+//            if (!timeData.startsWith("12")) {
+//                Log.d("prayer", "changeDateFormat: if");
+//                dateTime = new SimpleDateFormat("hh:mm", Locale.ENGLISH).parse(timeData);
+//                finalTime = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateTime);
+//            }
+//            else if (timeData.startsWith("12")){
+//                Log.d("prayer", "changeDateFormat: else");
+//                finalTime = timeData + " " + "PM";
+//            }
+//            Log.d("prayer", "changeDateFormat: " + finalTime);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
 //        }
-        return finalTime;
-    }
+//
+////        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+////            DateTimeFormatter parser = DateTimeFormatter.ofPattern("hh:mm",Locale.ENGLISH);
+////            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm aa",Locale.ENGLISH);
+////            LocalTime time = LocalTime.parse(timeData,parser);
+////            finalTime = time.format(formatter);
+////        }
+//        return finalTime;
+//    }
 
 }
 

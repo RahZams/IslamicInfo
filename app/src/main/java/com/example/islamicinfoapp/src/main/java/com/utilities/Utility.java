@@ -12,6 +12,7 @@ import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -23,6 +24,22 @@ public class Utility {
         SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
         Log.d("prayer", "getCurrentDate: " + Locale.getDefault());
         return sf.format(new Date());
+    }
+
+    public static String getDateForDb(Date date){
+        SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
+        return sf.format(date);
+    }
+
+    public static String getDateForApi(Date date){
+        SimpleDateFormat sf = new SimpleDateFormat("dd-mm-yyyy",Locale.getDefault());
+        return sf.format(date);
+    }
+
+    public static Date getTomorrowDate(){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE,1);
+        return c.getTime();
     }
 
     public boolean checkForNetworkAvailibility(Context context) {
@@ -54,7 +71,7 @@ public class Utility {
 
     }
 
-    public static String changeDateFormat(String timeData) {
+    public static String changeTimeFormat(String timeData) {
         Date dateTime;
         String finalTime = "";
         try {

@@ -30,13 +30,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".src.main.java.com.Receivers.ReminderReceiver">
+        <receiver android:name=".src.main.java.com.Receivers.ReminderReceiver"/>
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.BOOT_COMPLETED"/> -->
-            <!-- <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/> -->
-            <!-- </intent-filter> -->
-        </receiver>
+        <service android:name=".src.main.java.Services.ReminderService"/>
 
         <meta-data
             android:name="preloaded_fonts"

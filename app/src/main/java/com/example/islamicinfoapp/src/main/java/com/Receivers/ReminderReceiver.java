@@ -34,7 +34,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         serviceIntent.putExtra(context.getResources().getString(R.string.cityname),mCityName);
         serviceIntent.putExtra(context.getResources().getString(R.string.countryname),mCountryName);
         serviceIntent.putExtra(context.getResources().getString(R.string.namazName),mNamazName);
-        context.startService(serviceIntent);
+        //context.startService(serviceIntent);
         Log.d("prayer", "onReceive: " + mCityName);
         switch(mNamazName){
             case Constants.FAJR:

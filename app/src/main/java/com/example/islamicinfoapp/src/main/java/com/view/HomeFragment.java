@@ -1,6 +1,7 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.FragmentHomeBinding;
+import com.example.islamicinfoapp.src.main.java.Services.ReminderService;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
@@ -101,6 +103,8 @@ public class HomeFragment extends Fragment{
         observeViewModel(mCityname,mCountryname,binding);
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerview.setAdapter(adapter);
+        Intent intent = new Intent(getContext(), ReminderService.class);
+        getContext().startService(intent);
         return view;
     }
 

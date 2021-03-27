@@ -33,10 +33,10 @@ public class ReminderService extends Service {
     private QuranApi mQuranApi;
     private String city,country,namazName;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
-
+    private String BASE_URL = "https://api.aladhan.com/v1/";
     public ReminderService() {
         Log.d("prayer", "ReminderService: ");
-        mQuranApi = QuranApiService.getRetrofitInstance(this.getResources().getString(R.string.prayer_times_base_url),
+        mQuranApi = QuranApiService.getRetrofitInstance(BASE_URL,
                 PrayerTiming.class,new PrayerTimeDeserializer()).create(QuranApi.class);
 
     }
@@ -49,7 +49,7 @@ public class ReminderService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        int method = Integer.parseInt(getApplication().getResources().getString(R.string.prayer_time_calculation_method));
+        int method = Integer.parseInt(getApplicationContext().getResources().getString(R.string.prayer_time_calculation_method));
         city = intent.getStringExtra(getResources().getString(R.string.cityname));
         country = intent.getStringExtra(getResources().getString(R.string.countryname));
         namazName = intent.getStringExtra(getResources().getString(R.string.namazName));

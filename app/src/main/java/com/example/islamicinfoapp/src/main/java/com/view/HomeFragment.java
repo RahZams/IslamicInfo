@@ -103,8 +103,8 @@ public class HomeFragment extends Fragment{
         observeViewModel(mCityname,mCountryname,binding);
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerview.setAdapter(adapter);
-        Intent intent = new Intent(getContext(), ReminderService.class);
-        getContext().startService(intent);
+        //Intent intent = new Intent(getContext(), ReminderService.class);
+        //getContext().startService(intent);
         return view;
     }
 

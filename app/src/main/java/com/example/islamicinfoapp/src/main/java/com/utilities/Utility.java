@@ -13,7 +13,6 @@ import android.util.Log;
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
-import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -67,7 +66,7 @@ public class Utility {
     public void redirectingToProvideConnection(Context context, int ic_drawable) {
         Intent intent = null;
         if (ic_drawable == R.drawable.ic_no_network){
-            intent = new Intent(Settings.ACTION_WIRELESS_SETTINGS);
+            intent = new Intent(Settings.ACTION_SETTINGS);
         }
         else if (ic_drawable == R.drawable.ic_location_off){
             intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -183,17 +182,19 @@ public class Utility {
         return pendingIntent;
     }
 
-    public static void setupReminder(Context mContext,String namazTiming, PendingIntent pendingIntent) {
+    public static void setupReminder(Context mContext, String currentDate, String namazTiming, PendingIntent pendingIntent) {
         Log.d("prayer", "setupReminder: " + "time" + namazTiming);
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         //namazTiming = Utility.changeDateFormat(namazTiming);
         Log.d("prayer", "setupReminder: " + namazTiming);
         String[] initTiming = namazTiming.split(" ");
         String[] timing = initTiming[0].split(":");
+        String[] dateArray = currentDate.split("-");
         Log.d("prayer", "setupReminder: length" + timing.length + timing[0] + timing[1]);
 
         Calendar cal = Calendar.getInstance();
 //        cal.setTimeInMillis(System.currentTimeMillis());
+        cal.set(Calendar.DATE,Integer.valueOf(currentDate));
         cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timing[0]));
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);

@@ -14,14 +14,18 @@ import com.example.islamicinfoapp.src.main.java.com.model.QuranApiService;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.utilities.PrayerTimeDeserializer;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.internal.observers.SubscriberCompletableObserver;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class PrayerTimeViewModel extends AndroidViewModel {
     private static final String TAG = PrayerTimeViewModel.class.getName();
@@ -39,35 +43,46 @@ public class PrayerTimeViewModel extends AndroidViewModel {
                 new PrayerTimeDeserializer()).create(QuranApi.class);
     }
 
+//
+
     public void fetchFromRemote(String city,String country,String date){
         Log.d("prayer", "fetchFromRemote: " + "date: " + date);
         int method = Integer.parseInt(getApplication().getResources().getString(R.string.prayer_time_calculation_method));
-//        mQuranApi.getPrayerTiming(city,country,method,date)
+        //Observable<PrayerTiming> prayerTimingObservable = mQuranApi.getPrayerTimings(date,city,country,method);
+//        Observable<Long> timer = Observable.timer(1000, TimeUnit.MILLISECONDS);
+//        Observable.zip(prayerTimingObservable,timer,)
+
+        //mQuranApi.getPrayerTiming(city,country,method,date)
         mQuranApi.getPrayerTimings(date,city,country,method)
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
-                .subscribe(new Observer<PrayerTiming>() {
+                .subscribe(new Observer<Response<PrayerTiming>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
                         mCompositeDisposable.add(d);
+
                     }
 
                     @Override
-                    public void onNext(PrayerTiming prayerTiming) {
+                    public void onNext(@io.reactivex.annotations.NonNull Response<PrayerTiming> prayerTimingResponse) {
+                        Log.d("prayer", "onNext: response code: " + prayerTimingResponse.code() + " message: " + prayerTimingResponse.message() +
+                                " body: " + prayerTimingResponse.body() +
+                               " successful:" + prayerTimingResponse.isSuccessful());
+                        PrayerTiming prayerTiming = (PrayerTiming) prayerTimingResponse.body();
                         prayerTiming.setCity(city);
                         prayerTiming.setCountry(country);
-                        //mTimingMutableLiveData.setValue(prayerTiming);
-                        Log.d("prayer", "onNext: "+prayerTiming.toString());
                         insertDataToDb(prayerTiming);
-                        Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        Log.d("prayer", "onError: " + e.getLocalizedMessage());
+
                     }
 
                     @Override
                     public void onComplete() {
+
                     }
                 });
     }

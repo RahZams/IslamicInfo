@@ -49,92 +49,93 @@ public class ReminderService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int method = Integer.parseInt(getApplicationContext().getResources().getString(R.string.prayer_time_calculation_method));
-        city = intent.getStringExtra(getResources().getString(R.string.cityname));
-        country = intent.getStringExtra(getResources().getString(R.string.countryname));
-        namazName = intent.getStringExtra(getResources().getString(R.string.namazName));
-        Log.d("prayer", "onStartCommand: " + city + country + namazName);
-        mQuranApi.getPrayerTimings(Utility.getTomorrowDate(),city,country,method)
-                .timeout(1000, TimeUnit.SECONDS)
-                .retryWhen(throwableObservable -> throwableObservable.flatMap(error ->{
-                    if (error instanceof TimeoutException){
-                        Log.d("prayer", "fetchFromRemote: error");
-                        return Observable.just(new Object());
-                    }else{
-                        return Observable.error(error);
-                    }
-                }))
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.newThread())
-                .subscribe(new Observer<Response<PrayerTiming>>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
-                    }
-
-                    @Override
-                    public void onNext(@NonNull Response<PrayerTiming> prayerTimingResponse) {
-                        PendingIntent pendingIntent;
-                        PrayerTiming prayerTiming = (PrayerTiming) prayerTimingResponse.body();
-                        prayerTiming.setCity(city);
-                        prayerTiming.setCountry(country);
-                        //mTimingMutableLiveData.setValue(prayerTiming);
-                        Log.d("prayer", "onNext: "+prayerTiming.toString());
-                        Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
-                        switch (namazName){
-                            case Constants.FAJR:
-                                pendingIntent = Utility.createPendingIntent(ReminderService.this,Constants.FAJR,prayerTiming.getFajr(),city,country);
-                                //Utility.setupReminder(ReminderService.this,prayerTiming.getFajr(),pendingIntent);
-                                Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                        (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM",pendingIntent);
-                                break;
-                            case Constants.SUNRISE:
-                                pendingIntent = Utility.createPendingIntent(ReminderService.this,Constants.SUNRISE,prayerTiming.getSunsrise(),city,country);
-                                //Utility.setupReminder(ReminderService.this,prayerTiming.getSunsrise(),pendingIntent);
-                                Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                        (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM",pendingIntent);
-                                break;
-                            case Constants.DHUHR:
-                                pendingIntent = Utility.createPendingIntent(ReminderService.this,Constants.DHUHR,prayerTiming.getDhuhr(),city,country);
-                                //Utility.setupReminder(ReminderService.this,prayerTiming.getDhuhr(),pendingIntent);
-                                Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                        (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM",pendingIntent);
-                                break;
-                            case Constants.ASR:
-                                pendingIntent = Utility.createPendingIntent(ReminderService.this,Constants.ASR,prayerTiming.getAsr(),city,country);
-                                //Utility.setupReminder(ReminderService.this,prayerTiming.getAsr(),pendingIntent);
-                                Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                        (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM",pendingIntent);
-                                break;
-                            case Constants.MAGHRIB:
-                                pendingIntent = Utility.createPendingIntent(ReminderService.this,Constants.MAGHRIB,prayerTiming.getMaghrib(),city,country);
-                                //Utility.setupReminder(ReminderService.this,prayerTiming.getMaghrib(),pendingIntent);
-                                Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                        (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM",pendingIntent);
-                                break;
-                            case Constants.ISHA:
-                                pendingIntent = Utility.createPendingIntent(ReminderService.this,Constants.ISHA,prayerTiming.getIsha(),city,country);
-                                //Utility.setupReminder(ReminderService.this,prayerTiming.getIsha(),pendingIntent);
-                                Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                        (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM",pendingIntent);
-                                break;
-                            default:
-                                break;
+        if(intent != null) {
+            city = intent.getStringExtra(getResources().getString(R.string.cityname));
+            country = intent.getStringExtra(getResources().getString(R.string.countryname));
+            namazName = intent.getStringExtra(getResources().getString(R.string.namazName));
+            Log.d("prayer", "onStartCommand: " + city + country + namazName);
+            mQuranApi.getPrayerTimings(Utility.getTomorrowDate(), city, country, method)
+                    .timeout(1000, TimeUnit.SECONDS)
+                    .retryWhen(throwableObservable -> throwableObservable.flatMap(error -> {
+                        if (error instanceof TimeoutException) {
+                            Log.d("prayer", "fetchFromRemote: error");
+                            return Observable.just(new Object());
+                        } else {
+                            return Observable.error(error);
                         }
-                    }
+                    }))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.newThread())
+                    .subscribe(new Observer<Response<PrayerTiming>>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+                            mCompositeDisposable.add(d);
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
+                        @Override
+                        public void onNext(@NonNull Response<PrayerTiming> prayerTimingResponse) {
+                            PendingIntent pendingIntent;
+                            PrayerTiming prayerTiming = (PrayerTiming) prayerTimingResponse.body();
+                            prayerTiming.setCity(city);
+                            prayerTiming.setCountry(country);
+                            //mTimingMutableLiveData.setValue(prayerTiming);
+                            Log.d("prayer", "onNext: " + prayerTiming.toString());
+                            Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
+                            switch (namazName) {
+                                case Constants.FAJR:
+                                    pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.FAJR, prayerTiming.getFajr(), city, country);
+                                    //Utility.setupReminder(ReminderService.this,prayerTiming.getFajr(),pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
+                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    break;
+                                case Constants.SUNRISE:
+                                    pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.SUNRISE, prayerTiming.getSunsrise(), city, country);
+                                    //Utility.setupReminder(ReminderService.this,prayerTiming.getSunsrise(),pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
+                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    break;
+                                case Constants.DHUHR:
+                                    pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.DHUHR, prayerTiming.getDhuhr(), city, country);
+                                    //Utility.setupReminder(ReminderService.this,prayerTiming.getDhuhr(),pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
+                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    break;
+                                case Constants.ASR:
+                                    pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ASR, prayerTiming.getAsr(), city, country);
+                                    //Utility.setupReminder(ReminderService.this,prayerTiming.getAsr(),pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
+                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    break;
+                                case Constants.MAGHRIB:
+                                    pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.MAGHRIB, prayerTiming.getMaghrib(), city, country);
+                                    //Utility.setupReminder(ReminderService.this,prayerTiming.getMaghrib(),pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
+                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    break;
+                                case Constants.ISHA:
+                                    pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ISHA, prayerTiming.getIsha(), city, country);
+                                    //Utility.setupReminder(ReminderService.this,prayerTiming.getIsha(),pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
+                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
 
-                    }
+                        @Override
+                        public void onError(Throwable e) {
 
-                    @Override
-                    public void onComplete() {
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
 
 
-        //        mQuranApi.getPrayerTimings(Utility.getTomorrowDate(),city,country,method)
+            //        mQuranApi.getPrayerTimings(Utility.getTomorrowDate(),city,country,method)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn(Schedulers.newThread())
 //                .subscribe(new Observer<PrayerTiming>() {
@@ -203,6 +204,7 @@ public class ReminderService extends Service {
 //
 //                    }
 //                });
+        }
         return START_STICKY;
 
     }

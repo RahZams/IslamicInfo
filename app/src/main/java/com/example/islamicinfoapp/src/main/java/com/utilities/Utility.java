@@ -211,7 +211,7 @@ public class Utility {
             cal.set(Calendar.AM_PM,Calendar.AM);
         }
         else if (initTiming[1].equals("PM")){
-            Log.d("0prayer", "setupReminder: " + "if PM");
+            Log.d("prayer", "setupReminder: " + "if PM");
             cal.set(Calendar.AM_PM,Calendar.PM);
         }
 

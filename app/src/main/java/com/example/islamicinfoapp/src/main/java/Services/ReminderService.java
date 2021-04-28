@@ -85,38 +85,34 @@ public class ReminderService extends Service {
                                 case Constants.FAJR:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.FAJR, prayerTiming.getFajr(), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getFajr(),pendingIntent);
-                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+//                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
+//                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(), "12:48 AM", pendingIntent);
                                     break;
                                 case Constants.SUNRISE:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.SUNRISE, prayerTiming.getSunsrise(), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getSunsrise(),pendingIntent);
-                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(), "12:48 AM", pendingIntent);
                                     break;
                                 case Constants.DHUHR:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.DHUHR, prayerTiming.getDhuhr(), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getDhuhr(),pendingIntent);
-                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(), "12:48 AM", pendingIntent);
                                     break;
                                 case Constants.ASR:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ASR, prayerTiming.getAsr(), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getAsr(),pendingIntent);
-                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(), "12:48 AM", pendingIntent);
                                     break;
                                 case Constants.MAGHRIB:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.MAGHRIB, prayerTiming.getMaghrib(), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getMaghrib(),pendingIntent);
-                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(), "12:48 AM", pendingIntent);
                                     break;
                                 case Constants.ISHA:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ISHA, prayerTiming.getIsha(), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getIsha(),pendingIntent);
-                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
-                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(), "12:48 AM", pendingIntent);
                                     break;
                                 default:
                                     break;

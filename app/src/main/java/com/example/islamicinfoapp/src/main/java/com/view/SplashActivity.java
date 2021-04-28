@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivitySplashBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_splash);
-        binding.splashImage.setImageResource(R.drawable.prayer_times);
+        binding.splashImage.setImageResource(R.drawable.flash4);
         mDuasViewModel = ViewModelProviders.of(this).get(DuasViewModel.class);
         mSurahViewModel = ViewModelProviders.of(this).get(SurahViewModel.class);
         new Handler().postDelayed(new Runnable() {

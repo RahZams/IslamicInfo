@@ -2,7 +2,10 @@ package com.example.islamicinfoapp.src.main.java.com.model;
 
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Type;
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.Observable;
+import okhttp3.OkHttpClient;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -16,6 +19,21 @@ public class QuranApiService {
                 .addConverterFactory(gsonConverter(type,typeAdapter))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
+
+
+//                Retrofit.Builder builder = new Retrofit.Builder()
+//                .baseUrl(url)
+//                .addConverterFactory(gsonConverter(type,typeAdapter))
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+//
+//        OkHttpClient.Builder okHttpbuilder = new OkHttpClient.Builder()
+//                .readTimeout(30, TimeUnit.SECONDS);
+//
+//        builder.client(okHttpbuilder.build());
+//        Retrofit retrofit = builder.build();
+//        return retrofit;
+
+
     }
 
     private static Converter.Factory gsonConverter(Type type, Object typeAdapter) {

@@ -26,7 +26,7 @@ public class Utility {
     public static String getCurrentDate() {
         //Log.d("date", "getCurrentDate: " + Calendar.getInstance().getTimeInMillis());
         SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
-        Log.d("prayer", "getCurrentDate: " + Locale.getDefault());
+        Log.d("prayer", "getCurrentDate: " + Locale.getDefault() + sf.format(new Date()));
         return sf.format(new Date());
     }
 
@@ -37,7 +37,7 @@ public class Utility {
 
     public static String getDateForApi(Date date){
         SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
-        Log.d("prayer", "getDateForApi: " + sf.format(date));
+        Log.d("prayer", "getDateForApi: " + "input date"  + date  + sf.format(date));
         return sf.format(date);
     }
 
@@ -48,13 +48,16 @@ public class Utility {
     }
 
     public static Date convertStringToDate(String dateValue){
+        Log.d("prayer", "convertStringToDate: " + "dateValue" + dateValue);
         Date convertedDate = null;
-        SimpleDateFormat sf = new SimpleDateFormat("dd/MM/yyyy",Locale.getDefault());
+        SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
         try {
             convertedDate = sf.parse(dateValue);
+            Log.d("prayer", "convertStringToDate: " + "within try" + convertedDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        Log.d("prayer", "convertStringToDate: " + convertedDate);
         return convertedDate;
     }
 
@@ -194,7 +197,11 @@ public class Utility {
 
         Calendar cal = Calendar.getInstance();
 //        cal.setTimeInMillis(System.currentTimeMillis());
-        cal.set(Calendar.DATE,Integer.valueOf(currentDate));
+        //cal.set(Calendar.DATE,Integer.valueOf(currentDate));
+        Log.d("prayer", "setupReminder: dateArray" + dateArray[0] + dateArray[1] + dateArray[2]);
+        cal.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dateArray[0]));
+        cal.set(Calendar.MONTH,Integer.parseInt(dateArray[1]) - 1);
+        cal.set(Calendar.YEAR,Integer.parseInt(dateArray[2]));
         cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timing[0]));
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);
@@ -204,7 +211,7 @@ public class Utility {
             cal.set(Calendar.AM_PM,Calendar.AM);
         }
         else if (initTiming[1].equals("PM")){
-            Log.d("prayer", "setupReminder: " + "if PM");
+            Log.d("0prayer", "setupReminder: " + "if PM");
             cal.set(Calendar.AM_PM,Calendar.PM);
         }
 
@@ -212,12 +219,15 @@ public class Utility {
                 "minute:"+ cal.get(Calendar.MINUTE) + "am/pm:" + cal.get(Calendar.AM_PM));
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
+            Log.d("prayer", "setupReminder: " + "M" + cal.getTimeInMillis());
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         }
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            Log.d("prayer", "setupReminder: " + "kitkat");
             alarmManager.setExact(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
         }
         else{
+            Log.d("prayer", "setupReminder: " + "else");
             alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
         }
     }

@@ -15,6 +15,7 @@ import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.utilities.PrayerTimeDeserializer;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableObserver;
@@ -54,13 +55,21 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
         //mQuranApi.getPrayerTiming(city,country,method,date)
         mQuranApi.getPrayerTimings(date,city,country,method)
+                .timeout(1000,TimeUnit.SECONDS)
+                .retryWhen(throwableObservable -> throwableObservable.flatMap(error ->{
+                    if (error instanceof TimeoutException){
+                        Log.d("prayer", "fetchFromRemote: error");
+                        return Observable.just(new Object());
+                    }else{
+                        return Observable.error(error);
+                    }
+        }))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(new Observer<Response<PrayerTiming>>() {
                     @Override
                     public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
                         mCompositeDisposable.add(d);
-
                     }
 
                     @Override
@@ -76,13 +85,11 @@ public class PrayerTimeViewModel extends AndroidViewModel {
 
                     @Override
                     public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                        Log.d("prayer", "onError: " + e.getLocalizedMessage());
-
+                        Log.d("prayer", "onError: " + e.getLocalizedMessage() + e.getCause());
                     }
 
                     @Override
                     public void onComplete() {
-
                     }
                 });
     }

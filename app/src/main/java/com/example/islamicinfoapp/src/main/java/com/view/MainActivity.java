@@ -1,5 +1,6 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -43,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView,navController);
         //NavigationUI.setupWithNavController(toolbar,navController,appBarConfig);
         //NavigationUI.setupActionBarWithNavController(this,navController,appBarConfig);
-
-
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             //toolbar.setTitle(destination.getLabel());

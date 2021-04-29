@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:title="@string/home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_new"
         android:id="@+id/homeFragment" />
     <item
         android:title="@string/zikr"
@@ -15,10 +15,10 @@
         android:id="@+id/quranFragment"/>
     <item
         android:title="@string/pregnancy_info"
-        android:icon="@drawable/ic_pregnant_woman"
+        android:icon="@drawable/ic_pregnant_woman_new"
         android:id="@+id/pregInfoFragment"/>
     <item
         android:title="@string/more"
-        android:icon="@drawable/ic_more"
+        android:icon="@drawable/ic_more_new"
         android:id="@+id/moreFragment"/>
 </menu>

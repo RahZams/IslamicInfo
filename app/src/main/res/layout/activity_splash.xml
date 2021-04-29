@@ -7,11 +7,24 @@
     android:layout_height="match_parent"
     tools:context=".src.main.java.com.view.SplashActivity">
 
-     <ImageView
-         android:layout_width="match_parent"
-         android:layout_height="match_parent"  
-         android:id="@+id/splash_image"
-         android:layout_centerInParent="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/splash_text"
+            android:text="hello"
+            style="@style/SplashTextTheme"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            />
+
+        <ImageView
+            android:id="@+id/splash_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="92dp"
+            android:src="@drawable/splash_image_modifed" />
 
     </RelativeLayout>
 

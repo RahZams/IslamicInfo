@@ -16,4 +16,11 @@
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
+
+    <style name="SplashTextTheme" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textSize">100dp</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">bold|italic</item>
+        <item name="color">@color/black</item>
+    </style>
 </resources>

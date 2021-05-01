@@ -61,6 +61,7 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
         Log.d("surah_item", "onBindViewHolder: " + mSurahDataAyahs.get(position).getAyahText().length());
         SpannableString spanString = new SpannableString(mSurahDataAyahs.get(position).getAyahText() + "   " +
                 mSurahDataAyahs.get(position).getNumberInSurah());
+        //SpannableString spanString = new SpannableString("ndndbjdsbjsduidgfudsufgdsugfuisdhfuidhfuirhguihgugbuewiiiwiwieuew8eugfbdbdufuefh");
 //        builder.append(mSurahDataAyahs.get(position).getAyahText());
 //        builder.append("   ");
 //        Log.d("surah_item", "onBindViewHolder:before adding number " + builder.length()
@@ -201,11 +202,11 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
 //                mCircle.setBounds((int) x, top + 85, (int) x + mCircle.getIntrinsicWidth(),
 //                        top + 85 + mCircle.getIntrinsicHeight());
             if (mLineCount > 1)
-                mCircle.setBounds((int) x, top + 20, (int) x + mCircle.getIntrinsicWidth(),
-                       top + 20 + mCircle.getIntrinsicHeight());
+                mCircle.setBounds((int) x, top + 18, (int) x + mCircle.getIntrinsicWidth(),
+                       top + 18 + mCircle.getIntrinsicHeight());
             else if(mLineCount == 1)
-                mCircle.setBounds((int) x, top + 70, (int) x + mCircle.getIntrinsicWidth(),
-                        top + 70 + mCircle.getIntrinsicHeight());
+                mCircle.setBounds((int) x, top + 72, (int) x + mCircle.getIntrinsicWidth(),
+                        top + 72 + mCircle.getIntrinsicHeight());
             mCircle.draw(canvas);
             paint.setColor(mContext.getResources().getColor(R.color.colorAccent));
             paint.setStyle(Paint.Style.FILL_AND_STROKE);

@@ -30,10 +30,16 @@
             android:layout_marginTop="@dimen/padding_top_bottom"
             android:layout_marginEnd="@dimen/padding_left_right"
             android:fontFamily="@font/amiri"
-            android:text=""
+            android:text="ayah"
             android:textColor="@color/prayertime_color"
             android:textDirection="rtl"
             android:textSize="@dimen/text_size"/>
+
+        <View
+            android:layout_below="@id/ayah_text"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"/>
 
 
 <!--        <TextView-->

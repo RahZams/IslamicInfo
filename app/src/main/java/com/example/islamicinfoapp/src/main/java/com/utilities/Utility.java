@@ -182,6 +182,7 @@ public class Utility {
             default:
                 break;
         }
+        Log.d("prayer", "createPendingIntent: " + "namazName" + namazName + "pendingIntent" + pendingIntent);
         return pendingIntent;
     }
 
@@ -232,9 +233,43 @@ public class Utility {
         }
     }
 
-    public static void cancelReminder(Context mContext,PendingIntent pendingIntent) {
+//    public static void cancelReminder(Context mContext,PendingIntent pendingIntent) {
+//        Log.d("prayer", "cancelReminder: ");
+//        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+//        alarmManager.cancel(pendingIntent);
+//    }
+
+    public static void cancelReminder(Context mContext, String namazName) {
         Log.d("prayer", "cancelReminder: ");
+        Intent intent = new Intent(mContext,ReminderReceiver.class);
+        PendingIntent pendingIntent = null;
+        switch (namazName){
+            case Constants.FAJR:
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.FAJR_ID,intent,0);
+                break;
+            case Constants.SUNRISE:
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.SUNRISE_ID,intent,0);
+                break;
+            case Constants.DHUHR:
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.DHUHR_ID,intent,0);
+                break;
+            case Constants.ASR:
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ASR_ID,intent,0);
+                break;
+            case Constants.MAGHRIB:
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.MAGHRIB_ID,intent,0);
+                break;
+            case Constants.ISHA:
+                pendingIntent = PendingIntent.getBroadcast(mContext,Constants.ISHA_ID,intent,0);
+                break;
+            default:
+                break;
+        }
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(pendingIntent);
+        if (pendingIntent != null) {
+            Log.d("prayer", "cancelReminder: " + "namazName" + namazName + "pendingIntent" + pendingIntent);
+            alarmManager.cancel(pendingIntent);
+            pendingIntent.cancel();
+        }
     }
 }

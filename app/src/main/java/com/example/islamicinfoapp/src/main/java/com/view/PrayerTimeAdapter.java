@@ -156,7 +156,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     private void setReminders(String namazName, String namazTiming, ImageView reminderImage) {
         Log.d("prayer", "setReminders: " + namazName + namazTiming);
-        PendingIntent pendingIntent = Utility.createPendingIntent(mContext,namazName,namazTiming,mCityName,mCountryName);
+//        PendingIntent pendingIntent = Utility.createPendingIntent(mContext,namazName,namazTiming,mCityName,mCountryName);
 
         // placed it in utility class method
 
@@ -216,23 +216,27 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        }
         if (reminderImage.getDrawable().getConstantState().
                 equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
-            Log.d("prayer", "onClick:if ");
+            Log.d("prayer", "onClick:if set");
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
             SharedPrefsHelper.storeValue(mContext,namazName,true);
             Log.d("prayer", "setReminders: " + Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())));
+//            Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
+//                    "12:36 AM",pendingIntent);
             Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
-                    "12:45 AM",pendingIntent);
+                    "01:15 AM",
+                    Utility.createPendingIntent(mContext,namazName,namazTiming,mCityName,mCountryName));
         }
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
-            Log.d("prayer", "onClick: else if");
+            Log.d("prayer", "onClick: else if cancel");
             SharedPrefsHelper.storeValue(mContext,namazName,false);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
-            Utility.cancelReminder(mContext,pendingIntent);
+//            Utility.cancelReminder(mContext,pendingIntent);
+            Utility.cancelReminder(mContext,namazName);
         }
         else{
             Log.d("prayer", "onClick:else ");

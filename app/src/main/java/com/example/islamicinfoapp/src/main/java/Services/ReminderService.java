@@ -87,7 +87,7 @@ public class ReminderService extends Service {
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getFajr(),pendingIntent);
 //                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
 //                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
-                                    Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(), "12:48 AM", pendingIntent);
+                                    Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(), "01:20 AM", pendingIntent);
                                     break;
                                 case Constants.SUNRISE:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.SUNRISE, prayerTiming.getSunsrise(), city, country);

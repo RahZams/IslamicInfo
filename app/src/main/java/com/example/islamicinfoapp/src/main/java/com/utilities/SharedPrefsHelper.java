@@ -1,5 +1,6 @@
 package com.example.islamicinfoapp.src.main.java.com.utilities;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -33,4 +34,21 @@ public class SharedPrefsHelper {
         }
         return mSharedPreferences.getBoolean(key,false);
     }
+
+//    public static void storePendingIntentId(Context mContext, String namazName, int id) {
+//        if (mSharedPreferences == null){
+//            mSharedPreferences = getPrefs(mContext);
+//        }
+//        if (mEditor == null){
+//            mEditor = mSharedPreferences.edit();
+//            mEditor.putInt(namazName,id);
+//        }
+//    }
+//
+//    public static int getPendingIntentId(Context mContext, String namazName){
+//        if (mSharedPreferences == null){
+//            mSharedPreferences = getPrefs(mContext);
+//        }
+//        return mSharedPreferences.getInt(namazName,0);
+//    }
 }

@@ -226,7 +226,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //            Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                    "12:36 AM",pendingIntent);
             Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
-                    "01:15 AM",
+                    "03:28 PM",
                     Utility.createPendingIntent(mContext,namazName,namazTiming,mCityName,mCountryName));
         }
         else if (reminderImage.getDrawable().getConstantState() ==

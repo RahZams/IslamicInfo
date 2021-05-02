@@ -31,6 +31,11 @@
         </activity>
 
         <receiver android:name=".src.main.java.com.Receivers.ReminderReceiver"/>
+        <receiver android:name=".src.main.java.com.Receivers.BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <service android:name=".src.main.java.Services.ReminderService"/>
 

@@ -35,7 +35,6 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         Log.d("prayer", "PrayerTimeAdapter: " + mPrayerTimeList.size());
         this.mContext = context;
         this.mPrayerTimeList = mPrayerTimeList;
-
     }
 
     public void updateList(String cityname, String countryname,ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
@@ -226,7 +225,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //            Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                    "12:36 AM",pendingIntent);
             Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
-                    "03:28 PM",
+                    namazTiming,
                     Utility.createPendingIntent(mContext,namazName,namazTiming,mCityName,mCountryName));
         }
         else if (reminderImage.getDrawable().getConstantState() ==

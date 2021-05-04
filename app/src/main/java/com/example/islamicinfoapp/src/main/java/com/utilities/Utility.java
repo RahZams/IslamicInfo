@@ -199,11 +199,12 @@ public class Utility {
         Calendar cal = Calendar.getInstance();
 //        cal.setTimeInMillis(System.currentTimeMillis());
         //cal.set(Calendar.DATE,Integer.valueOf(currentDate));
-        Log.d("prayer", "setupReminder: dateArray" + dateArray[0] + dateArray[1] + dateArray[2]);
+        Log.d("prayer", "setupReminder: dateArray" + dateArray[0] + dateArray[1] + dateArray[2]
+        + "Integer.parseInt(timing[0])" + Integer.parseInt(timing[0]));
         cal.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dateArray[0]));
         cal.set(Calendar.MONTH,Integer.parseInt(dateArray[1]) - 1);
         cal.set(Calendar.YEAR,Integer.parseInt(dateArray[2]));
-        cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timing[0]));
+        cal.set(Calendar.HOUR, Integer.parseInt(timing[0]));
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);
         Log.d("prayer", "setupReminder: " + initTiming[1]);

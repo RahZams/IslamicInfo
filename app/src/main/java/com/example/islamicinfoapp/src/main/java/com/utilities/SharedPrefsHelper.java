@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.util.Map;
+
 public class SharedPrefsHelper {
     public static SharedPreferences.Editor mEditor;
     private static SharedPreferences mSharedPreferences;
@@ -26,13 +28,32 @@ public class SharedPrefsHelper {
             mEditor = mSharedPreferences.edit();
 
             mEditor.putBoolean(key,value).apply();
-
     }
-    public static boolean getValue(Context context,String key){
+
+    public static void storeValue(Context context, String key, String value) {
+        Log.d("prayer", "storeValue: " + "key:" + key + " value:" + value);
+        if (mSharedPreferences == null)
+            mSharedPreferences = getPrefs(context);
+
+        if (mEditor == null)
+            mEditor = mSharedPreferences.edit();
+
+        mEditor.putString(key,value).apply();
+    }
+
+    public static String getValue(Context context,String key){
         if (mSharedPreferences == null){
             mSharedPreferences = getPrefs(context);
         }
-        return mSharedPreferences.getBoolean(key,false);
+        //return mSharedPreferences.getBoolean(key,false);
+        return mSharedPreferences.getString(key,"");
+    }
+
+    public static Map<String,?> getAllSharedPrefs(Context context){
+       if (mSharedPreferences == null){
+           mSharedPreferences = getPrefs(context);
+       }
+       return mSharedPreferences.getAll();
     }
 
 //    public static void storePendingIntentId(Context mContext, String namazName, int id) {

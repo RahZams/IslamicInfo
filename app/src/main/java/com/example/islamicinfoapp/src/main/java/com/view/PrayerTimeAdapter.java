@@ -220,7 +220,8 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
-            SharedPrefsHelper.storeValue(mContext,namazName,true);
+            String sharedPrefsValue = namazTiming + ":true";
+            SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);
             Log.d("prayer", "setReminders: " + Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())));
 //            Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                    "12:36 AM",pendingIntent);
@@ -246,7 +247,11 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     private void assignReminderImage(String namazName, ImageView reminderImage) {
         Log.d("prayer", "assignReminderImage: " + "namazName:" + namazName + SharedPrefsHelper.getValue(mContext,namazName));
 
-        if (SharedPrefsHelper.getValue(mContext,namazName)){
+//        if (SharedPrefsHelper.getValue(mContext,namazName)){
+//            reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+//        }
+
+        if (SharedPrefsHelper.getValue(mContext,namazName).split(":")[1] == "true"){
             reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
         }
 

@@ -26,13 +26,14 @@
         <activity android:name=".src.main.java.com.view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <receiver android:name=".src.main.java.com.Receivers.ReminderReceiver"/>
-        <receiver android:name=".src.main.java.com.Receivers.BootCompletedReceiver">
+        <receiver android:name=".src.main.java.com.Receivers.BootCompletedReceiver"
+            android:exported="true"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>

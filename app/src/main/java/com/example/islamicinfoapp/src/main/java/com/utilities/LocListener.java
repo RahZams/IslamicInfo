@@ -84,6 +84,8 @@ public class LocListener implements LocationListener {
                 callMainActivityCallback.callMainAcitivity(cityName,countryName);
              //   getPrayerTimesDataFromApi(cityName, countryName);
                 Log.d("prayer", "onLocationChanged: " + cityName + " " + countryName);
+                SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.cityname),cityName);
+                SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.countryname),countryName);
                 Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -61,6 +61,11 @@ public class Utility {
         return convertedDate;
     }
 
+    public static String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a",Locale.getDefault());
+        return sdf.format(Calendar.getInstance().getTime());
+    }
+
     public boolean checkForNetworkAvailibility(Context context) {
         mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return mConnectivityManager.getActiveNetworkInfo()!= null && mConnectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();

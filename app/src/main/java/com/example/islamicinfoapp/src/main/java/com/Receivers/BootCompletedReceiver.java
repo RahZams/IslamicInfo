@@ -28,6 +28,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             String[] sharedPrefsValues = SharedPrefsHelper.getValue(context,s).split(":");
             Log.d("prayer", "onReceive: " + sharedPrefsValues[0] + " : " + sharedPrefsValues[1]);
             if (sharedPrefsValues[1] == "true"){
+                Log.d("prayer", "onReceive: " + "true");
+                //if (sharedPrefsValues[0] > Utility.getCurrentTime())
                 Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
                         sharedPrefsValues[0],
                         Utility.createPendingIntent(context,s,sharedPrefsValues[0],mCityName,mCountryName));

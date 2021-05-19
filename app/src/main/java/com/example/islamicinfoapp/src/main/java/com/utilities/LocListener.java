@@ -57,7 +57,7 @@ public class LocListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        String cityName,countryName;
+        String cityName = "",countryName = "";
         if (location == null){
             cityName = mContext.getResources().getString(R.string.default_city);
             countryName = mContext.getResources().getString(R.string.default_country);
@@ -84,13 +84,23 @@ public class LocListener implements LocationListener {
                 callMainActivityCallback.callMainAcitivity(cityName,countryName);
              //   getPrayerTimesDataFromApi(cityName, countryName);
                 Log.d("prayer", "onLocationChanged: " + cityName + " " + countryName);
-                SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.cityname),cityName);
-                SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.countryname),countryName);
+                //SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.cityname),cityName);
+                //SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.countryname),countryName);
                 Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        saveCityCountryToSharedPrefs(cityName,countryName);
+        checkAndCreateNewAlarms();
+    }
+
+    private void saveCityCountryToSharedPrefs(String cityName, String countryName) {
+        SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.cityname),cityName);
+        SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.countryname),countryName);
+    }
+
+    private void checkAndCreateNewAlarms() {
     }
 
     private void checkIfDataAvailableInDatabase(String cityName, String countryName) {

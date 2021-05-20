@@ -26,13 +26,14 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         Set<String> sharedPrefsKeys = allSharedPrefs.keySet();
         for (String s:sharedPrefsKeys){
             String[] sharedPrefsValues = SharedPrefsHelper.getValue(context,s).split(":");
-            Log.d("prayer", "onReceive: " + sharedPrefsValues[0] + " : " + sharedPrefsValues[1]);
-            if (sharedPrefsValues[1] == "true"){
+            Log.d("prayer", "onReceive: " + sharedPrefsValues[0] + " : " + sharedPrefsValues[1] +
+            ":" + sharedPrefsValues[2] + Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())));
+            if (sharedPrefsValues[2] == "true"){
                 Log.d("prayer", "onReceive: " + "true");
                 //if (sharedPrefsValues[0] > Utility.getCurrentTime())
                 Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
-                        sharedPrefsValues[0],
-                        Utility.createPendingIntent(context,s,sharedPrefsValues[0],mCityName,mCountryName));
+                        sharedPrefsValues[1],
+                        Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
             }
         }
     }

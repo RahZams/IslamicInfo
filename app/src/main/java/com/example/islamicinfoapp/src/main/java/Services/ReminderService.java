@@ -74,6 +74,7 @@ public class ReminderService extends Service {
                         @Override
                         public void onNext(@NonNull Response<PrayerTiming> prayerTimingResponse) {
                             PendingIntent pendingIntent;
+                            String sharedPrefsValue = "";
                             PrayerTiming prayerTiming = (PrayerTiming) prayerTimingResponse.body();
                             prayerTiming.setCity(city);
                             prayerTiming.setCountry(country);
@@ -87,6 +88,8 @@ public class ReminderService extends Service {
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getFajr(),pendingIntent);
 //                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
 //                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
+                                    sharedPrefsValue = Utility.convertStringToDate(Utility.getTomorrowDate()) + "-" +
+                                            Utility.changeTimeFormat(prayerTiming.getFajr()) + "-true";
                                     Utility.setupReminder(ReminderService.this,
                                             Utility.getTomorrowDate(), Utility.changeTimeFormat(prayerTiming.getFajr()), pendingIntent);
                                     break;

@@ -221,8 +221,9 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
-            sharedPrefsValue = Utility.getCurrentDate() + ":" + namazTiming + ":true";
+            sharedPrefsValue = Utility.getCurrentDate() + "-" + namazTiming + "-true";
             SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);
+            Log.d("prayer", "setReminders: sharedPrefsValue" + sharedPrefsValue);
             Log.d("prayer", "setReminders: " + Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())));
 //            Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                    "12:36 AM",pendingIntent);
@@ -247,18 +248,30 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     }
 
     private void assignReminderImage(String namazName, ImageView reminderImage) {
-        Log.d("prayer", "assignReminderImage: " + "namazName:" + namazName +
-                SharedPrefsHelper.getValue(mContext,namazName) + SharedPrefsHelper.getValue(mContext,namazName).split(":")[2]);
+        Log.d("prayer", "assignReminderImage: " + "namazName:" + namazName);
+//                SharedPrefsHelper.getValue(mContext,namazName).split("-")[0] +
+//                SharedPrefsHelper.getValue(mContext,namazName).split("-")[1]
+//        + SharedPrefsHelper.getValue(mContext,namazName).split("-")[2]);
 
 //        if (SharedPrefsHelper.getValue(mContext,namazName)){
 //            reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
 //        }
 
-        if ((!SharedPrefsHelper.getValue(mContext,namazName).equals("")) &&
-                SharedPrefsHelper.getValue(mContext,namazName).split(":")[2] == "true"){
-            Log.d("prayer", "assignReminderImage: ");
-            reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
-        }
+//        if (!SharedPrefsHelper.getValue(mContext,namazName).equals("")){
+//            Log.d("prayer", "assignReminderImage: not equals");
+//            if(SharedPrefsHelper.getValue(mContext,namazName).split("-")[2].equals("true")) {
+//                Log.d("prayer", "assignReminderImage: if");
+//                reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+//            }
+//        }
+
+        if (!SharedPrefsHelper.getValue(mContext,namazName).equals("") &&
+                SharedPrefsHelper.getValue(mContext,namazName).split("-")[2].equals("true")) {
+                Log.d("prayer", "assignReminderImage: if");
+                reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
+            }
+
+
 
     }
 

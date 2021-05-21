@@ -234,7 +234,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
             Log.d("prayer", "onClick: else if cancel");
-            sharedPrefsValue = namazTiming + ":false";
+            sharedPrefsValue = Utility.getCurrentDate() + "-" + namazTiming +":false";
             SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));

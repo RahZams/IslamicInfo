@@ -28,22 +28,32 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         Log.d("prayer", "onReceive: " + mCityName + " " + mCountryName);
         Set<String> sharedPrefsKeys = allSharedPrefs.keySet();
         Log.d("prayer", "onReceive: " + sharedPrefsKeys.size());
-        for (String s:sharedPrefsKeys){
-            Log.d("prayer", "onReceive: " + s);
-            String[] sharedPrefsValues = SharedPrefsHelper.getValue(context,s).split("-");
-            Log.d("prayer", "onReceive: " + sharedPrefsValues[0] + " : " + sharedPrefsValues[1] +
-            ":" + sharedPrefsValues[2] + Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())));
-            if (sharedPrefsValues[2] == "true"){
-                Log.d("prayer", "onReceive: " + "true");
-                //if (sharedPrefsValues[0] > Utility.getCurrentTime())
+        for (String s:sharedPrefsKeys) {
+            Log.d("prayer", "onReceive: s" + s);
+            if (SharedPrefsHelper.getValue(context, s).contains("|")) {
+                String[] sharedPrefsValues = SharedPrefsHelper.getValue(context, s).split("|");
+                Log.d("prayer", "onReceive: sharedPrefsValues" + sharedPrefsValues[0] + " : " + sharedPrefsValues[1] +
+                        ":" + sharedPrefsValues[2]);
+                if (sharedPrefsValues[2] == "true") {
+                    Log.d("prayer", "onReceive: " + "true");
+                    //if (sharedPrefsValues[0] > Utility.getCurrentTime())
 //                Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                        sharedPrefsValues[1],
 //                        Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
-                Log.d("prayer", "onReceive: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
-                Utility.setupReminder(context,sharedPrefsValues[0],
-                        sharedPrefsValues[1],
-                        Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
+                    Log.d("prayer", "onReceive: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
+                    Utility.setupReminder(context, sharedPrefsValues[0],
+                            sharedPrefsValues[1],
+                            Utility.createPendingIntent(context, s, sharedPrefsValues[1], mCityName, mCountryName));
+                }
             }
         }
+
+//        for (String s:sharedPrefsKeys) {
+//            Log.d("prayer", "onReceive: " + s);
+//            Log.d("prayer", "onReceive: " + SharedPrefsHelper.getValue(context, s));
+//            if (SharedPrefsHelper.getValue(context, s).contains("-")) {
+//                Log.d("prayer", "onReceive: " + SharedPrefsHelper.getValue(context, s));
+//            }
+//        }
     }
 }

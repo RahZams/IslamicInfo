@@ -216,12 +216,12 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        }
         if (reminderImage.getDrawable().getConstantState().
                 equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
-            Log.d("prayer", "onClick:if set");
+            Log.d("prayer", "onClick:if set" + Utility.getCurrentDate());
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
-            sharedPrefsValue = Utility.getCurrentDate() + "-" + namazTiming + "-true";
+            sharedPrefsValue = Utility.getCurrentDate() + "|" + namazTiming + "|true";
             SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);
             Log.d("prayer", "setReminders: sharedPrefsValue" + sharedPrefsValue);
             Log.d("prayer", "setReminders: " + Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())));
@@ -234,7 +234,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
             Log.d("prayer", "onClick: else if cancel");
-            sharedPrefsValue = Utility.getCurrentDate() + "-" + namazTiming +":false";
+            sharedPrefsValue = Utility.getCurrentDate() + "|" + namazTiming +"|false";
             SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
@@ -266,7 +266,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        }
 
         if (!SharedPrefsHelper.getValue(mContext,namazName).equals("") &&
-                SharedPrefsHelper.getValue(mContext,namazName).split("-")[2].equals("true")) {
+                SharedPrefsHelper.getValue(mContext,namazName).split("|")[2].equals("true")) {
                 Log.d("prayer", "assignReminderImage: if");
                 reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
             }

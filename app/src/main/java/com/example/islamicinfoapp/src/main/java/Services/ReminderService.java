@@ -81,7 +81,8 @@ public class ReminderService extends Service {
                             prayerTiming.setCountry(country);
                             //mTimingMutableLiveData.setValue(prayerTiming);
                             Log.d("prayer", "onNext: " + prayerTiming.toString());
-                            Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate());
+                            Log.d("prayer", "onSuccess: " + prayerTiming.getPrayerTimeEngDate() +
+                                    Utility.getTomorrowDate());
                             switch (namazName) {
                                 case Constants.FAJR:
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this,
@@ -89,8 +90,8 @@ public class ReminderService extends Service {
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getFajr(),pendingIntent);
 //                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
 //                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
-                                    sharedPrefsValue = Utility.convertStringToDate(Utility.getTomorrowDate()) + "-" +
-                                            Utility.changeTimeFormat(prayerTiming.getFajr()) + "-true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
+                                            Utility.changeTimeFormat(prayerTiming.getFajr()) + "|true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,
                                             Utility.getTomorrowDate(), Utility.changeTimeFormat(prayerTiming.getFajr()), pendingIntent);
@@ -99,8 +100,8 @@ public class ReminderService extends Service {
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this,
                                             Constants.SUNRISE, Utility.changeTimeFormat(prayerTiming.getSunsrise()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getSunsrise(),pendingIntent);
-                                    sharedPrefsValue = Utility.convertStringToDate(Utility.getTomorrowDate()) + "-" +
-                                            Utility.changeTimeFormat(prayerTiming.getSunsrise()) + "-true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
+                                            Utility.changeTimeFormat(prayerTiming.getSunsrise()) + "|true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getSunsrise()), pendingIntent);
@@ -109,8 +110,8 @@ public class ReminderService extends Service {
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.DHUHR,
                                             Utility.changeTimeFormat(prayerTiming.getDhuhr()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getDhuhr(),pendingIntent);
-                                    sharedPrefsValue = Utility.convertStringToDate(Utility.getTomorrowDate()) + "-" +
-                                            Utility.changeTimeFormat(prayerTiming.getDhuhr()) + "-true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
+                                            Utility.changeTimeFormat(prayerTiming.getDhuhr()) + "|true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getDhuhr()), pendingIntent);
@@ -119,8 +120,8 @@ public class ReminderService extends Service {
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ASR,
                                             Utility.changeTimeFormat(prayerTiming.getAsr()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getAsr(),pendingIntent);
-                                    sharedPrefsValue = Utility.convertStringToDate(Utility.getTomorrowDate()) + "-" +
-                                            Utility.changeTimeFormat(prayerTiming.getAsr()) + "-true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
+                                            Utility.changeTimeFormat(prayerTiming.getAsr()) + "|true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getAsr()), pendingIntent);
@@ -129,8 +130,8 @@ public class ReminderService extends Service {
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.MAGHRIB,
                                             Utility.changeTimeFormat(prayerTiming.getMaghrib()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getMaghrib(),pendingIntent);
-                                    sharedPrefsValue = Utility.convertStringToDate(Utility.getTomorrowDate()) + "-" +
-                                            Utility.changeTimeFormat(prayerTiming.getMaghrib()) + "-true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
+                                            Utility.changeTimeFormat(prayerTiming.getMaghrib()) + "|true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getMaghrib()), pendingIntent);
@@ -139,8 +140,8 @@ public class ReminderService extends Service {
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ISHA,
                                             Utility.changeTimeFormat(prayerTiming.getIsha()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getIsha(),pendingIntent);
-                                    sharedPrefsValue = Utility.convertStringToDate(Utility.getTomorrowDate()) + "-" +
-                                            Utility.changeTimeFormat(prayerTiming.getIsha()) + "-true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
+                                            Utility.changeTimeFormat(prayerTiming.getIsha()) + "|true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getIsha()), pendingIntent);

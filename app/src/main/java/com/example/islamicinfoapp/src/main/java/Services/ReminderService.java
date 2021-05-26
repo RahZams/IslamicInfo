@@ -85,63 +85,69 @@ public class ReminderService extends Service {
                                     Utility.getTomorrowDate());
                             switch (namazName) {
                                 case Constants.FAJR:
+                                    Log.d("prayer", "onNext:switch case " + namazName);
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this,
                                             Constants.FAJR, Utility.changeTimeFormat(prayerTiming.getFajr()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getFajr(),pendingIntent);
 //                                    Utility.setupReminder(ReminderService.this, Utility.getDateForApi
 //                                            (Utility.convertStringToDate(Utility.getTomorrowDate())), "1:15 PM", pendingIntent);
-                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
-                                            Utility.changeTimeFormat(prayerTiming.getFajr()) + "|true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                                            Utility.changeTimeFormat(prayerTiming.getFajr()) + ",true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,
                                             Utility.getTomorrowDate(), Utility.changeTimeFormat(prayerTiming.getFajr()), pendingIntent);
                                     break;
                                 case Constants.SUNRISE:
+                                    Log.d("prayer", "onNext:switch case " + namazName);
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this,
                                             Constants.SUNRISE, Utility.changeTimeFormat(prayerTiming.getSunsrise()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getSunsrise(),pendingIntent);
-                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
-                                            Utility.changeTimeFormat(prayerTiming.getSunsrise()) + "|true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                                            Utility.changeTimeFormat(prayerTiming.getSunsrise()) + ",true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getSunsrise()), pendingIntent);
                                     break;
                                 case Constants.DHUHR:
+                                    Log.d("prayer", "onNext:switch case " + namazName);
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.DHUHR,
                                             Utility.changeTimeFormat(prayerTiming.getDhuhr()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getDhuhr(),pendingIntent);
-                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
-                                            Utility.changeTimeFormat(prayerTiming.getDhuhr()) + "|true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                                            Utility.changeTimeFormat(prayerTiming.getDhuhr()) + ",true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getDhuhr()), pendingIntent);
                                     break;
                                 case Constants.ASR:
+                                    Log.d("prayer", "onNext:switch case " + namazName);
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ASR,
                                             Utility.changeTimeFormat(prayerTiming.getAsr()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getAsr(),pendingIntent);
-                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
-                                            Utility.changeTimeFormat(prayerTiming.getAsr()) + "|true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                                            Utility.changeTimeFormat(prayerTiming.getAsr()) + ",true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getAsr()), pendingIntent);
                                     break;
                                 case Constants.MAGHRIB:
+                                    Log.d("prayer", "onNext:switch case " + namazName);
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.MAGHRIB,
                                             Utility.changeTimeFormat(prayerTiming.getMaghrib()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getMaghrib(),pendingIntent);
-                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
-                                            Utility.changeTimeFormat(prayerTiming.getMaghrib()) + "|true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                                            Utility.changeTimeFormat(prayerTiming.getMaghrib()) + ",true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getMaghrib()), pendingIntent);
                                     break;
                                 case Constants.ISHA:
+                                    Log.d("prayer", "onNext:switch case " + namazName);
                                     pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ISHA,
                                             Utility.changeTimeFormat(prayerTiming.getIsha()), city, country);
                                     //Utility.setupReminder(ReminderService.this,prayerTiming.getIsha(),pendingIntent);
-                                    sharedPrefsValue = Utility.getTomorrowDate() + "|" +
-                                            Utility.changeTimeFormat(prayerTiming.getIsha()) + "|true";
+                                    sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                                            Utility.changeTimeFormat(prayerTiming.getIsha()) + ",true";
                                     SharedPrefsHelper.storeValue(ReminderService.this,namazName,sharedPrefsValue);
                                     Utility.setupReminder(ReminderService.this,Utility.getTomorrowDate(),
                                             Utility.changeTimeFormat(prayerTiming.getIsha()), pendingIntent);

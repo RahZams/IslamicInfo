@@ -30,11 +30,11 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         Log.d("prayer", "onReceive: " + sharedPrefsKeys.size());
         for (String s:sharedPrefsKeys) {
             Log.d("prayer", "onReceive: s" + s);
-            if (SharedPrefsHelper.getValue(context, s).contains("|")) {
-                String[] sharedPrefsValues = SharedPrefsHelper.getValue(context, s).split("|");
+            if (SharedPrefsHelper.getValue(context, s).contains(",")) {
+                String[] sharedPrefsValues = SharedPrefsHelper.getValue(context, s).split(",");
                 Log.d("prayer", "onReceive: sharedPrefsValues" + sharedPrefsValues[0] + " : " + sharedPrefsValues[1] +
                         ":" + sharedPrefsValues[2]);
-                if (sharedPrefsValues[2] == "true") {
+                if (sharedPrefsValues[2].equals("true")) {
                     Log.d("prayer", "onReceive: " + "true");
                     //if (sharedPrefsValues[0] > Utility.getCurrentTime())
 //                Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),

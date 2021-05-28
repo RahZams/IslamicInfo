@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.google.android.material.bottomnavigation.BottomNavigationMenu;
 
 public class DialogActivity extends AppCompatActivity {
@@ -56,6 +60,7 @@ public class DialogActivity extends AppCompatActivity {
     }
 
     private void showAlertDialog() {
+        Utility.playSound(DialogActivity.this);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         ViewGroup viewGroup = findViewById(android.R.id.content);
         View view = LayoutInflater.from(this).inflate(R.layout.fragment_notif_dialog,viewGroup,false);

@@ -5,7 +5,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.util.Log;
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+import com.example.islamicinfoapp.src.main.java.com.view.DialogActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,6 +70,12 @@ public class Utility {
         return sdf.format(Calendar.getInstance().getTime());
     }
 
+    public static void playSound(Context context) {
+        Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        MediaPlayer mediaPlayer = MediaPlayer.create(context,uri);
+        mediaPlayer.start();
+    }
+
     public boolean checkForNetworkAvailibility(Context context) {
         mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return mConnectivityManager.getActiveNetworkInfo()!= null && mConnectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
@@ -116,6 +126,7 @@ public class Utility {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
 
 //        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 //            DateTimeFormatter parser = DateTimeFormatter.ofPattern("hh:mm",Locale.ENGLISH);

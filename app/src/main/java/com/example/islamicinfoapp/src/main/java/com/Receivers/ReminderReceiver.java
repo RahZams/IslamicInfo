@@ -6,14 +6,16 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.islamicinfoapp.R;
-import com.example.islamicinfoapp.src.main.java.Services.ReminderService;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+import com.example.islamicinfoapp.src.main.java.com.services.ReminderService;
+import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.view.DialogActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
 
@@ -30,11 +32,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         mNamazTime = intent.getStringExtra(context.getResources().getString(R.string.namazTime));
         mCityName = intent.getStringExtra(context.getResources().getString(R.string.cityname));
         mCountryName = intent.getStringExtra(context.getResources().getString(R.string.countryname));
-        Intent serviceIntent = new Intent(context, ReminderService.class);
-        serviceIntent.putExtra(context.getResources().getString(R.string.cityname),mCityName);
-        serviceIntent.putExtra(context.getResources().getString(R.string.countryname),mCountryName);
-        serviceIntent.putExtra(context.getResources().getString(R.string.namazName),mNamazName);
-        context.startService(serviceIntent);
+        startServiceCall(context);
         Log.d("prayer", "onReceive: " + mCityName);
         switch(mNamazName){
             case Constants.FAJR:
@@ -81,6 +79,19 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
     }
 
+    private void startServiceCall(Context context) {
+        Intent serviceIntent = new Intent(context, ReminderService.class);
+        serviceIntent.putExtra(context.getResources().getString(R.string.cityname),mCityName);
+        serviceIntent.putExtra(context.getResources().getString(R.string.countryname),mCountryName);
+        serviceIntent.putExtra(context.getResources().getString(R.string.namazName),mNamazName);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            context.startForegroundService(serviceIntent);
+        }
+        else {
+            context.startService(serviceIntent);
+        }
+    }
+
     private void createCustomDialog(Context context,
                                     String mNamazTime,String mTitle, String mDesc) {
        Log.d("prayer", "createCustomDialog: " + mNamazTime + mTitle + mDesc);
@@ -122,6 +133,8 @@ public class ReminderReceiver extends BroadcastReceiver {
         startAppIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,startAppIntent,0);
 
+        Utility.playSound(context);
+
         Notification notification = new NotificationCompat.Builder(context,Constants.NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.ic_quran)
                 .setContentTitle(mTitle)
@@ -134,7 +147,6 @@ public class ReminderReceiver extends BroadcastReceiver {
                 .setCategory(NotificationCompat.CATEGORY_ALARM)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .build();
-
         mNotificationManagerCompat.notify(Constants.NOTIFICATION_ID,notification);
     }
 

@@ -1,4 +1,4 @@
-package com.example.islamicinfoapp.src.main.java.Services;
+package com.example.islamicinfoapp.src.main.java.com.services;
 
 import android.app.PendingIntent;
 import android.app.Service;

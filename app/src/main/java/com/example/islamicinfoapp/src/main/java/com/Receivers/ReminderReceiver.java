@@ -2,6 +2,7 @@ package com.example.islamicinfoapp.src.main.java.com.Receivers;
 
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;

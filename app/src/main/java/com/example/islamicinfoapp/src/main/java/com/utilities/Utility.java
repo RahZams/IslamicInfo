@@ -1,6 +1,9 @@
 package com.example.islamicinfoapp.src.main.java.com.utilities;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -13,10 +16,12 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
-import com.example.islamicinfoapp.src.main.java.com.view.DialogActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,6 +79,30 @@ public class Utility {
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         MediaPlayer mediaPlayer = MediaPlayer.create(context,uri);
         mediaPlayer.start();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String createNotificationChannel(Context context) {
+        NotificationManager notificationManager = (NotificationManager)
+                context.getSystemService(Context.NOTIFICATION_SERVICE);
+        String channelId  = "SERVICE_CHANNEL_ID";
+        String channelName = "Service Notification Channel";
+        NotificationChannel notificationChannel = new NotificationChannel(channelId,channelName,
+                NotificationManager.IMPORTANCE_HIGH);
+        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+        notificationManager.createNotificationChannel(notificationChannel);
+        return channelId;
+
+    }
+
+    public static Notification createNotification(Context context, String channelId, int notification_id) {
+        NotificationCompat.Builder builder = new NotificationCompat.
+                Builder(context,channelId);
+        Notification notification = builder.setOngoing(true)
+                .setContentTitle("service example")
+                .setCategory(Notification.CATEGORY_SERVICE)
+                .build();
+        return notification;
     }
 
     public boolean checkForNetworkAvailibility(Context context) {

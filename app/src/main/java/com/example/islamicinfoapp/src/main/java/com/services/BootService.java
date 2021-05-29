@@ -22,6 +22,11 @@ public class BootService extends Service {
     int NOTIFICATION_ID = 0;
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("prayer", "BootService:onStartCommand: " + intent);
         mCityName = SharedPrefsHelper.getValue(getApplicationContext(),
@@ -62,12 +67,12 @@ public class BootService extends Service {
         return null;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Log.d("prayer", "BootService : onCreate:");
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            startForeground(NOTIFICATION_ID,new Notification.Builder(this).build());
-        }
-    }
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        Log.d("prayer", "BootService : onCreate:");
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            startForeground(NOTIFICATION_ID,new Notification.Builder(this).build());
+//        }
+//    }
 }

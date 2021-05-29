@@ -9,6 +9,8 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
@@ -42,6 +44,15 @@ public class ReminderService extends Service {
         Log.d("prayer", "ReminderService: ");
         mQuranApi = QuranApiService.getRetrofitInstance(BASE_URL,
                 PrayerTiming.class,new PrayerTimeDeserializer()).create(QuranApi.class);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        String channelId = Utility.createNotificationChannel(ReminderService.this);
+        Notification notification = Utility.createNotification(ReminderService.this,channelId,NOTIFICATION_ID);
+        startForeground(NOTIFICATION_ID,notification);
     }
 
     @Nullable
@@ -243,13 +254,13 @@ public class ReminderService extends Service {
         return START_STICKY;
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            startForeground(NOTIFICATION_ID,new Notification.Builder(this).build());
-        }
-    }
+//    @Override
+//    public void onCreate() {
+//        super.onCreate();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            startForeground(NOTIFICATION_ID,new Notification.Builder(this).build());
+//        }
+//    }
 
     @Override
     public void onDestroy() {

@@ -1,7 +1,9 @@
 package com.example.islamicinfoapp.src.main.java.com.services;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -17,6 +19,7 @@ import java.util.Set;
 public class BootService extends Service {
     String mCityName,mCountryName;
     Map<String,?> allSharedPrefs;
+    int NOTIFICATION_ID = 0;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -43,9 +46,9 @@ public class BootService extends Service {
 //                        sharedPrefsValues[1],
 //                        Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
                     Log.d("prayer", "BootService onStartCommand: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
-                    Utility.setupReminder(getApplicationContext(), sharedPrefsValues[0],
+                    Utility.setupReminder(BootService.this, sharedPrefsValues[0],
                             sharedPrefsValues[1],
-                            Utility.createPendingIntent(getApplicationContext(), s,
+                            Utility.createPendingIntent(BootService.this, s,
                                     sharedPrefsValues[1], mCityName, mCountryName));
                 }
             }
@@ -63,5 +66,8 @@ public class BootService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.d("prayer", "BootService : onCreate:");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            startForeground(NOTIFICATION_ID,new Notification.Builder(this).build());
+        }
     }
 }

@@ -39,8 +39,9 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".src.main.java.com.services.BootService"/>
 
+        <service android:name=".src.main.java.com.services.BootService"/>
+        <service android:name=".src.main.java.com.services.ReminderService"/>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

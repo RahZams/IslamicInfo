@@ -1,8 +1,10 @@
 package com.example.islamicinfoapp.src.main.java.com.services;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -34,6 +36,8 @@ public class ReminderService extends Service {
     private String city,country,namazName;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private String BASE_URL = "https://api.aladhan.com/v1/";
+    int NOTIFICATION_ID = 0;
+
     public ReminderService() {
         Log.d("prayer", "ReminderService: ");
         mQuranApi = QuranApiService.getRetrofitInstance(BASE_URL,
@@ -242,6 +246,9 @@ public class ReminderService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            startForeground(NOTIFICATION_ID,new Notification.Builder(this).build());
+        }
     }
 
     @Override

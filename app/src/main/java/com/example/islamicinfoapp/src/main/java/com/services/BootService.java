@@ -20,28 +20,29 @@ public class BootService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("prayer", "BootService:onStartCommand: " + intent);
         mCityName = SharedPrefsHelper.getValue(getApplicationContext(),
                 getApplicationContext().getString(R.string.cityname));
         mCountryName = SharedPrefsHelper.getValue(getApplicationContext(),
                 getApplicationContext().getString(R.string.countryname));
         allSharedPrefs = SharedPrefsHelper.getAllSharedPrefs(getApplicationContext());
-        Log.d("prayer", "onStartCommand: " + mCityName + " " + mCountryName);
+        Log.d("prayer", "BootService:onStartCommand: " + mCityName + " " + mCountryName);
         Set<String> sharedPrefsKeys = allSharedPrefs.keySet();
-        Log.d("prayer", "onStartCommand: " + sharedPrefsKeys.size());
+        Log.d("prayer", "BootService onStartCommand: " + sharedPrefsKeys.size());
         for (String s:sharedPrefsKeys) {
-            Log.d("prayer", "onStartCommand: s" + s);
+            Log.d("prayer", "BootService onStartCommand: s" + s);
             if (SharedPrefsHelper.getValue(getApplicationContext(), s).contains(",")) {
                 String[] sharedPrefsValues = SharedPrefsHelper.getValue(getApplicationContext(), s).
                         split(",");
-                Log.d("prayer", "onStartCommand: sharedPrefsValues" + sharedPrefsValues[0]
+                Log.d("prayer", "BootService onStartCommand: sharedPrefsValues" + sharedPrefsValues[0]
                         + " : " + sharedPrefsValues[1] + ":" + sharedPrefsValues[2]);
                 if (sharedPrefsValues[2].equals("true")) {
-                    Log.d("prayer", "onStartCommand: " + "true");
+                    Log.d("prayer", "BootService onStartCommand: " + "true");
                     //if (sharedPrefsValues[0] > Utility.getCurrentTime())
 //                Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                        sharedPrefsValues[1],
 //                        Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
-                    Log.d("prayer", "onStartCommand: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
+                    Log.d("prayer", "BootService onStartCommand: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
                     Utility.setupReminder(getApplicationContext(), sharedPrefsValues[0],
                             sharedPrefsValues[1],
                             Utility.createPendingIntent(getApplicationContext(), s,
@@ -56,5 +57,11 @@ public class BootService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Log.d("prayer", "BootService : onCreate:");
     }
 }

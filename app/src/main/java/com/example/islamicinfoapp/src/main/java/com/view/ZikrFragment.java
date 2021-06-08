@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.DuasViewModel;
 
@@ -51,6 +52,7 @@ public class ZikrFragment extends Fragment {
     private NavController mNavController;
     private AppBarConfiguration mAppBarConfig;
     private Toolbar mToolbar;
+    private static final String TAG = ZikrFragment.class.getSimpleName();
 
     public ZikrFragment() {
         // Required empty public constructor
@@ -92,7 +94,7 @@ public class ZikrFragment extends Fragment {
                 mSurahName = mChild_items.get(mZikr_items.get(groupPosition)).get(childPosition);
                 mSurahName = mSurahName.split(" ").length == 2 ?
                         mSurahName.split(" ")[1] : mSurahName.split(" ")[3];
-                Log.d("zikr", "onChildClick: " + mSurahName);
+                Log.d(Constants.ZIKR_TAG, TAG + " onChildClick: " + mSurahName);
                 mNavController = Navigation.findNavController(view);
                 ZikrFragmentDirections.Action_zikrFragment_to_surahItemFragment action =
                         ZikrFragmentDirections.action_zikrFragment_to_surahItemFragment(mSurahName);
@@ -104,7 +106,7 @@ public class ZikrFragment extends Fragment {
         mExpandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Log.d("zikr", "onGroupClick: " + groupPosition);
+                Log.d(Constants.ZIKR_TAG, TAG + " onGroupClick: " + groupPosition);
                 switch (groupPosition) {
                     case 0:
                         sendStringArgsToItemFrag(mZikr_items.get(groupPosition),getResources().getString(R.string.darood));

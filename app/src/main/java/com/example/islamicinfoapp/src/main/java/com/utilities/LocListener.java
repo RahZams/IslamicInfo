@@ -27,6 +27,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.view.LocationActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
@@ -46,6 +47,7 @@ public class LocListener implements LocationListener {
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private Utility mUtility;
     private CallMainActivityCallback callMainActivityCallback;
+    private static final String TAG = LocListener.class.getSimpleName();
 
     public LocListener(LocationActivity context) {
         this.mContext = context;
@@ -83,7 +85,7 @@ public class LocListener implements LocationListener {
                 checkIfDataAvailableInDatabase(cityName,countryName);
                 callMainActivityCallback.callMainAcitivity(cityName,countryName);
              //   getPrayerTimesDataFromApi(cityName, countryName);
-                Log.d("prayer", "onLocationChanged: " + cityName + " " + countryName);
+                Log.d(Constants.PRAYER_TAG, TAG + " onLocationChanged: " + cityName + " " + countryName);
                 //SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.cityname),cityName);
                 //SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.countryname),countryName);
                 Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
@@ -108,7 +110,7 @@ public class LocListener implements LocationListener {
                 .observe((LifecycleOwner) mContext, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        Log.d("prayer", "onChanged: " + " integer "+ integer);
+                        Log.d(Constants.PRAYER_TAG, TAG + " onChanged: " + " integer "+ integer);
                         if (integer == 0){
                             getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(new Date()));
                         }
@@ -118,7 +120,7 @@ public class LocListener implements LocationListener {
 
     private void getPrayerTimesDataFromApi(String cityName, String countryName,String formattedDate) {
         //String formattedDate = mUtility.getCurrentDate();
-        Log.d("prayer", "getPrayerTimesDataFromApi: " + cityName + countryName + formattedDate);
+        Log.d(Constants.PRAYER_TAG, TAG + " getPrayerTimesDataFromApi: " + cityName + countryName + formattedDate);
         //boolean exists = mPrayerTimeVewModel.checkIfExists(cityName,countryName,formattedDate);
         //Log.d("date", "getPrayerTimesDataFromApi: " + exists);
         mPrayerTimeViewModel.fetchFromRemote(cityName,countryName,formattedDate);
@@ -202,14 +204,14 @@ public class LocListener implements LocationListener {
                 continue;
             }
             if (bestLocation == null){
-                Log.d("prayer", "findLocation: " + "provider" + provider);
+                Log.d(Constants.PRAYER_TAG, TAG + " findLocation: " + "provider" + provider);
                     bestLocation = location;
             }
         }
 //        if (bestLocation == null){
 //
 //        }
-        Log.d("prayer", "findLocation: " + bestLocation);
+        Log.d(Constants.PRAYER_TAG, TAG + " findLocation: " + bestLocation);
         onLocationChanged(bestLocation);
     }
 

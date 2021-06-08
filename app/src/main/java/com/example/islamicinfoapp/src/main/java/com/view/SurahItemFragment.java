@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.SurahAyahItemLayoutBinding;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.model.SurahAyahItemApiData;
 import com.example.islamicinfoapp.src.main.java.com.model.SurahData;
@@ -37,6 +38,7 @@ public class SurahItemFragment extends Fragment {
     private String mSurahName;
     private SurahViewModel mSurahViewModel;
     private SurahItemAdapter surahItemAdapter;
+    private static final String TAG = SurahItemFragment.class.getSimpleName();
 
     public SurahItemFragment() {
         // Required empty public constructor
@@ -53,7 +55,7 @@ public class SurahItemFragment extends Fragment {
         mSurahViewModel = ViewModelProviders.of(this).get(SurahViewModel.class);
         if (getArguments()!= null){
             mSurahName = SurahItemFragmentArgs.fromBundle(getArguments()).getSurahname();
-            Log.d("surah", "onCreateView: " + mSurahName);
+            Log.d(Constants.SURAH_TAG, TAG + " onCreateView: " + mSurahName);
             //mSurahViewModel.fetchFromDatabase(mSurahName);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setAdapter(surahItemAdapter);
@@ -64,7 +66,7 @@ public class SurahItemFragment extends Fragment {
     }
 
     private void observeViewModel(String mSurahName) {
-        Log.d("surah_item", "observeViewModel: ");
+        Log.d(Constants.SURAH_TAG, TAG + " observeViewModel: ");
 //        mSurahViewModel.mSurahDataMutableLiveData.observe(this,surahData -> {
 //            Log.d("surah_item", "observeViewModel: " + surahData);
 //            if (surahData!= null){
@@ -76,9 +78,10 @@ public class SurahItemFragment extends Fragment {
         QuranDatabase.getInstance(getActivity()).quranDao().getSurahData(mSurahName).observe(this, new Observer<SurahData>() {
             @Override
             public void onChanged(SurahData surahData) {
-                Log.d("surah_item", "onChanged: ");
+                Log.d(Constants.SURAH_TAG, TAG + " onChanged: ");
                 if (surahData != null){
-                    Log.d("surah_item", "onChanged: " + surahData.toString().length());
+                    Log.d(Constants.SURAH_TAG, Constants.SURAH_TAG + " onChanged: "
+                            + surahData.toString().length());
                     surahItemAdapter.updateList(surahData.getAyahList());
                 }
             }

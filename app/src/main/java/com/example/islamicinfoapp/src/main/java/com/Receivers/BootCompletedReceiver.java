@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.PowerManager;
 import android.util.Log;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.services.BootService;
@@ -11,14 +12,19 @@ import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import java.util.Map;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
-    Map<String,?> allSharedPrefs;
-    String mCityName,mCountryName;
+//    Map<String,?> allSharedPrefs;
+//    String mCityName,mCountryName;
+    private static final String TAG = BootCompletedReceiver.class.getSimpleName();
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("prayer", " BootCompletedReceiver onReceive: " + intent.getAction() +
+        Log.d(Constants.PRAYER_TAG, TAG + " onReceive: " + intent.getAction() +
                 SharedPrefsHelper.getValue(context, Constants.FAJR));
         Intent serviceIntent = new Intent(context, BootService.class);
+        PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"islamicapp:my_wake_lock");
+        wakeLock.acquire();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            Log.d(Constants.PRAYER_TAG,TAG + " onReceive: O" );
             context.startForegroundService(serviceIntent);
         }
         else{

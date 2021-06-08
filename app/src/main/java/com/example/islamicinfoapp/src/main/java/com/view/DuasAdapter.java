@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.DuasItemLayoutBinding;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +19,17 @@ public class DuasAdapter extends RecyclerView.Adapter<DuasAdapter.DuasViewHolder
     private List<QuranDbData> mQuranDbData;
     //private List<String> mEveryDuasList;
     private String[] mDuasTitle,mEverydayDuasTitle;
+    private static final String TAG = DuasAdapter.class.getSimpleName();
 
     public DuasAdapter(ArrayList<QuranDbData> quranDbData) {
             mQuranDbData = quranDbData;
     }
 
     public void updateList(String[] duasTitle, List<QuranDbData> quranDbData) {
-        Log.d("tag", "updateList: "  + quranDbData.size());
+        Log.d(Constants.PRAYER_TAG, TAG + "updateList: "  + quranDbData.size());
         mDuasTitle = duasTitle;
         mQuranDbData.addAll(quranDbData);
-        Log.d("tag", "updateList: " + "mQuranDbData " + mQuranDbData.size());
+        Log.d(Constants.PRAYER_TAG, TAG + " updateList: " + "mQuranDbData " + mQuranDbData.size());
         notifyDataSetChanged();
     }
 
@@ -41,14 +43,14 @@ public class DuasAdapter extends RecyclerView.Adapter<DuasAdapter.DuasViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull DuasViewHolder holder, int position) {
-        Log.d("tag", "onBindViewHolder: " + position);
+        Log.d(Constants.PRAYER_TAG, TAG + " onBindViewHolder: " + position);
         holder.itemView.setDua(mQuranDbData.get(position));
         holder.itemView.duaItemTitle.setText(mDuasTitle[position]);
     }
 
     @Override
     public int getItemCount() {
-        Log.d("tag", "getItemCount: " +mQuranDbData.size() );
+        Log.d(Constants.PRAYER_TAG, TAG + " getItemCount: " +mQuranDbData.size() );
         return mQuranDbData.size();
     }
 

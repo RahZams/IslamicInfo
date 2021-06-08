@@ -8,12 +8,15 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+
 import java.util.HashMap;
 import java.util.List;
 
 public class ZikrAdapter extends BaseExpandableListAdapter {
     private List<String> mZikr_items;
     private HashMap<String,List<String>> mChild_items;
+    private static final String TAG = ZikrAdapter.class.getSimpleName();
 
     public ZikrAdapter(List<String> mZikr_items, HashMap<String, List<String>> mChild_items) {
         this.mZikr_items = mZikr_items;
@@ -40,7 +43,7 @@ public class ZikrAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        Log.d("zikr", "getChild: " + groupPosition);
+        Log.d(Constants.ZIKR_TAG, TAG + " getChild: " + groupPosition);
         if (groupPosition > 4)
             return mChild_items.get(mZikr_items.get(groupPosition)).get(childPosition);
         else
@@ -76,7 +79,7 @@ public class ZikrAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        Log.d("zikr", "getChildView: "  + mChild_items.get(mZikr_items.get(groupPosition)).get(childPosition));
+        Log.d(Constants.ZIKR_TAG, TAG + " getChildView: "  + mChild_items.get(mZikr_items.get(groupPosition)).get(childPosition));
         if (mChild_items.get(mZikr_items.get(groupPosition)).get(childPosition) != null){
             if (convertView == null){
                 convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.zikr_child_item,parent,false);

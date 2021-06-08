@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Log.d("main_log", "onBackPressed: ");
+        Log.d(Constants.PRAYER_TAG, "onBackPressed: ");
         finish();
     }
 

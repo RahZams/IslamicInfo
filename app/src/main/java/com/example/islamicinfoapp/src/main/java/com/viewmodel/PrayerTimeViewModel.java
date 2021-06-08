@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
 public class PrayerTimeViewModel extends AndroidViewModel {
-    private static final String TAG = PrayerTimeViewModel.class.getName();
+    private static final String TAG = PrayerTimeViewModel.class.getSimpleName();
     public MutableLiveData<PrayerTiming> mTimingMutableLiveData = new MutableLiveData<>();
     private QuranApi mQuranApi;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();

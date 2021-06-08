@@ -15,7 +15,9 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+import com.example.islamicinfoapp.src.main.java.com.services.ReminderLifeService;
 import com.example.islamicinfoapp.src.main.java.com.services.ReminderService;
+import com.example.islamicinfoapp.src.main.java.com.services.ReminderService_old;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.view.DialogActivity;
 import com.example.islamicinfoapp.src.main.java.com.view.MainActivity;
@@ -25,16 +27,17 @@ import java.util.List;
 public class ReminderReceiver extends BroadcastReceiver {
     private NotificationManagerCompat mNotificationManagerCompat;
     String mNamazName,mNamazTime,mTitle,mDesc,mCityName,mDialogTitle,mCountryName;
+    private static final String TAG = ReminderReceiver.class.getSimpleName();
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("prayer", "onReceive: ");
+        Log.d(Constants.PRAYER_TAG, TAG + " onReceive: ");
         mNamazName = intent.getStringExtra(context.getResources().getString(R.string.namazName));
         mNamazTime = intent.getStringExtra(context.getResources().getString(R.string.namazTime));
         mCityName = intent.getStringExtra(context.getResources().getString(R.string.cityname));
         mCountryName = intent.getStringExtra(context.getResources().getString(R.string.countryname));
         startServiceCall(context);
-        Log.d("prayer", "onReceive: " + mCityName);
+        Log.d(Constants.PRAYER_TAG, TAG + " onReceive: " + mCityName);
         switch(mNamazName){
             case Constants.FAJR:
                 mTitle = context.getResources().getString(R.string.fajr_title_notif) + " " + mCityName + " " + mNamazTime;
@@ -71,31 +74,33 @@ public class ReminderReceiver extends BroadcastReceiver {
         }
 
         if ((checkRunningApp(context)).equals(context.getResources().getString(R.string.package_name))){
-            Log.d("prayer", "onReceive: " + "if");
+            Log.d(Constants.PRAYER_TAG, TAG + " onReceive: " + "if");
             createCustomDialog(context,mNamazTime,mDialogTitle,mDesc);
         }
         else{
-            Log.d("prayer", "onReceive: " + "else");
+            Log.d(Constants.PRAYER_TAG, TAG + "onReceive: " + "else");
             createNotification(context,mTitle,mDesc);
         }
     }
 
     private void startServiceCall(Context context) {
-        Intent serviceIntent = new Intent(context, ReminderService.class);
+        //Intent serviceIntent = new Intent(context, ReminderService.class);
+        Intent serviceIntent = new Intent(context, ReminderLifeService.class);
         serviceIntent.putExtra(context.getResources().getString(R.string.cityname),mCityName);
         serviceIntent.putExtra(context.getResources().getString(R.string.countryname),mCountryName);
         serviceIntent.putExtra(context.getResources().getString(R.string.namazName),mNamazName);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            context.startForegroundService(serviceIntent);
-        }
-        else {
-            context.startService(serviceIntent);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            context.startForegroundService(serviceIntent);
+//        }
+//        else {
+//            context.startService(serviceIntent);
+//        } .
+        context.startService(serviceIntent);
     }
 
     private void createCustomDialog(Context context,
                                     String mNamazTime,String mTitle, String mDesc) {
-       Log.d("prayer", "createCustomDialog: " + mNamazTime + mTitle + mDesc);
+       Log.d(Constants.PRAYER_TAG, TAG + " createCustomDialog: " + mNamazTime + mTitle + mDesc);
 //        NotifDialogFragment dialogFragment = new NotifDialogFragment();
 //        dialogFragment.show(context.getSupportFragmentManager(),"dialog");
 
@@ -154,7 +159,7 @@ public class ReminderReceiver extends BroadcastReceiver {
     private String checkRunningApp(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(1);
-        Log.d("prayer", "checkRunningApp: " + tasks.get(0).baseActivity.getPackageName());
+        Log.d(Constants.PRAYER_TAG, TAG + " checkRunningApp: " + tasks.get(0).baseActivity.getPackageName());
         return tasks.get(0).baseActivity.getPackageName();
 
 //        if (tasks.get(0).baseActivity.getPackageName().

@@ -10,9 +10,12 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 
+import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,6 +23,7 @@ public class BootService extends Service {
     String mCityName,mCountryName;
     Map<String,?> allSharedPrefs;
     int NOTIFICATION_ID = 0;
+    private static final String TAG = BootService.class.getSimpleName();
 
     @Override
     public void onCreate() {
@@ -28,29 +32,29 @@ public class BootService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("prayer", "BootService:onStartCommand: " + intent);
+        Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + intent);
         mCityName = SharedPrefsHelper.getValue(getApplicationContext(),
                 getApplicationContext().getString(R.string.cityname));
         mCountryName = SharedPrefsHelper.getValue(getApplicationContext(),
                 getApplicationContext().getString(R.string.countryname));
         allSharedPrefs = SharedPrefsHelper.getAllSharedPrefs(getApplicationContext());
-        Log.d("prayer", "BootService:onStartCommand: " + mCityName + " " + mCountryName);
+        Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + mCityName + " " + mCountryName);
         Set<String> sharedPrefsKeys = allSharedPrefs.keySet();
-        Log.d("prayer", "BootService onStartCommand: " + sharedPrefsKeys.size());
+        Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + sharedPrefsKeys.size());
         for (String s:sharedPrefsKeys) {
-            Log.d("prayer", "BootService onStartCommand: s" + s);
+            Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: s" + s);
             if (SharedPrefsHelper.getValue(getApplicationContext(), s).contains(",")) {
                 String[] sharedPrefsValues = SharedPrefsHelper.getValue(getApplicationContext(), s).
                         split(",");
-                Log.d("prayer", "BootService onStartCommand: sharedPrefsValues" + sharedPrefsValues[0]
+                Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: sharedPrefsValues" + sharedPrefsValues[0]
                         + " : " + sharedPrefsValues[1] + ":" + sharedPrefsValues[2]);
                 if (sharedPrefsValues[2].equals("true")) {
-                    Log.d("prayer", "BootService onStartCommand: " + "true");
+                    Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + "true");
                     //if (sharedPrefsValues[0] > Utility.getCurrentTime())
 //                Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                        sharedPrefsValues[1],
 //                        Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
-                    Log.d("prayer", "BootService onStartCommand: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
+                    Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
                     Utility.setupReminder(BootService.this, sharedPrefsValues[0],
                             sharedPrefsValues[1],
                             Utility.createPendingIntent(BootService.this, s,
@@ -70,7 +74,7 @@ public class BootService extends Service {
 //    @Override
 //    public void onCreate() {
 //        super.onCreate();
-//        Log.d("prayer", "BootService : onCreate:");
+//        Log.d("prayer", "BootSe434Drvice : onCreate:");
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
 //            startForeground(NOTIFICATION_ID,new Notification.Builder(this).build());
 //        }

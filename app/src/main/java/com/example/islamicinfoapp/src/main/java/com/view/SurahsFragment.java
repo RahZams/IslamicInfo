@@ -17,6 +17,7 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -40,6 +41,7 @@ public class SurahsFragment extends Fragment {
     private List<String> mSurahHeaderItemList, mSurahChildItemList;
     private HashMap<String, List<String>> mSurahChildItem;
     String mSurahName;
+    private static final String TAG = SurahsFragment.class.getSimpleName();
 
 //    @BindView(R.id.recyclerview)
 //    RecyclerView mRecyclerView;
@@ -69,7 +71,7 @@ public class SurahsFragment extends Fragment {
                         mSurahChildItem.get(mSurahHeaderItemList.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
                 mSurahName = mSurahChildItem.get(mSurahHeaderItemList.get(groupPosition)).get(childPosition);
                 mSurahName = mSurahName.split(" ")[1];
-                Log.d("surah", "onChildClick: " + "mSurahName: "  + mSurahName);
+                Log.d(Constants.SURAH_TAG, TAG + " onChildClick: " + "mSurahName: "  + mSurahName);
                 NavController navController = Navigation.findNavController(v);
                 SurahsFragmentDirections.Action_surahsFragment_to_surahItemFragment action =
                         SurahsFragmentDirections.action_surahsFragment_to_surahItemFragment(mSurahName);

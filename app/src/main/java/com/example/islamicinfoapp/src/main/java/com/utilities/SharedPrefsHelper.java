@@ -5,12 +5,15 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+
 import java.util.Map;
 
 public class SharedPrefsHelper {
     public static SharedPreferences.Editor mEditor;
     private static SharedPreferences mSharedPreferences;
     public static final String SHARED_PREFS = "APP_SHARED_PREFS";
+    private static final String TAG = SharedPrefsHelper.class.getSimpleName();
 
     private static SharedPreferences getPrefs(Context context) {
         if (mSharedPreferences == null) {
@@ -20,7 +23,7 @@ public class SharedPrefsHelper {
     }
 
     public static void storeValue(Context context, String key, boolean value) {
-        Log.d("prayer", "storeValue: " + "key:" + key + " value:" + value);
+        Log.d(Constants.PRAYER_TAG, TAG + " storeValue: " + "key:" + key + " value:" + value);
         if (mSharedPreferences == null)
             mSharedPreferences = getPrefs(context);
 
@@ -31,7 +34,7 @@ public class SharedPrefsHelper {
     }
 
     public static void storeValue(Context context, String key, String value) {
-        Log.d("prayer", "storeValue: " + "key:" + key + " value:" + value);
+        Log.d(Constants.PRAYER_TAG, TAG + " storeValue: " + "key:" + key + " value:" + value);
         if (mSharedPreferences == null)
             mSharedPreferences = getPrefs(context);
 

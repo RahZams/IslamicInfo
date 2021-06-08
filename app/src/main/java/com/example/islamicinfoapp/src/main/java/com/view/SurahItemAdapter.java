@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.SurahAyahItemLayoutBinding;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.SurahAyahItemApiData;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
     private List<SurahAyahItemApiData> mSurahDataAyahs;
     private Context mContext;
     int viewWidth;
+    private static final String TAG = SurahItemAdapter.class.getSimpleName();
 
     public SurahItemAdapter(Context context,ArrayList<SurahAyahItemApiData> surahAyahItemApiData) {
         mContext = context;
@@ -56,9 +58,9 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onBindViewHolder(@NonNull SurahItemViewHolder holder, int position) {
-        Log.d("surah_item", "onBindViewHolder: " + position);
+        Log.d(Constants.SURAHITEM, TAG + " onBindViewHolder: " + position);
         //holder.itemView.setSurahitem(mSurahDataAyahs.get(position));
-        Log.d("surah_item", "onBindViewHolder: " + mSurahDataAyahs.get(position).getAyahText().length());
+        Log.d(Constants.SURAHITEM, TAG + " onBindViewHolder: " + mSurahDataAyahs.get(position).getAyahText().length());
         SpannableString spanString = new SpannableString(mSurahDataAyahs.get(position).getAyahText() + "   " +
                 mSurahDataAyahs.get(position).getNumberInSurah());
         //SpannableString spanString = new SpannableString("ndndbjdsbjsduidgfudsufgdsugfuisdhfuidhfuirhguihgugbuewiiiwiwieuew8eugfbdbdufuefh");
@@ -95,7 +97,7 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
             @Override
             public boolean onPreDraw() {
                 int linecount = holder.itemView.ayahText.getLineCount();
-                Log.d("surah", "onPreDraw: " + linecount);
+                Log.d(Constants.SURAHITEM, TAG + " onPreDraw: " + linecount);
                 spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
                                 linecount),spanString.length()-2,
                         spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -105,7 +107,8 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
                 return true;
             }
         });
-        Log.d("surah", "onBindViewHolder: " + "line count:" + holder.itemView.ayahText.getLineCount());
+        Log.d(Constants.SURAHITEM, TAG + " onBindViewHolder: " + "line count:" +
+                holder.itemView.ayahText.getLineCount());
 //        Rect bounds = new Rect();
 //        Paint textPaint = holder.itemView.ayahText.getPaint();
 //        textPaint.getTextBounds(spanString,0,spanString.length(),bounds);
@@ -149,7 +152,7 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
     }
 
     public void updateList(List<SurahAyahItemApiData> surahDataAyahs) {
-        Log.d("surah_item", "updateList: " + surahDataAyahs.size());
+        Log.d(Constants.SURAHITEM, TAG + " updateList: " + surahDataAyahs.size());
         mSurahDataAyahs = surahDataAyahs;
         notifyDataSetChanged();
     }
@@ -192,7 +195,7 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
 
         @Override
         public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, @NonNull Paint paint) {
-            Log.d("surah_item", "draw:" + "text " +  text + "length " + text.length() +
+            Log.d(Constants.SURAHITEM, TAG + " draw:" + "text " +  text + "length " + text.length() +
                     "count " + mLineCount);
             Rect bounds = new Rect();
 //            if (text.length() > Integer.valueOf(mContext.getResources().getString(R.string.min_text_length_surah)))

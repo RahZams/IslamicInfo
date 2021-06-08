@@ -30,9 +30,10 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     private ArrayList<PrayerTimingItem> mPrayerTimeList;
     private Context mContext;
     private String mCityName,mCountryName;
+    private static final String TAG = PrayerTimeAdapter.class.getSimpleName();
 
     public PrayerTimeAdapter(Context context, ArrayList<PrayerTimingItem> mPrayerTimeList) {
-        Log.d("prayer", "PrayerTimeAdapter: " + mPrayerTimeList.size());
+        Log.d(Constants.PRAYER_TAG, TAG + " PrayerTimeAdapter: " + mPrayerTimeList.size());
         this.mContext = context;
         this.mPrayerTimeList = mPrayerTimeList;
     }
@@ -41,14 +42,14 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         mCityName = cityname;
         mCountryName = countryname;
         this.mPrayerTimeList = arrayListOfPrayerTiming;
-        Log.d("prayer", "updateList: " + mPrayerTimeList.size() + mCityName);
+        Log.d(Constants.PRAYER_TAG, TAG + " updateList: " + mPrayerTimeList.size() + mCityName);
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public PrayerItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("prayer", "onCreateViewHolder: ");
+        Log.d(Constants.PRAYER_TAG, TAG + " onCreateViewHolder: ");
                 PrayertimeItemBinding binding = DataBindingUtil.inflate(LayoutInflater.
                                 from(parent.getContext()),R.layout.prayertime_item,parent,false);
         return new PrayerItemViewHolder(binding);
@@ -68,7 +69,8 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
             public void onClick(View v) {
                 setReminders(holder.binding.namazName.getText().toString(),
                         holder.binding.namazTiming.getText().toString(),holder.binding.reminderImage);
-                Log.d("prayer", "onClick: " + holder.binding.reminderImage.getDrawable() + mCityName);
+                Log.d(Constants.PRAYER_TAG, TAG + " onClick: " + holder.binding.reminderImage.getDrawable() +
+                        mCityName);
 
                 // removed from here and placed it in setReminders method
 
@@ -155,7 +157,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     private void setReminders(String namazName, String namazTiming, ImageView reminderImage) {
         String sharedPrefsValue = "";
-        Log.d("prayer", "setReminders: " + namazName + namazTiming);
+        Log.d(Constants.PRAYER_TAG, TAG + " setReminders: " + namazName + namazTiming);
 //        PendingIntent pendingIntent = Utility.createPendingIntent(mContext,namazName,namazTiming,mCityName,mCountryName);
 
         // placed it in utility class method
@@ -216,15 +218,16 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        }
         if (reminderImage.getDrawable().getConstantState().
                 equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
-            Log.d("prayer", "onClick:if set" + Utility.getCurrentDate() + "namazname" + namazName);
+            Log.d(Constants.PRAYER_TAG, TAG + " onClick:if set" + Utility.getCurrentDate() + "namazname" + namazName);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
 //                    setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
             sharedPrefsValue = Utility.getCurrentDate() + "," + namazTiming + ",true";
             SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);
-            Log.d("prayer", "setReminders: sharedPrefsValue" + sharedPrefsValue);
-            Log.d("prayer", "setReminders: " + Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())));
+            Log.d(Constants.PRAYER_TAG, TAG + " setReminders: sharedPrefsValue" + sharedPrefsValue);
+            Log.d(Constants.PRAYER_TAG, TAG + " setReminders: " + Utility.getDateForApi(Utility.convertStringToDate(
+                    Utility.getCurrentDate())));
 //            Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
 //                    "12:36 AM",pendingIntent);
             Utility.setupReminder(mContext,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),
@@ -233,7 +236,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         }
         else if (reminderImage.getDrawable().getConstantState() ==
                 mContext.getResources().getDrawable(R.drawable.ic_notifications_on).getConstantState()){
-            Log.d("prayer", "onClick: else if cancel" + "namazname" + namazName);
+            Log.d(Constants.PRAYER_TAG, TAG + " onClick: else if cancel" + "namazname" + namazName);
             sharedPrefsValue = Utility.getCurrentDate() + "," + namazTiming +",false";
             SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);
             reminderImage.setImageDrawable
@@ -242,13 +245,12 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
             Utility.cancelReminder(mContext,namazName);
         }
         else{
-            Log.d("prayer", "onClick:else ");
+            Log.d(Constants.PRAYER_TAG, TAG + " onClick:else ");
         }
-
     }
 
     private void assignReminderImage(String namazName, ImageView reminderImage) {
-        Log.d("prayer", "assignReminderImage: " + "namazName:" + namazName);
+        Log.d(Constants.PRAYER_TAG, TAG + " assignReminderImage: " + "namazName:" + namazName);
 //                SharedPrefsHelper.getValue(mContext,namazName).split("-")[0] +
 //                SharedPrefsHelper.getValue(mContext,namazName).split("-")[1]
 //        + SharedPrefsHelper.getValue(mContext,namazName).split("-")[2]);
@@ -273,7 +275,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //            Log.d("prayer", "assignReminderImage: sharedPrefsValue[0]" + sharedPrefsValue[0] +
 //                    "sharedPrefsValue[1]" + sharedPrefsValue[1] + "sharedPrefsValue[2]" + sharedPrefsValue[2]);
 //                if (sharedPrefsValue[2].equals("true")) {
-                Log.d("prayer", "assignReminderImage: if");
+                Log.d(Constants.PRAYER_TAG, TAG + " assignReminderImage: if");
                 reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
             //}
         }

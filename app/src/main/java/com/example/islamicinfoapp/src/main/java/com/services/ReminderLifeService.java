@@ -2,13 +2,10 @@ package com.example.islamicinfoapp.src.main.java.com.services;
 
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleService;
@@ -36,39 +33,41 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Response;
 
-public class ReminderService extends Service {
+public class ReminderLifeService extends LifecycleService {
 
     private QuranApi mQuranApi;
     private String city, country, namazName;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private String BASE_URL = "https://api.aladhan.com/v1/";
     int NOTIFICATION_ID = 0;
-    private static final String TAG = ReminderService.class.getSimpleName();
+    private static final String TAG = ReminderLifeService.class.getSimpleName();
 
-    public ReminderService() {
+    public ReminderLifeService() {
         Log.d(Constants.PRAYER_TAG, TAG);
         mQuranApi = QuranApiService.getRetrofitInstance(BASE_URL,
                 PrayerTiming.class, new PrayerTimeDeserializer()).create(QuranApi.class);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    //@RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate() {
         super.onCreate();
-        String channelId = Utility.createNotificationChannel(ReminderService.this);
-        Notification notification = Utility.createNotification(ReminderService.this,
+        Log.d(Constants.PRAYER_TAG, TAG + " onCreate: ");
+        String channelId = Utility.createNotificationChannel(this);
+        Notification notification = Utility.createNotification(this,
                 channelId, NOTIFICATION_ID);
         startForeground(NOTIFICATION_ID, notification);
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d(Constants.PRAYER_TAG,TAG +  " onStartCommand: ");
+
+        String channelId = Utility.createNotificationChannel(this);
+        Notification notification = Utility.createNotification(this,
+                channelId, NOTIFICATION_ID);
+        startForeground(NOTIFICATION_ID, notification);
+
         if (intent != null) {
             city = intent.getStringExtra(getResources().getString(R.string.cityname));
             country = intent.getStringExtra(getResources().getString(R.string.countryname));
@@ -76,12 +75,14 @@ public class ReminderService extends Service {
             Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + city + country + namazName);
             checkIfDataAvailableInDb(city, country, Utility.getTomorrowDate(), namazName);
         }
-        return START_STICKY;
+        //return START_STICKY;
+        return super.onStartCommand(intent, flags, startId);
     }
 
     private void checkIfDataAvailableInDb(String city, String country, String tomorrowDate, String namazName) {
-        QuranDatabase.getInstance(ReminderService.this).quranDao().getRecordCount(city, country, tomorrowDate)
-                .observe((LifecycleOwner) ReminderService.this, new androidx.lifecycle.Observer<Integer>() {
+        Log.d(Constants.PRAYER_TAG,TAG  + " checkIfDataAvailableInDb: " + city  + country + tomorrowDate + namazName);
+        QuranDatabase.getInstance(this).quranDao().getRecordCount(city, country, tomorrowDate)
+                .observe((LifecycleOwner) this, new androidx.lifecycle.Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         Log.d(Constants.PRAYER_TAG, TAG + " onChanged: " + " integer " + integer);
@@ -95,8 +96,9 @@ public class ReminderService extends Service {
     }
 
     private void getDataFromDb(String city, String country, String tomorrowDate, String namazName) {
-        QuranDatabase.getInstance(ReminderService.this).quranDao().getPrayerTimingOfCity(city, country, tomorrowDate)
-                .observe((LifecycleOwner) ReminderService.this, new androidx.lifecycle.Observer<PrayerTiming>() {
+        Log.d(Constants.PRAYER_TAG,TAG + " getDataFromDb: " + city + country + tomorrowDate + namazName);
+        QuranDatabase.getInstance(this).quranDao().getPrayerTimingOfCity(city, country, tomorrowDate)
+                .observe((LifecycleOwner) this, new androidx.lifecycle.Observer<PrayerTiming>() {
                     @Override
                     public void onChanged(PrayerTiming prayerTiming) {
                         setUpReminders(prayerTiming, namazName);
@@ -105,6 +107,7 @@ public class ReminderService extends Service {
     }
 
     private void getDataFromApi(String city, String country, String tomorrowDate, String namazName) {
+        Log.d(Constants.PRAYER_TAG,TAG +" getDataFromApi: " + city + country + tomorrowDate + namazName);
         int method = Integer.parseInt(getApplicationContext().getResources().
                 getString(R.string.prayer_time_calculation_method));
         mQuranApi.getPrayerTimings(tomorrowDate, city, country, method)
@@ -133,7 +136,7 @@ public class ReminderService extends Service {
                         insertDataToDb(prayerTiming, namazName);
                         Log.d(Constants.PRAYER_TAG, "onNext: " + prayerTiming.toString());
                         Log.d(Constants.PRAYER_TAG, "onSuccess: " + prayerTiming.getPrayerTimeEngDate() +
-                                Utility.getTomorrowDate());
+                                Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())));
                     }
 
                     @Override
@@ -147,76 +150,80 @@ public class ReminderService extends Service {
     }
 
     private void setUpReminders(PrayerTiming prayerTiming, String namazName) {
+        Log.d(Constants.PRAYER_TAG,TAG +  " setUpReminders: " + namazName);
         PendingIntent pendingIntent;
         String sharedPrefsValue = "";
         switch (namazName) {
             case Constants.FAJR:
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + namazName);
-                pendingIntent = Utility.createPendingIntent(ReminderService.this,
+                pendingIntent = Utility.createPendingIntent(this,
                         Constants.FAJR, Utility.changeTimeFormat(prayerTiming.getFajr()), city, country);
-                sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
                         Utility.changeTimeFormat(prayerTiming.getFajr()) + ",true";
-                SharedPrefsHelper.storeValue(ReminderService.this, this.namazName, sharedPrefsValue);
-                Utility.setupReminder(ReminderService.this,
-                        Utility.getTomorrowDate(), Utility.changeTimeFormat(prayerTiming.getFajr()), pendingIntent);
+                SharedPrefsHelper.
+                        storeValue(this, this.namazName, sharedPrefsValue);
+                Utility.setupReminder(this,
+                        Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
+                        Utility.changeTimeFormat(prayerTiming.getFajr()), pendingIntent);
                 break;
             case Constants.SUNRISE:
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
-                pendingIntent = Utility.createPendingIntent(ReminderService.this,
+                pendingIntent = Utility.createPendingIntent(this,
                         Constants.SUNRISE, Utility.changeTimeFormat(prayerTiming.getSunsrise()), city, country);
-                sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
                         Utility.changeTimeFormat(prayerTiming.getSunsrise()) + ",true";
-                SharedPrefsHelper.storeValue(ReminderService.this, this.namazName, sharedPrefsValue);
-                Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(),
+                SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
+                Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
                         Utility.changeTimeFormat(prayerTiming.getSunsrise()), pendingIntent);
                 break;
             case Constants.DHUHR:
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
-                pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.DHUHR,
+                pendingIntent = Utility.createPendingIntent(this, Constants.DHUHR,
                         Utility.changeTimeFormat(prayerTiming.getDhuhr()), city, country);
-                sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
                         Utility.changeTimeFormat(prayerTiming.getDhuhr()) + ",true";
-                SharedPrefsHelper.storeValue(ReminderService.this, this.namazName, sharedPrefsValue);
-                Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(),
+                SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
+                Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
                         Utility.changeTimeFormat(prayerTiming.getDhuhr()), pendingIntent);
                 break;
             case Constants.ASR:
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
-                pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ASR,
+                pendingIntent = Utility.createPendingIntent(this, Constants.ASR,
                         Utility.changeTimeFormat(prayerTiming.getAsr()), city, country);
-                sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
                         Utility.changeTimeFormat(prayerTiming.getAsr()) + ",true";
-                SharedPrefsHelper.storeValue(ReminderService.this, this.namazName, sharedPrefsValue);
-                Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(),
+                SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
+                Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
                         Utility.changeTimeFormat(prayerTiming.getAsr()), pendingIntent);
                 break;
             case Constants.MAGHRIB:
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
-                pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.MAGHRIB,
+                pendingIntent = Utility.createPendingIntent(this, Constants.MAGHRIB,
                         Utility.changeTimeFormat(prayerTiming.getMaghrib()), city, country);
-                sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
                         Utility.changeTimeFormat(prayerTiming.getMaghrib()) + ",true";
-                SharedPrefsHelper.storeValue(ReminderService.this, this.namazName, sharedPrefsValue);
-                Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(),
+                SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
+                Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
                         Utility.changeTimeFormat(prayerTiming.getMaghrib()), pendingIntent);
                 break;
             case Constants.ISHA:
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
-                pendingIntent = Utility.createPendingIntent(ReminderService.this, Constants.ISHA,
+                pendingIntent = Utility.createPendingIntent(this, Constants.ISHA,
                         Utility.changeTimeFormat(prayerTiming.getIsha()), city, country);
-                sharedPrefsValue = Utility.getTomorrowDate() + "," +
+                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
                         Utility.changeTimeFormat(prayerTiming.getIsha()) + ",true";
-                SharedPrefsHelper.storeValue(ReminderService.this, this.namazName, sharedPrefsValue);
-                Utility.setupReminder(ReminderService.this, Utility.getTomorrowDate(),
+                SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
+                Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
                         Utility.changeTimeFormat(prayerTiming.getIsha()), pendingIntent);
                 break;
             default:
                 break;
         }
+        //stopSelf();
     }
-
     private void insertDataToDb(PrayerTiming prayerTiming, String namazName) {
-        Completable completable = QuranDatabase.getInstance(ReminderService.this).quranDao().insert(prayerTiming);
+        Log.d(Constants.PRAYER_TAG,TAG + " insertDataToDb: " + namazName);
+        Completable completable = QuranDatabase.getInstance(this).quranDao().insert(prayerTiming);
         completable.subscribe(new CompletableObserver() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
@@ -239,6 +246,7 @@ public class ReminderService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.d(Constants.PRAYER_TAG,TAG  + " onDestroy: ");
         mCompositeDisposable.clear();
     }
 }

@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.FragmentHomeBinding;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
@@ -54,6 +55,7 @@ public class HomeFragment extends Fragment{
     private String mCityname,mCountryname;
     private AppBarConfiguration mAppBarConfig;
     private NavController mNavController;
+    private static final String TAG = HomeFragment.class.getSimpleName();
 
 
     public HomeFragment() {
@@ -98,7 +100,7 @@ public class HomeFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("prayer", "onViewCreated: ");
+        Log.d(Constants.PRAYER_TAG, TAG + " onViewCreated: ");
         toolbar = getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,R.id.zikrFragment,
@@ -121,7 +123,7 @@ public class HomeFragment extends Fragment{
 //    }
 
     private void observeViewModel(String mCityname, String mCountryname, FragmentHomeBinding binding) {
-        Log.d("prayer", "observeViewModel: " + Utility.getCurrentDate() + mCityname + mCountryname);
+        Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel: " + Utility.getCurrentDate() + mCityname + mCountryname);
         QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname, mCountryname,
                 Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
             @Override
@@ -129,7 +131,7 @@ public class HomeFragment extends Fragment{
 //                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
                 //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
                 if (prayerTiming != null && !prayerTiming.equals("")){
-                    Log.d("prayer", "observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
+                    Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
                     binding.dateText.setText(prayerTiming.getPrayerTimeEngDate());
                     adapter.updateList(mCityname,mCountryname,createArrayListOfPrayerTiming(prayerTiming));
                 }
@@ -144,7 +146,8 @@ public class HomeFragment extends Fragment{
         String time = "";
         boolean reminderSet = false;
 
-        Log.d("prayer", "createArrayListOfPrayerTiming:before assigning " + mPrayerTimeList.size());
+        Log.d(Constants.PRAYER_TAG, TAG + " createArrayListOfPrayerTiming:before assigning "
+                + mPrayerTimeList.size());
         mPrayerTimeList.clear();
 
         for (int i=0;i<6;i++){
@@ -203,7 +206,7 @@ public class HomeFragment extends Fragment{
             }
             mPrayerTimeList.add(new PrayerTimingItem(name,time,imgId,reminderSet));
             }
-        Log.d("prayer", "createArrayListOfPrayerTiming: " + mPrayerTimeList.size());
+        Log.d(Constants.PRAYER_TAG, TAG + " createArrayListOfPrayerTiming: " + mPrayerTimeList.size());
             return mPrayerTimeList;
         }
 

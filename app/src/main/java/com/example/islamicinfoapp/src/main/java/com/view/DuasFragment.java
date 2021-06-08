@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.DuasViewModel;
 
@@ -37,6 +38,7 @@ public class DuasFragment extends Fragment {
     private String[] mDuasTitle,mEverydayDuaTitle;
     private String mFrag_name;
     private List<String> mEverydayDuas;
+    private static final String TAG = DuasFragment.class.getSimpleName();
 
     public DuasFragment() {
         // Required empty public constructor
@@ -76,9 +78,9 @@ public class DuasFragment extends Fragment {
 
     private void observeViewModel() {
         mDuasViewModel.duasLiveData.observe(this, quranDbData -> {
-            Log.d("tag", "observeViewModel: " + quranDbData.size());
+            Log.d(Constants.PRAYER_TAG, TAG + "observeViewModel: " + quranDbData.size());
             if (quranDbData != null) {
-                Log.d("tag", "observeViewModel: " + quranDbData.get(0).getQuranText());
+                Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel: " + quranDbData.get(0).getQuranText());
                 adapter.updateList(mDuasTitle, quranDbData);
             }
         });

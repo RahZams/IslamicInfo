@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.ActivitySplashBinding;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDao;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
@@ -27,6 +28,7 @@ public class SplashActivity extends AppCompatActivity {
     private AsyncTask<Void,Void,Void> mduasDeleteTask;
     private QuranDao mQuranDao;
     private Utility utility =  new Utility();
+    private static final String TAG = SplashActivity.class.getSimpleName();
 
 
     @Override
@@ -55,9 +57,9 @@ public class SplashActivity extends AppCompatActivity {
         QuranDatabase.getInstance(this).quranDao().getSurahDataCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer surah_count) {
-                Log.d("splash", "onChanged:surah " + surah_count);
+                Log.d(Constants.SPLASH, TAG + " onChanged:surah " + surah_count);
                 if (surah_count != Integer.valueOf(getString(R.string.surah_total_count))){
-                    Log.d("splash", "onChanged: integer is not 30");
+                    Log.d(Constants.SPLASH, TAG + " onChanged: integer is not 30");
                     mSurahViewModel.fetchFromRemote();
                 }
             }
@@ -66,9 +68,9 @@ public class SplashActivity extends AppCompatActivity {
         QuranDatabase.getInstance(this).quranDao().getQuranDataCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
-                Log.d("splash", "onChanged: quran" + integer);
+                Log.d(Constants.SPLASH, TAG + " onChanged: quran" + integer);
                 if (integer == 0) {
-                    Log.d("splash", "onChanged: integer is 0");
+                    Log.d(Constants.SPLASH, TAG + " onChanged: integer is 0");
                     mDuasViewModel.fetchFromRemote();
                 }
             }

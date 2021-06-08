@@ -10,6 +10,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranApi;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranApiService;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
@@ -31,6 +32,7 @@ public class SurahViewModel extends AndroidViewModel {
     //public MutableLiveData<SurahData> mSurahDataMutableLiveData = new MutableLiveData<>();
     private QuranApi mQuranApi;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+    private static final String TAG = SurahViewModel.class.getSimpleName();
     //private SurahSaveToDBTask mSurahSaveToDBTask;
     //private SurahRetrieveTask mSurahRetrieveTask;
 
@@ -42,7 +44,7 @@ public class SurahViewModel extends AndroidViewModel {
     }
 
     public void fetchFromRemote() {
-        Log.d("surah", "fetchFromRemote: ");
+        Log.d(Constants.SURAH_TAG, TAG + " fetchFromRemote: ");
 //        makeMergeCalls(mQuranApi.getSurahYusuf(),mQuranApi.getSurahYunus(),mQuranApi.getSurahYaseen()
 //        ,mQuranApi.getSurahWaaqia(),mQuranApi.getSurahQadr(),mQuranApi.getSurahNasr(),mQuranApi.getSurahNahl()
 //        ,mQuranApi.getSurahMulk(),mQuranApi.getSurahMuhammad(),mQuranApi.getSurahMaryam(),mQuranApi.getSurahLuqman()
@@ -79,7 +81,7 @@ public class SurahViewModel extends AndroidViewModel {
     private void makeMergeCalls(Observable<SurahData> surahOne, Observable<SurahData> surahTwo,
                                 Observable<SurahData> surahThree, Observable<SurahData> surahFour,
                                 Observable<SurahData> surahFive, Observable<SurahData> surahSix) {
-        Log.d("surah", "makeMergeCalls: " + surahOne);
+        Log.d(Constants.SURAH_TAG, TAG + " makeMergeCalls: " + surahOne);
         Observable.merge(Arrays.asList(surahOne, surahTwo, surahThree, surahFour, surahFive, surahSix))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
@@ -92,7 +94,7 @@ public class SurahViewModel extends AndroidViewModel {
                     @Override
                     public void onNext(SurahData surahData) {
                         //Toast.makeText(getApplication(), " on next surah " , Toast.LENGTH_SHORT).show();
-                        Log.d("surah", "onNext:surah " + surahData.getDataNumber() + " " + surahData.getSurahNameEnglish());
+                        Log.d(Constants.SURAH_TAG, TAG + " onNext:surah " + surahData.getDataNumber() + " " + surahData.getSurahNameEnglish());
 //                        mSurahSaveToDBTask = new SurahSaveToDBTask();
 //                        mSurahSaveToDBTask.execute(surahData);
                         insertDataToDb(surahData);
@@ -100,7 +102,7 @@ public class SurahViewModel extends AndroidViewModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("surah", "onError: " + e.getMessage());
+                        Log.d(Constants.SURAH_TAG, TAG +" onError: " + e.getMessage());
 
                     }
 
@@ -112,7 +114,7 @@ public class SurahViewModel extends AndroidViewModel {
     }
 
     private void insertDataToDb(SurahData surahData) {
-        Log.d("surah", "insertDataToDb: ");
+        Log.d(Constants.SURAH_TAG, "insertDataToDb: ");
 
         Completable completable = QuranDatabase.getInstance(getApplication()).quranDao().insert(surahData);
         completable.subscribe(new CompletableObserver() {
@@ -123,12 +125,12 @@ public class SurahViewModel extends AndroidViewModel {
 
             @Override
             public void onComplete() {
-                Log.d("surah", "onComplete: ");
+                Log.d(Constants.SURAH_TAG, "onComplete: ");
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.d("surah", "onError: " + e.getLocalizedMessage() + " " + e.getCause());
+                Log.d(Constants.SURAH_TAG, "onError: " + e.getLocalizedMessage() + " " + e.getCause());
             }
         });
     }

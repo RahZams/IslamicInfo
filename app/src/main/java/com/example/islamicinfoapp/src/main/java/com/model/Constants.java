@@ -15,4 +15,9 @@ public class Constants {
     public static final String ISHA = "Isha";
     public static final String NOTIFICATION_CHANNEL = "Prayer Times Channel";
     public static final int NOTIFICATION_ID = 1;
+    public static final String PRAYER_TAG = "prayer";
+    public static final String SURAH_TAG = "surah";
+    public static final String SPLASH = "splash";
+    public static final String SURAHITEM = "surah_item";
+    public static final String ZIKR_TAG = "zikr";
 }

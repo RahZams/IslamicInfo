@@ -31,11 +31,12 @@ import java.util.Locale;
 
 public class Utility {
     private ConnectivityManager mConnectivityManager;
+    private static final String TAG = Utility.class.getSimpleName();
 
     public static String getCurrentDate() {
         //Log.d("date", "getCurrentDate: " + Calendar.getInstance().getTimeInMillis());
         SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
-        Log.d("prayer", "getCurrentDate: " + Locale.getDefault() + sf.format(new Date()));
+        Log.d(Constants.PRAYER_TAG, TAG + " getCurrentDate: " + Locale.getDefault() + sf.format(new Date()));
         return sf.format(new Date());
     }
 
@@ -46,7 +47,7 @@ public class Utility {
 
     public static String getDateForApi(Date date){
         SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
-        Log.d("prayer", "getDateForApi: " + "input date"  + date  + sf.format(date));
+        Log.d(Constants.PRAYER_TAG, TAG + " getDateForApi: " + "input date"  + date  + sf.format(date));
         return sf.format(date);
     }
 
@@ -57,16 +58,17 @@ public class Utility {
     }
 
     public static Date convertStringToDate(String dateValue){
-        Log.d("prayer", "convertStringToDate: " + "dateValue" + dateValue);
+        Log.d(Constants.PRAYER_TAG, TAG + " convertStringToDate: " + "dateValue" + dateValue);
         Date convertedDate = null;
         SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
+        //SimpleDateFormat sf = new SimpleDateFormat(pattern,Locale.getDefault());
         try {
             convertedDate = sf.parse(dateValue);
-            Log.d("prayer", "convertStringToDate: " + "within try" + convertedDate);
+            Log.d(Constants.PRAYER_TAG, TAG + " convertStringToDate: " + "within try" + convertedDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        Log.d("prayer", "convertStringToDate: " + convertedDate);
+        Log.d(Constants.PRAYER_TAG, TAG + " convertStringToDate: " + convertedDate);
         return convertedDate;
     }
 
@@ -81,16 +83,19 @@ public class Utility {
         mediaPlayer.start();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public static String createNotificationChannel(Context context) {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         String channelId  = "SERVICE_CHANNEL_ID";
         String channelName = "Service Notification Channel";
-        NotificationChannel notificationChannel = new NotificationChannel(channelId,channelName,
-                NotificationManager.IMPORTANCE_HIGH);
-        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        notificationManager.createNotificationChannel(notificationChannel);
+        NotificationChannel notificationChannel = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            notificationChannel = new NotificationChannel(channelId, channelName,
+                    NotificationManager.IMPORTANCE_HIGH);
+
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
         return channelId;
 
     }
@@ -138,20 +143,20 @@ public class Utility {
         String finalTime = "";
         try {
             if (timeData.endsWith("AM") || timeData.endsWith("PM") || timeData.endsWith("am") || timeData.endsWith("pm")){
-                Log.d("prayer", "changeDateFormat: " + "if am/pm");
+                Log.d(Constants.PRAYER_TAG, TAG + " changeDateFormat: " + "if am/pm");
                 dateTime = new SimpleDateFormat("hh:mm a").parse(timeData);
                 finalTime = new SimpleDateFormat("hh:mm").format(dateTime);
             }
             else if (!timeData.startsWith("12")) {
-                Log.d("prayer", "changeDateFormat: if");
+                Log.d(Constants.PRAYER_TAG, TAG + " changeDateFormat: if");
                 dateTime = new SimpleDateFormat("hh:mm", Locale.ENGLISH).parse(timeData);
                 finalTime = new SimpleDateFormat("hh:mm a", Locale.ENGLISH).format(dateTime);
             }
             else if (timeData.startsWith("12")){
-                Log.d("prayer", "changeDateFormat: else");
+                Log.d(Constants.PRAYER_TAG, TAG + " changeDateFormat: else");
                 finalTime = timeData + " " + "PM";
             }
-            Log.d("prayer", "changeDateFormat: " + finalTime);
+            Log.d(Constants.PRAYER_TAG, TAG + " changeDateFormat: " + finalTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -227,24 +232,24 @@ public class Utility {
             default:
                 break;
         }
-        Log.d("prayer", "createPendingIntent: " + "namazName" + namazName + "pendingIntent" + pendingIntent);
+        Log.d(Constants.PRAYER_TAG, TAG + " createPendingIntent: " + "namazName" + namazName + "pendingIntent" + pendingIntent);
         return pendingIntent;
     }
 
     public static void setupReminder(Context mContext, String currentDate, String namazTiming, PendingIntent pendingIntent) {
-        Log.d("prayer", "setupReminder: " + "time" + namazTiming);
+        Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + "time" + namazTiming);
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         //namazTiming = Utility.changeDateFormat(namazTiming);
-        Log.d("prayer", "setupReminder: " + namazTiming);
+        Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + namazTiming);
         String[] initTiming = namazTiming.split(" ");
         String[] timing = initTiming[0].split(":");
         String[] dateArray = currentDate.split("-");
-        Log.d("prayer", "setupReminder: length" + timing.length + timing[0] + timing[1]);
+        Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: length" + timing.length + timing[0] + timing[1]);
 
         Calendar cal = Calendar.getInstance();
 //        cal.setTimeInMillis(System.currentTimeMillis());
         //cal.set(Calendar.DATE,Integer.valueOf(currentDate));
-        Log.d("prayer", "setupReminder: dateArray" + dateArray[0] + dateArray[1] + dateArray[2]
+        Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: dateArray" + dateArray[0] + dateArray[1] + dateArray[2]
         + "Integer.parseInt(timing[0])" + Integer.parseInt(timing[0]));
         cal.set(Calendar.DAY_OF_MONTH,Integer.parseInt(dateArray[0]));
         cal.set(Calendar.MONTH,Integer.parseInt(dateArray[1]) - 1);
@@ -252,29 +257,29 @@ public class Utility {
         cal.set(Calendar.HOUR, Integer.parseInt(timing[0]));
         cal.set(Calendar.MINUTE, Integer.parseInt(timing[1]));
         cal.set(Calendar.SECOND,0);
-        Log.d("prayer", "setupReminder: " + initTiming[1]);
+        Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + initTiming[1]);
         if (initTiming[1].equals("AM")){
-            Log.d("prayer", "setupReminder: " + " if AM");
+            Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + " if AM");
             cal.set(Calendar.AM_PM,Calendar.AM);
         }
         else if (initTiming[1].equals("PM")){
-            Log.d("prayer", "setupReminder: " + "if PM");
+            Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + "if PM");
             cal.set(Calendar.AM_PM,Calendar.PM);
         }
 
-        Log.d("prayer", "setupReminder: " + "hour:" + cal.get(Calendar.HOUR_OF_DAY) +
+        Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + "hour:" + cal.get(Calendar.HOUR_OF_DAY) +
                 "minute:"+ cal.get(Calendar.MINUTE) + "am/pm:" + cal.get(Calendar.AM_PM));
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),24*60*60*1000,pendingIntent);
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.M) {
-            Log.d("prayer", "setupReminder: " + "M" + cal.getTimeInMillis());
+            Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + "M" + cal.getTimeInMillis());
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         }
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
-            Log.d("prayer", "setupReminder: " + "kitkat");
+            Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + "kitkat");
             alarmManager.setExact(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
         }
         else{
-            Log.d("prayer", "setupReminder: " + "else");
+            Log.d(Constants.PRAYER_TAG, TAG + " setupReminder: " + "else");
             alarmManager.set(AlarmManager.RTC_WAKEUP,cal.getTimeInMillis(),pendingIntent);
         }
     }
@@ -286,7 +291,7 @@ public class Utility {
 //    }
 
     public static void cancelReminder(Context mContext, String namazName) {
-        Log.d("prayer", "cancelReminder: ");
+        Log.d(Constants.PRAYER_TAG, TAG + " cancelReminder: ");
         Intent intent = new Intent(mContext,ReminderReceiver.class);
         PendingIntent pendingIntent = null;
         switch (namazName){
@@ -313,7 +318,8 @@ public class Utility {
         }
         AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         if (pendingIntent != null) {
-            Log.d("prayer", "cancelReminder: " + "namazName" + namazName + "pendingIntent" + pendingIntent);
+            Log.d(Constants.PRAYER_TAG, TAG + " cancelReminder: " + "namazName" +
+                    namazName + "pendingIntent" + pendingIntent);
             alarmManager.cancel(pendingIntent);
             pendingIntent.cancel();
         }

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +24,7 @@ public class ZikrItemFragment extends Fragment {
 
     @BindView(R.id.zikr_item)
     TextView textView;
+    private static final String TAG = ZikrItemFragment.class.getSimpleName();
 
 
     public ZikrItemFragment() {
@@ -39,10 +41,10 @@ public class ZikrItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_zikr_item, container, false);
         ButterKnife.bind(this,view);
         if (getArguments() != null){
-            Log.d("zikr", "onCreateView: " + ZikrItemFragmentArgs.fromBundle(getArguments()).getZikrText());
+            Log.d(Constants.ZIKR_TAG, TAG + " onCreateView: " +
+                    ZikrItemFragmentArgs.fromBundle(getArguments()).getZikrText());
             textView.setText(ZikrItemFragmentArgs.fromBundle(getArguments()).getZikrText());
         }
         return view;
     }
-
 }

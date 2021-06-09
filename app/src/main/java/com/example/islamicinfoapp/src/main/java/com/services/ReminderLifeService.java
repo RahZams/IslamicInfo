@@ -53,20 +53,20 @@ public class ReminderLifeService extends LifecycleService {
     public void onCreate() {
         super.onCreate();
         Log.d(Constants.PRAYER_TAG, TAG + " onCreate: ");
-        String channelId = Utility.createNotificationChannel(this);
-        Notification notification = Utility.createNotification(this,
-                channelId, NOTIFICATION_ID);
-        startForeground(NOTIFICATION_ID, notification);
+//        String channelId = Utility.createNotificationChannel(this);
+//        Notification notification = Utility.createNotification(this,
+//                channelId, NOTIFICATION_ID);
+//        startForeground(NOTIFICATION_ID, notification);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d(Constants.PRAYER_TAG,TAG +  " onStartCommand: ");
 
-        String channelId = Utility.createNotificationChannel(this);
-        Notification notification = Utility.createNotification(this,
-                channelId, NOTIFICATION_ID);
-        startForeground(NOTIFICATION_ID, notification);
+//        String channelId = Utility.createNotificationChannel(this);
+//        Notification notification = Utility.createNotification(this,
+//                channelId, NOTIFICATION_ID);
+//        startForeground(NOTIFICATION_ID, notification);
 
         if (intent != null) {
             city = intent.getStringExtra(getResources().getString(R.string.cityname));

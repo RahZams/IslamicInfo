@@ -47,8 +47,8 @@ public interface QuranDao {
     @Query("DELETE FROM PrayerTiming")
     void deleteAllPrayerTimingData();
 
-    @Query("DELETE FROM PrayerTiming WHERE prayerTimeEngDate != :date")
-    void deletePrayerTimeData(String date);
+    @Query("DELETE FROM PrayerTiming WHERE DATE(prayerTimeEngDate) < DATE(:date)")
+    Completable deletePrayerTimeData(String date);
 
     @Query("SELECT COUNT(*) FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date")
     LiveData<Integer> getRecordCount(String city, String country, String date);

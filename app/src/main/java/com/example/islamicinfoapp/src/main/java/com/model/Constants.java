@@ -20,4 +20,5 @@ public class Constants {
     public static final String SPLASH = "splash";
     public static final String SURAHITEM = "surah_item";
     public static final String ZIKR_TAG = "zikr";
+    public static final String LOC_TAG = "location";
 }

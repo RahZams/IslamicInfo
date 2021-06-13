@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.annotation.LongDef;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.ActivitySplashBinding;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDao;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
@@ -61,6 +63,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkIfDataAvailableInDatabase() {
+        Log.d(Constants.SPLASH, TAG + " onChanged:current date :  " + Utility.getCurrentDate());
         QuranDatabase.getInstance(this).quranDao().getSurahDataCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer surah_count) {
@@ -82,6 +85,20 @@ public class SplashActivity extends AppCompatActivity {
                 }
             }
         });
+
+        QuranDatabase.getInstance(this).quranDao().getAllOldRecords(Utility.getCurrentDate())
+                .observe(this, new Observer<PrayerTiming>() {
+                    @Override
+                    public void onChanged(PrayerTiming prayerTiming) {
+                        if (prayerTiming != null) {
+                            Log.d(Constants.SPLASH, TAG + " onChanged: all records" + prayerTiming.getPrayerTimeEngDate());
+                        }
+                        else{
+                            Log.d(Constants.SPLASH, TAG + " onChanged: no records");
+                        }
+                    }
+                });
+
 
         Completable deletedrecordsCompletable = QuranDatabase.getInstance(this).quranDao().deletePrayerTimeData(Utility.getCurrentDate());
         deletedrecordsCompletable.subscribeOn(Schedulers.io()).

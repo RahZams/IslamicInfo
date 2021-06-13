@@ -5,8 +5,6 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
-
-import java.util.Date;
 import java.util.List;
 
 import io.reactivex.Completable;
@@ -47,8 +45,11 @@ public interface QuranDao {
     @Query("DELETE FROM PrayerTiming")
     void deleteAllPrayerTimingData();
 
-    @Query("DELETE FROM PrayerTiming WHERE DATE(prayerTimeEngDate) < DATE(:date)")
+    @Query("DELETE FROM PrayerTiming WHERE date(prayerTimeEngDate) < date(:date)")
     Completable deletePrayerTimeData(String date);
+
+    @Query("SELECT * FROM PrayerTiming WHERE date(prayerTimeEngDate) < date(:date)")
+    LiveData<PrayerTiming> getAllOldRecords(String date);
 
     @Query("SELECT COUNT(*) FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date")
     LiveData<Integer> getRecordCount(String city, String country, String date);

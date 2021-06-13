@@ -48,7 +48,7 @@ public class BootService extends Service {
                         split(",");
                 Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: sharedPrefsValues" + sharedPrefsValues[0]
                         + " : " + sharedPrefsValues[1] + ":" + sharedPrefsValues[2]);
-                if (sharedPrefsValues[2].equals("true")) {
+                if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime()) && sharedPrefsValues[2].equals("true")) {
                     Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + "true");
                     //if (sharedPrefsValues[0] > Utility.getCurrentTime())
 //                Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate())),

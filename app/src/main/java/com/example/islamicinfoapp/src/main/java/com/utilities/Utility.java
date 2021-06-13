@@ -25,6 +25,8 @@ import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -38,6 +40,25 @@ public class Utility {
         SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
         Log.d(Constants.PRAYER_TAG, TAG + " getCurrentDate: " + Locale.getDefault() + sf.format(new Date()));
         return sf.format(new Date());
+    }
+
+    public static boolean compareTwoTimings(String firstTime, String secondTime){
+        DateTimeFormatter dateTimeFormatter = null;
+        boolean afterTime = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            dateTimeFormatter = DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH);
+            LocalTime firstlocalTime = LocalTime.parse(firstTime, dateTimeFormatter);
+            LocalTime secondlocalTime = LocalTime.parse(secondTime, dateTimeFormatter);
+            if (firstlocalTime.isAfter(secondlocalTime)) {
+                afterTime = true;
+            }
+        }
+        return afterTime;
+    }
+
+    public static String getSystemTime(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a",Locale.ENGLISH);
+        return simpleDateFormat.format(Calendar.getInstance().getTime());
     }
 
     public static String getDateForDb(Date date){

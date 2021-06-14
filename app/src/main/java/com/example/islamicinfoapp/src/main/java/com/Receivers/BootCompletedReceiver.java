@@ -23,13 +23,14 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"islamicapp:my_wake_lock");
         wakeLock.acquire();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            Log.d(Constants.PRAYER_TAG,TAG + " onReceive: O" );
-            context.startForegroundService(serviceIntent);
-        }
-        else{
-            context.startService(serviceIntent);
-        }
+        context.startService(serviceIntent);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+//            Log.d(Constants.PRAYER_TAG,TAG + " onReceive: O" );
+//            context.startForegroundService(serviceIntent);
+//        }
+//        else{
+//            context.startService(serviceIntent);
+//        }
 
 //        mCityName = SharedPrefsHelper.getValue(context,context.getString(R.string.cityname));
 //        mCountryName = SharedPrefsHelper.getValue(context,context.getString(R.string.countryname));

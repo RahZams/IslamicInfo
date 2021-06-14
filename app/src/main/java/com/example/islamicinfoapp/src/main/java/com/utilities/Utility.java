@@ -72,10 +72,16 @@ public class Utility {
         return sf.format(date);
     }
 
-    public static String getTomorrowDate(){
+    public static String getTomorrowDateForApi(){
         Calendar c = Calendar.getInstance();
         c.add(Calendar.DATE,1);
         return getDateForApi(c.getTime());
+    }
+
+    public static String getTomorrowDateForDb(){
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.DATE,1);
+        return getDateForDb(c.getTime());
     }
 
     public static Date convertStringToDate(String dateValue){

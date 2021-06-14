@@ -40,6 +40,7 @@ public class ReminderLifeService extends LifecycleService {
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private String BASE_URL = "https://api.aladhan.com/v1/";
     int NOTIFICATION_ID = 0;
+    int count = 0;
     private static final String TAG = ReminderLifeService.class.getSimpleName();
 
     public ReminderLifeService() {
@@ -73,7 +74,7 @@ public class ReminderLifeService extends LifecycleService {
             country = intent.getStringExtra(getResources().getString(R.string.countryname));
             namazName = intent.getStringExtra(getResources().getString(R.string.namazName));
             Log.d(Constants.PRAYER_TAG, TAG + " onStartCommand: " + city + country + namazName);
-            checkIfDataAvailableInDb(city, country, Utility.getTomorrowDate(), namazName);
+            checkIfDataAvailableInDb(city, country, Utility.getTomorrowDateForDb(), namazName);
         }
         //return START_STICKY;
         return super.onStartCommand(intent, flags, startId);
@@ -85,9 +86,9 @@ public class ReminderLifeService extends LifecycleService {
                 .observe((LifecycleOwner) this, new androidx.lifecycle.Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        Log.d(Constants.PRAYER_TAG, TAG + " onChanged: " + " integer " + integer);
+                        Log.d(Constants.PRAYER_TAG, TAG + " checkIfDataAvailableInDb onChanged: " + " integer " + integer);
                         if (integer == 0) {
-                            getDataFromApi(city, country, tomorrowDate, namazName);
+                            getDataFromApi(city, country, Utility.getTomorrowDateForApi(), namazName);
                         } else {
                             getDataFromDb(city, country, tomorrowDate, namazName);
                         }
@@ -131,12 +132,17 @@ public class ReminderLifeService extends LifecycleService {
                     @Override
                     public void onNext(@NonNull Response<PrayerTiming> prayerTimingResponse) {
                         PrayerTiming prayerTiming = (PrayerTiming) prayerTimingResponse.body();
-                        prayerTiming.setCity(city);
-                        prayerTiming.setCountry(country);
-                        insertDataToDb(prayerTiming, namazName);
-                        Log.d(Constants.PRAYER_TAG, "onNext: " + prayerTiming.toString());
-                        Log.d(Constants.PRAYER_TAG, "onSuccess: " + prayerTiming.getPrayerTimeEngDate() +
-                                Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())));
+                        if(prayerTiming != null) {
+                            count = count + 1;
+                            prayerTiming.setCity(city);
+                            prayerTiming.setCountry(country);
+                            Log.d(Constants.PRAYER_TAG, TAG + " onNext: count" + count);
+                            Log.d(Constants.PRAYER_TAG, TAG + " onNext: " + prayerTiming.toString());
+                            Log.d(Constants.PRAYER_TAG, TAG + " onSuccess: " + prayerTiming.getPrayerTimeEngDate() +
+                                    Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())));
+                            insertDataToDb(prayerTiming, namazName);
+
+                        }
                     }
 
                     @Override

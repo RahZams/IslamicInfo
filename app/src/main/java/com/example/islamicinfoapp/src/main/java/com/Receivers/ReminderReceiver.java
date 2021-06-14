@@ -84,6 +84,7 @@ public class ReminderReceiver extends BroadcastReceiver {
     }
 
     private void startServiceCall(Context context) {
+        Log.d(Constants.PRAYER_TAG,TAG +  "startServiceCall: ");
         //Intent serviceIntent = new Intent(context, ReminderService.class);
         Intent serviceIntent = new Intent(context, ReminderLifeService.class);
         serviceIntent.putExtra(context.getResources().getString(R.string.cityname),mCityName);

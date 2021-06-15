@@ -1,9 +1,7 @@
 package com.example.islamicinfoapp.src.main.java.com.services;
 
-import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
-import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -13,16 +11,13 @@ import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
-
-import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
 public class BootService extends Service {
+
     String mCityName,mCountryName;
     Map<String,?> allSharedPrefs;
-    int NOTIFICATION_ID = 0;
     private static final String TAG = BootService.class.getSimpleName();
 
     @Override

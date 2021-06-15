@@ -12,6 +12,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.ReplacementSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,9 +32,11 @@ import com.example.islamicinfoapp.databinding.SurahAyahItemLayoutBinding;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.SurahAyahItemApiData;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.SurahItemViewHolder> {
 
@@ -61,8 +64,9 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
         Log.d(Constants.SURAHITEM, TAG + " onBindViewHolder: " + position);
         //holder.itemView.setSurahitem(mSurahDataAyahs.get(position));
         Log.d(Constants.SURAHITEM, TAG + " onBindViewHolder: " + mSurahDataAyahs.get(position).getAyahText().length());
-        SpannableString spanString = new SpannableString(mSurahDataAyahs.get(position).getAyahText() + "   " +
-                mSurahDataAyahs.get(position).getNumberInSurah());
+        SpannableString spanString = new SpannableString(mSurahDataAyahs.get(position).getAyahText() + " - " +
+                NumberFormat.getNumberInstance(new Locale("ar","SA"))
+                        .format(mSurahDataAyahs.get(position).getNumberInSurah()));
         //SpannableString spanString = new SpannableString("ndndbjdsbjsduidgfudsufgdsugfuisdhfuidhfuirhguihgugbuewiiiwiwieuew8eugfbdbdufuefh");
 //        builder.append(mSurahDataAyahs.get(position).getAyahText());
 //        builder.append("   ");
@@ -98,9 +102,12 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
             public boolean onPreDraw() {
                 int linecount = holder.itemView.ayahText.getLineCount();
                 Log.d(Constants.SURAHITEM, TAG + " onPreDraw: " + linecount);
-                spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
-                                linecount),spanString.length()-2,
-                        spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                // use this commented line to give background as circle to spannablestring
+//                spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
+//                                linecount),spanString.length()-2,
+//                        spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                spanString.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.colorAccent)),
+                        spanString.length()-2,spanString.length(),Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 holder.itemView.ayahText.setText("");
                 holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
                 holder.itemView.ayahText.setVisibility(View.VISIBLE);

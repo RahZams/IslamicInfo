@@ -23,6 +23,7 @@ public class BootService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        Log.d(Constants.PRAYER_TAG,TAG +  " onCreate: ");
     }
 
     @Override

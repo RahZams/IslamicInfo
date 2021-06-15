@@ -35,11 +35,11 @@
             android:textDirection="rtl"
             android:textSize="@dimen/text_size"/>
 
-        <View
-            android:layout_below="@id/ayah_text"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/black"/>
+<!--        <View-->
+<!--            android:layout_below="@id/ayah_text"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="2dp"-->
+<!--            android:background="@color/black"/>-->
 
 
 <!--        <TextView-->

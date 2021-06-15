@@ -41,9 +41,12 @@
         </receiver>
 
 
-        <service android:name=".src.main.java.com.services.BootService"/>
+        <service android:name=".src.main.java.com.services.BootService"
+            android:enabled="true"
+            android:exported="true"></service>
         <service android:name=".src.main.java.com.services.ReminderService"/>
         <service android:name=".src.main.java.com.services.ReminderLifeService"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

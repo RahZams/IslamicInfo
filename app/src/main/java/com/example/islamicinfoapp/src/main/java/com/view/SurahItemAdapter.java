@@ -65,8 +65,10 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
         //holder.itemView.setSurahitem(mSurahDataAyahs.get(position));
         Log.d(Constants.SURAHITEM, TAG + " onBindViewHolder: " + mSurahDataAyahs.get(position).getAyahText().length());
         SpannableString spanString = new SpannableString(mSurahDataAyahs.get(position).getAyahText() + " - " +
-                NumberFormat.getNumberInstance(new Locale("ar","SA"))
+                "  " + NumberFormat.getNumberInstance(new Locale("ar","SA"))
                         .format(mSurahDataAyahs.get(position).getNumberInSurah()));
+//                  NumberFormat.getNumberInstance(Locale.forLanguageTag("AR"))
+//                        .format(mSurahDataAyahs.get(position).getNumberInSurah()) + " \u06DD");
         //SpannableString spanString = new SpannableString("ndndbjdsbjsduidgfudsufgdsugfuisdhfuidhfuirhguihgugbuewiiiwiwieuew8eugfbdbdufuefh");
 //        builder.append(mSurahDataAyahs.get(position).getAyahText());
 //        builder.append("   ");
@@ -106,8 +108,10 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
 //                spanString.setSpan(new RoundedBackgroundSpan(mContext.getResources().getDrawable(R.drawable.circle),
 //                                linecount),spanString.length()-2,
 //                        spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-                spanString.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.colorAccent)),
-                        spanString.length()-2,spanString.length(),Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+//                spanString.setSpan(new ForegroundColorSpan(mContext.getResources().getColor(R.color.colorAccent)),
+//                        spanString.length()-2,spanString.length(),Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                spanString.setSpan(new DesignBackgroundSpan("\u06DD"),spanString.length()-2,
+                        spanString.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 holder.itemView.ayahText.setText("");
                 holder.itemView.ayahText.setText(spanString,TextView.BufferType.SPANNABLE);
                 holder.itemView.ayahText.setVisibility(View.VISIBLE);
@@ -176,6 +180,31 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
         }
     }
 
+    public class DesignBackgroundSpan extends ReplacementSpan{
+        String uniChar;
+
+        public DesignBackgroundSpan(String unicodeChar) {
+            uniChar = unicodeChar;
+        }
+
+        @Override
+        public int getSize(@NonNull Paint paint, CharSequence text, int start, int end,
+                           @Nullable Paint.FontMetricsInt fm) {
+            return Math.round(paint.measureText(text, start, end));
+        }
+
+        @Override
+        public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end,
+                         float x, int top, int y, int bottom, @NonNull Paint paint) {
+            float textSize = paint.getTextSize();
+            canvas.drawText(uniChar, 0, 1, x - textSize / 5, (float) y, paint);
+            paint.setTextSize(textSize - textSize / 3);
+            canvas.drawText(text, start, end, x, y - textSize / 9, paint);
+            paint.setTextSize(textSize);
+            paint.setTextAlign(Paint.Align.CENTER);
+        }
+    }
+
     public class RoundedBackgroundSpan extends ReplacementSpan
     {
         Drawable mCircle;
@@ -201,7 +230,8 @@ public class SurahItemAdapter extends RecyclerView.Adapter<SurahItemAdapter.Sura
         }
 
         @Override
-        public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, @NonNull Paint paint) {
+        public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x,
+                         int top, int y, int bottom, @NonNull Paint paint) {
             Log.d(Constants.SURAHITEM, TAG + " draw:" + "text " +  text + "length " + text.length() +
                     "count " + mLineCount);
             Rect bounds = new Rect();

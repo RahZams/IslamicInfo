@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
         android:name=".src.main.java.com.model.ApplicationClass"
@@ -41,9 +42,7 @@
         </receiver>
 
 
-        <service android:name=".src.main.java.com.services.BootService"
-            android:enabled="true"
-            android:exported="true"></service>
+        <service android:name=".src.main.java.com.services.BootService"/>
         <service android:name=".src.main.java.com.services.ReminderService"/>
         <service android:name=".src.main.java.com.services.ReminderLifeService"/>
 

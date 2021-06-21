@@ -8,6 +8,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.Receivers.BootCompletedReceiver;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
@@ -58,6 +59,7 @@ public class BootService extends Service {
                 }
             }
         }
+        //BootCompletedReceiver.completeWakefulIntent(intent);
         return START_STICKY;
     }
 

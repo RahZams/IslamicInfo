@@ -98,6 +98,9 @@
     <string name="close">Close</string>
     <string name="dialogTitle">dialog_title</string>
     <string name="dialogdesc">dialog_desc</string>
+    <string name="after">after</string>
+    <string name="before">before</string>
+    <string name="equals">equals</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

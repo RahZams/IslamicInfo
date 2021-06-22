@@ -38,6 +38,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
     private void scheduleAlarm(Context context) {
         mCityName = SharedPrefsHelper.getValue(context,context.getString(R.string.cityname));
         mCountryName = SharedPrefsHelper.getValue(context,context.getString(R.string.countryname));
+        String sharedPrefs = "";
         Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + mCityName + " " + mCountryName);
         allSharedPrefs = SharedPrefsHelper.getAllSharedPrefs(context);
         Set<String> sharedPrefsKeys = allSharedPrefs.keySet();
@@ -48,12 +49,36 @@ public class BootCompletedReceiver extends BroadcastReceiver {
                 String[] sharedPrefsValues = SharedPrefsHelper.getValue(context,s).split(",");
                 Log.d(Constants.PRAYER_TAG, TAG + " scheduleAlarm: sharedPrefsValues" + sharedPrefsValues[0]
                         + " : " + sharedPrefsValues[1] + ":" + sharedPrefsValues[2]);
-                if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime()) &&
-                        sharedPrefsValues[2].equals("true")){
-                    Log.d(Constants.PRAYER_TAG, TAG + " scheduleAlarm: " + "true");
-                    Log.d(Constants.PRAYER_TAG, TAG + " scheduleAlarm: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
-                    Utility.setupReminder(context,sharedPrefsValues[0],sharedPrefsValues[1],
+//                if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime()) &&
+//                        sharedPrefsValues[2].equals("true")){
+//                    Log.d(Constants.PRAYER_TAG, TAG + " scheduleAlarm: " + "true");
+//                    Log.d(Constants.PRAYER_TAG, TAG + " scheduleAlarm: " + sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
+//                    Utility.setupReminder(context,sharedPrefsValues[0],sharedPrefsValues[1],
+//                            Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
+//                }
+                if (sharedPrefsValues[2].equals("true")){
+                    if(Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate())
+                            .equals(context.getResources().getString(R.string.equals))){
+                        if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime())){
+                                Utility.setupReminder(context,sharedPrefsValues[0],sharedPrefsValues[1],
                             Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
+                        }
+                        else{
+                                sharedPrefs = Utility.getTomorrowDateForDb() + "," + sharedPrefsValues[1]
+                                        + "," + sharedPrefsValues[2];
+                                SharedPrefsHelper.storeValue(context,s,sharedPrefs);
+                                Utility.setupReminder(context,Utility.getTomorrowDateForDb(),sharedPrefsValues[1],
+                                        Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
+                        }
+                    }
+                    else if(Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate())
+                            .equals(context.getResources().getString(R.string.after))){
+
+                    }
+                    else if(Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate())
+                            .equals(context.getResources().getString(R.string.before))){
+
+                    }
                 }
             }
         }

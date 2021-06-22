@@ -39,7 +39,6 @@ public class ReminderLifeService extends LifecycleService {
     private String city, country, namazName;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private String BASE_URL = "https://api.aladhan.com/v1/";
-    int NOTIFICATION_ID = 0;
     int count = 0;
     private static final String TAG = ReminderLifeService.class.getSimpleName();
 
@@ -158,7 +157,7 @@ public class ReminderLifeService extends LifecycleService {
     private void setUpReminders(PrayerTiming prayerTiming, String namazName) {
         Log.d(Constants.PRAYER_TAG,TAG +  " setUpReminders: " + namazName);
         PendingIntent pendingIntent;
-        String sharedPrefsValue = "";
+        String sharedPrefsValue;
         switch (namazName) {
             case Constants.FAJR:
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + namazName);

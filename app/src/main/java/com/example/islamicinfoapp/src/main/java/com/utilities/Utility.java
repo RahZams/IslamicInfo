@@ -56,6 +56,29 @@ public class Utility {
         return afterTime;
     }
 
+    public static String compareDates(Context context,String otherDate,String todayDate){
+        Date date1 = null;
+        Date date2 = null;
+        String result = "";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
+        try {
+            date1 = simpleDateFormat.parse(otherDate);
+            date2 = simpleDateFormat.parse(todayDate);
+            if (date1.after(date2)){
+                result = context.getResources().getString(R.string.after);
+            }
+            else if (date1.before(date2)){
+                result = context.getResources().getString(R.string.before);
+            }
+            else if (date1.equals(date2)){
+                result = context.getResources().getString(R.string.equals);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public static String getSystemTime(){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm a",Locale.ENGLISH);
         return simpleDateFormat.format(Calendar.getInstance().getTime());

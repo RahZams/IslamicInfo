@@ -57,27 +57,55 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 //                            Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
 //                }
                 if (sharedPrefsValues[2].equals("true")){
+                    Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "true " +
+                            Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate()));
                     if(Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate())
                             .equals(context.getResources().getString(R.string.equals))){
+                        Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare dates equal");
                         if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime())){
-                                Utility.setupReminder(context,sharedPrefsValues[0],sharedPrefsValues[1],
-                            Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
+                            Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare timings after");
+                                Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(sharedPrefsValues[0]))
+                                        ,sharedPrefsValues[1], Utility.createPendingIntent
+                                                (context,s,sharedPrefsValues[1],mCityName,mCountryName));
                         }
                         else{
+                            Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare timings before");
                                 sharedPrefs = Utility.getTomorrowDateForDb() + "," + sharedPrefsValues[1]
                                         + "," + sharedPrefsValues[2];
                                 SharedPrefsHelper.storeValue(context,s,sharedPrefs);
-                                Utility.setupReminder(context,Utility.getTomorrowDateForDb(),sharedPrefsValues[1],
+                                Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(
+                                        Utility.getTomorrowDateForDb())),sharedPrefsValues[1],
                                         Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
                         }
                     }
                     else if(Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate())
                             .equals(context.getResources().getString(R.string.after))){
-
+                        Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare dates after");
+                        Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(
+                                sharedPrefsValues[0])),sharedPrefsValues[1],
+                                Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
                     }
                     else if(Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate())
                             .equals(context.getResources().getString(R.string.before))){
-
+                        Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare dates before");
+                        if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime())){
+                            Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare timings after");
+                            sharedPrefs = Utility.getCurrentDate() + "," + sharedPrefsValues[1]
+                                    + "," + sharedPrefsValues[2];
+                            SharedPrefsHelper.storeValue(context,s,sharedPrefs);
+                            Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(Utility.getCurrentDate()))
+                                    ,sharedPrefsValues[1], Utility.createPendingIntent(context,s,
+                                            sharedPrefsValues[1],mCityName,mCountryName));
+                        }
+                        else{
+                            Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare timings before");
+                            sharedPrefs = Utility.getTomorrowDateForDb() + "," + sharedPrefsValues[1]
+                                    + "," + sharedPrefsValues[2];
+                            SharedPrefsHelper.storeValue(context,s,sharedPrefs);
+                            Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(
+                                    Utility.getTomorrowDateForDb())),sharedPrefsValues[1],
+                                    Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
+                        }
                     }
                 }
             }

@@ -275,7 +275,10 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //            Log.d("prayer", "assignReminderImage: sharedPrefsValue[0]" + sharedPrefsValue[0] +
 //                    "sharedPrefsValue[1]" + sharedPrefsValue[1] + "sharedPrefsValue[2]" + sharedPrefsValue[2]);
 //                if (sharedPrefsValue[2].equals("true")) {
-                Log.d(Constants.PRAYER_TAG, TAG + " assignReminderImage: if");
+                Log.d(Constants.PRAYER_TAG, TAG + " assignReminderImage: if " +
+                        SharedPrefsHelper.getValue(mContext,namazName).split(",")[0] +
+                        SharedPrefsHelper.getValue(mContext,namazName).split(",")[1] +
+                        SharedPrefsHelper.getValue(mContext,namazName).split(",")[2]);
                 reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
             //}
         }

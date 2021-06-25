@@ -61,9 +61,11 @@ public class Utility {
         Date date2 = null;
         String result = "";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
+        Log.d(TAG, "compareDates: dates" + otherDate + " " + todayDate);
         try {
             date1 = simpleDateFormat.parse(otherDate);
             date2 = simpleDateFormat.parse(todayDate);
+            Log.d(Constants.PRAYER_TAG,TAG +  " compareDates: " + " date1 " + date1 + " " + " date2 " + date2);
             if (date1.after(date2)){
                 result = context.getResources().getString(R.string.after);
             }
@@ -76,6 +78,7 @@ public class Utility {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        Log.d(Constants.PRAYER_TAG,TAG +  " compareDates: result" + result);
         return result;
     }
 
@@ -87,6 +90,19 @@ public class Utility {
     public static String getDateForDb(Date date){
         SimpleDateFormat sf = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
         return sf.format(date);
+    }
+
+    public static String convertOneStringFormatToAnother(String dateString){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy",Locale.getDefault());
+        String convertedString = "";
+        try {
+            Date date = simpleDateFormat.parse(dateString);
+            SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd MMM yyyy",Locale.getDefault());
+            convertedString = simpleDateFormat1.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return convertedString;
     }
 
     public static String getDateForApi(Date date){

@@ -57,11 +57,12 @@ public class Utility {
     }
 
     public static String compareDates(Context context,String otherDate,String todayDate){
+        Log.d(Constants.PRAYER_TAG,TAG  +" compareDates: dates" + "otherDate:" + otherDate +
+                " " + "todayDate:" + todayDate);
         Date date1 = null;
         Date date2 = null;
-        String result = "";
+        String result = "nfnnffgnfgkngklf";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMM yyyy");
-        Log.d(TAG, "compareDates: dates" + otherDate + " " + todayDate);
         try {
             date1 = simpleDateFormat.parse(otherDate);
             date2 = simpleDateFormat.parse(todayDate);

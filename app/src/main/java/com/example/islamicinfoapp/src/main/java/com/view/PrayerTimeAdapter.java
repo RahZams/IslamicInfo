@@ -221,7 +221,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
             Log.d(Constants.PRAYER_TAG, TAG + " onClick:if set" + Utility.getCurrentDate() + "namazname" + namazName);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));
-//                    setupReminder(holder.binding.namazName.getText().toString(),
+//                     setupReminder(holder.binding.namazName.getText().toString(),
 //                            holder.binding.namazTiming.getText().toString(),pendingIntent);
             sharedPrefsValue = Utility.getCurrentDate() + "," + namazTiming + ",true";
             SharedPrefsHelper.storeValue(mContext,namazName,sharedPrefsValue);

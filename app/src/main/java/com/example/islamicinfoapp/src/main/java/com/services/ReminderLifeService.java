@@ -163,7 +163,9 @@ public class ReminderLifeService extends LifecycleService {
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + namazName);
                 pendingIntent = Utility.createPendingIntent(this,
                         Constants.FAJR, Utility.changeTimeFormat(prayerTiming.getFajr()), city, country);
-                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
+//                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
+//                        Utility.changeTimeFormat(prayerTiming.getFajr()) + ",true";
+                sharedPrefsValue = prayerTiming.getPrayerTimeEngDate() + "," +
                         Utility.changeTimeFormat(prayerTiming.getFajr()) + ",true";
                 SharedPrefsHelper.
                         storeValue(this, this.namazName, sharedPrefsValue);
@@ -175,7 +177,7 @@ public class ReminderLifeService extends LifecycleService {
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
                 pendingIntent = Utility.createPendingIntent(this,
                         Constants.SUNRISE, Utility.changeTimeFormat(prayerTiming.getSunsrise()), city, country);
-                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
+                sharedPrefsValue = prayerTiming.getPrayerTimeEngDate() + "," +
                         Utility.changeTimeFormat(prayerTiming.getSunsrise()) + ",true";
                 SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
                 Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
@@ -185,7 +187,7 @@ public class ReminderLifeService extends LifecycleService {
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
                 pendingIntent = Utility.createPendingIntent(this, Constants.DHUHR,
                         Utility.changeTimeFormat(prayerTiming.getDhuhr()), city, country);
-                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
+                sharedPrefsValue = prayerTiming.getPrayerTimeEngDate() + "," +
                         Utility.changeTimeFormat(prayerTiming.getDhuhr()) + ",true";
                 SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
                 Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
@@ -195,7 +197,7 @@ public class ReminderLifeService extends LifecycleService {
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
                 pendingIntent = Utility.createPendingIntent(this, Constants.ASR,
                         Utility.changeTimeFormat(prayerTiming.getAsr()), city, country);
-                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
+                sharedPrefsValue = prayerTiming.getPrayerTimeEngDate() + "," +
                         Utility.changeTimeFormat(prayerTiming.getAsr()) + ",true";
                 SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
                 Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
@@ -205,7 +207,7 @@ public class ReminderLifeService extends LifecycleService {
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
                 pendingIntent = Utility.createPendingIntent(this, Constants.MAGHRIB,
                         Utility.changeTimeFormat(prayerTiming.getMaghrib()), city, country);
-                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
+                sharedPrefsValue = prayerTiming.getPrayerTimeEngDate() + "," +
                         Utility.changeTimeFormat(prayerTiming.getMaghrib()) + ",true";
                 SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
                 Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),
@@ -215,7 +217,7 @@ public class ReminderLifeService extends LifecycleService {
                 Log.d(Constants.PRAYER_TAG, "onNext:switch case " + this.namazName);
                 pendingIntent = Utility.createPendingIntent(this, Constants.ISHA,
                         Utility.changeTimeFormat(prayerTiming.getIsha()), city, country);
-                sharedPrefsValue = Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())) + "," +
+                sharedPrefsValue = prayerTiming.getPrayerTimeEngDate() + "," +
                         Utility.changeTimeFormat(prayerTiming.getIsha()) + ",true";
                 SharedPrefsHelper.storeValue(this, this.namazName, sharedPrefsValue);
                 Utility.setupReminder(this, Utility.getDateForApi(Utility.convertStringToDate(prayerTiming.getPrayerTimeEngDate())),

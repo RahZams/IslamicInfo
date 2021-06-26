@@ -48,7 +48,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
             if (SharedPrefsHelper.getValue(context,s).contains(",")){
                 String[] sharedPrefsValues = SharedPrefsHelper.getValue(context,s).split(",");
                 Log.d(Constants.PRAYER_TAG, TAG + " scheduleAlarm: sharedPrefsValues" + sharedPrefsValues[0]
-                        + " : " + sharedPrefsValues[1] + ":" + sharedPrefsValues[2]);
+                        + " " + sharedPrefsValues[1] + " " + sharedPrefsValues[2]);
 //                if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime()) &&
 //                        sharedPrefsValues[2].equals("true")){
 //                    Log.d(Constants.PRAYER_TAG, TAG + " scheduleAlarm: " + "true");
@@ -58,8 +58,8 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 //                }
                 if (sharedPrefsValues[2].equals("true")){
                     Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "true " + sharedPrefsValues[0] + Utility.getCurrentDate() +
-                            Utility.compareDates(context,Utility.convertOneStringFormatToAnother(sharedPrefsValues[0]),Utility.getCurrentDate()));
-                    if(Utility.compareDates(context,Utility.convertOneStringFormatToAnother(sharedPrefsValues[0]),Utility.getCurrentDate())
+                            Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate()));
+                    if(Utility.compareDates(context,sharedPrefsValues[0],Utility.getCurrentDate())
                             .equals(context.getResources().getString(R.string.equals))){
                         Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare dates equal");
                         if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime())){
@@ -78,14 +78,16 @@ public class BootCompletedReceiver extends BroadcastReceiver {
                                         Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
                         }
                     }
-                    else if(Utility.compareDates(context,Utility.convertOneStringFormatToAnother(sharedPrefsValues[0]),
+                    else if(Utility.compareDates(context,sharedPrefsValues[0],
                             Utility.getCurrentDate()).equals(context.getResources().getString(R.string.after))){
                         Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare dates after");
+                        Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + Utility.getDateForApi(Utility.convertStringToDate(
+                                sharedPrefsValues[0])));
                         Utility.setupReminder(context,Utility.getDateForApi(Utility.convertStringToDate(
                                 sharedPrefsValues[0])),sharedPrefsValues[1],
                                 Utility.createPendingIntent(context,s,sharedPrefsValues[1],mCityName,mCountryName));
                     }
-                    else if(Utility.compareDates(context,Utility.convertOneStringFormatToAnother(sharedPrefsValues[0]),
+                    else if(Utility.compareDates(context,sharedPrefsValues[0],
                             Utility.getCurrentDate()).equals(context.getResources().getString(R.string.before))){
                         Log.d(Constants.PRAYER_TAG,TAG +  " scheduleAlarm: " + "compare dates before");
                         if (Utility.compareTwoTimings(sharedPrefsValues[1],Utility.getSystemTime())){

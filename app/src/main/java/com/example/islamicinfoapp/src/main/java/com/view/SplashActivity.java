@@ -86,6 +86,8 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
+
+
         QuranDatabase.getInstance(this).quranDao().getAllOldRecords(Utility.getCurrentDate())
                 .observe(this, new Observer<PrayerTiming>() {
                     @Override

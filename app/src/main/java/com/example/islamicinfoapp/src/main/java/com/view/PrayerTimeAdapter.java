@@ -62,7 +62,12 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        holder.mNamazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
 //                , 0, 0, 0);
         holder.binding.namazTiming.setText(mPrayerTimeList.get(position).getmNamazTime());
-        assignReminderImage(holder.binding.namazName.getText().toString(),holder.binding.reminderImage);
+        Log.d(Constants.PRAYER_TAG,TAG +  " onBindViewHolder: checkIfNewLocationToAssignReminders"
+                + checkIfNewLocationToAssignReminders());
+        if(!checkIfNewLocationToAssignReminders()) {
+            Log.d(Constants.PRAYER_TAG,TAG +  " onBindViewHolder: checkIfNewLocationToAssignReminders" );
+            assignReminderImage(holder.binding.namazName.getText().toString(), holder.binding.reminderImage);
+        }
 
         holder.binding.reminderImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +158,19 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
             }
         });
 
+    }
+
+    private boolean checkIfNewLocationToAssignReminders() {
+        boolean returnValue = false;
+        if (!SharedPrefsHelper.getValue(mContext,mContext.getResources().getString(R.string.new_location)).isEmpty()){
+            if ((SharedPrefsHelper.getValue(mContext,mContext.getResources().
+                    getString(R.string.new_location)).split(",")[0].equals(mCityName)) &&
+                    (SharedPrefsHelper.getValue(mContext,mContext.getResources().
+                            getString(R.string.new_location)).split(",")[0].equals(mCountryName))){
+                return true;
+            }
+        }
+        return returnValue;
     }
 
     private void setReminders(String namazName, String namazTiming, ImageView reminderImage) {

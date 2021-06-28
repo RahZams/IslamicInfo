@@ -38,6 +38,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 public class LocListener implements LocationListener {
     private Context mContext;
@@ -112,10 +114,35 @@ public class LocListener implements LocationListener {
                     public void onChanged(Integer integer) {
                         Log.d(Constants.PRAYER_TAG, TAG + " onChanged: " + " integer "+ integer);
                         if (integer == 0){
+                            // cancel alarms here
+                            cancelAllExistingAlarms();
+                            SharedPrefsHelper.storeValue(mContext,mContext.getResources().getString(R.string.new_location),
+                                    cityName + "," + countryName);
                             getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(new Date()));
                         }
                     }
                 });
+    }
+
+    private void cancelAllExistingAlarms() {
+        Log.d(Constants.PRAYER_TAG,TAG + " cancelAllExistingAlarms: ");
+        Map<String,?> allSharedPrefs;
+        Set<String> sharedPrefsKeys;
+
+        allSharedPrefs = SharedPrefsHelper.getAllSharedPrefs(mContext);
+        sharedPrefsKeys = allSharedPrefs.keySet();
+        for (String s:sharedPrefsKeys){
+            Log.d(Constants.PRAYER_TAG,TAG +  " cancelAllExistingAlarms: s " + s);
+            if (SharedPrefsHelper.getValue(mContext,s).contains(",")){
+                String[] sharedPrefsValues = SharedPrefsHelper.getValue(mContext,s).split(",");
+                Log.d(Constants.PRAYER_TAG,TAG +  " cancelAllExistingAlarms:sharedPrefsValues " + sharedPrefsValues[0] + " "
+                + sharedPrefsValues[1] + " " + sharedPrefsValues[2]);
+                if (!(sharedPrefsValues[2].isEmpty()) && sharedPrefsValues[2].equals("true")){
+                    Utility.cancelReminder(mContext,s);
+                }
+            }
+        }
+
     }
 
     private void getPrayerTimesDataFromApi(String cityName, String countryName,String formattedDate) {

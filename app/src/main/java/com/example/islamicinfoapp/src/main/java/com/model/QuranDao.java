@@ -51,6 +51,9 @@ public interface QuranDao {
     @Query("SELECT * FROM PrayerTiming WHERE date(prayerTimeEngDate) < date(:date)")
     LiveData<PrayerTiming> getAllOldRecords(String date);
 
+    @Query("SELECT * FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:todaysdate")
+    LiveData<PrayerTiming> getRecordForToday(String city,String country,String todaysdate);
+
     @Query("SELECT COUNT(*) FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date")
     LiveData<Integer> getRecordCount(String city, String country, String date);
 

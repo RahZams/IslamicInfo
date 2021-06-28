@@ -364,7 +364,7 @@ public class Utility {
 //    }
 
     public static void cancelReminder(Context mContext, String namazName) {
-        Log.d(Constants.PRAYER_TAG, TAG + " cancelReminder: ");
+        Log.d(Constants.PRAYER_TAG, TAG + " cancelReminder: namazName" + namazName);
         Intent intent = new Intent(mContext,ReminderReceiver.class);
         PendingIntent pendingIntent = null;
         switch (namazName){

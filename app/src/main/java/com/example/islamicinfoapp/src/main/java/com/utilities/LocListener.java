@@ -114,11 +114,11 @@ public class LocListener implements LocationListener {
                     public void onChanged(Integer integer) {
                         Log.d(Constants.PRAYER_TAG, TAG + " onChanged: " + " integer "+ integer);
                         if (integer == 0){
+                            getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(new Date()));
                             // cancel alarms here
                             cancelAllExistingAlarms();
                             SharedPrefsHelper.storeValue(mContext,mContext.getResources().getString(R.string.new_location),
                                     cityName + "," + countryName);
-                            getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(new Date()));
                         }
                     }
                 });
@@ -135,8 +135,8 @@ public class LocListener implements LocationListener {
             Log.d(Constants.PRAYER_TAG,TAG +  " cancelAllExistingAlarms: s " + s);
             if (SharedPrefsHelper.getValue(mContext,s).contains(",")){
                 String[] sharedPrefsValues = SharedPrefsHelper.getValue(mContext,s).split(",");
-                Log.d(Constants.PRAYER_TAG,TAG +  " cancelAllExistingAlarms:sharedPrefsValues " + sharedPrefsValues[0] + " "
-                + sharedPrefsValues[1] + " " + sharedPrefsValues[2]);
+                Log.d(Constants.PRAYER_TAG,TAG +  " cancelAllExistingAlarms:sharedPrefsValues " +
+                        sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
                 if (!(sharedPrefsValues[2].isEmpty()) && sharedPrefsValues[2].equals("true")){
                     Utility.cancelReminder(mContext,s);
                 }

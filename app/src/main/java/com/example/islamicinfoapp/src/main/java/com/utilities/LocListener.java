@@ -137,12 +137,13 @@ public class LocListener implements LocationListener {
                 String[] sharedPrefsValues = SharedPrefsHelper.getValue(mContext,s).split(",");
                 Log.d(Constants.PRAYER_TAG,TAG +  " cancelAllExistingAlarms:sharedPrefsValues " +
                         sharedPrefsValues[0] + " " + sharedPrefsValues[1]);
-                if (!(sharedPrefsValues[2].isEmpty()) && sharedPrefsValues[2].equals("true")){
-                    Utility.cancelReminder(mContext,s);
+                if(!sharedPrefsValues[2].isEmpty()) {
+                    if (sharedPrefsValues[2].equals("true")) {
+                        Utility.cancelReminder(mContext, s);
+                    }
                 }
             }
         }
-
     }
 
     private void getPrayerTimesDataFromApi(String cityName, String countryName,String formattedDate) {

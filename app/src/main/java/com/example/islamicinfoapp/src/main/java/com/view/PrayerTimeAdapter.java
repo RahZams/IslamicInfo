@@ -163,10 +163,17 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     private boolean checkIfNewLocationToAssignReminders() {
         boolean returnValue = false;
         if (!SharedPrefsHelper.getValue(mContext,mContext.getResources().getString(R.string.new_location)).isEmpty()){
+            Log.d(Constants.PRAYER_TAG,TAG + " checkIfNewLocationToAssignReminders: not empty" +
+                    SharedPrefsHelper.getValue(mContext,mContext.getResources().
+                            getString(R.string.new_location)).split(",")[0] +
+                    SharedPrefsHelper.getValue(mContext,mContext.getResources().
+                            getString(R.string.new_location)).split(",")[1]);
             if ((SharedPrefsHelper.getValue(mContext,mContext.getResources().
                     getString(R.string.new_location)).split(",")[0].equals(mCityName)) &&
                     (SharedPrefsHelper.getValue(mContext,mContext.getResources().
-                            getString(R.string.new_location)).split(",")[0].equals(mCountryName))){
+                            getString(R.string.new_location)).split(",")[1].equals(mCountryName))){
+                //SharedPrefsHelper.storeValue(mContext,mContext.getResources().getString(R.string.cityname),"");
+                //SharedPrefsHelper.storeValue(mContext,mContext.getResources().getString(R.string.countryname),"");
                 return true;
             }
         }

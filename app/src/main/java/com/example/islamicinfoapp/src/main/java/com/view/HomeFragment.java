@@ -28,6 +28,7 @@ import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
 import com.example.islamicinfoapp.src.main.java.com.model.PrayerTimingItem;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
+import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.PrayerTimeViewModel;
 
@@ -37,8 +38,8 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends Fragment{
-//
+public class HomeFragment extends Fragment {
+    //
 //    @BindView(R.id.recyclerview)
 //    RecyclerView mRecyclerView;
 //
@@ -47,12 +48,12 @@ public class HomeFragment extends Fragment{
 //
 //    @BindView(R.id.date_text)
 //    TextView mDateView;
-        Toolbar toolbar;
+    Toolbar toolbar;
 
     private PrayerTimeViewModel mPrayerTimeViewModel;
     private ArrayList<PrayerTimingItem> mPrayerTimeList = new ArrayList<>();
     private PrayerTimeAdapter adapter;
-    private String mCityname,mCountryname;
+    private String mCityname, mCountryname;
     private AppBarConfiguration mAppBarConfig;
     private NavController mNavController;
     private static final String TAG = HomeFragment.class.getSimpleName();
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment{
 //        intent.putExtra(Intent.EXTRA_TEXT, "mail body");
 //        startActivity(Intent.createChooser(intent, ""));
         // Inflate the layout for this fragment
-        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home,
+        FragmentHomeBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home,
                 container, false);
         View view = binding.getRoot();
 
@@ -88,8 +89,8 @@ public class HomeFragment extends Fragment{
         //binding.dateText.setText(Utility.getCurrentDate());
 //   m     mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());
-        adapter = new PrayerTimeAdapter(getContext(),mPrayerTimeList);
-        observeViewModel(mCityname,mCountryname,binding);
+        adapter = new PrayerTimeAdapter(getContext(), mPrayerTimeList);
+        observeViewModel(mCityname, mCountryname, binding);
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.recyclerview.setAdapter(adapter);
         //Intent intent = new Intent(getContext(), ReminderService.class);
@@ -102,11 +103,11 @@ public class HomeFragment extends Fragment{
         super.onViewCreated(view, savedInstanceState);
         Log.d(Constants.PRAYER_TAG, TAG + " onViewCreated: ");
         toolbar = getActivity().findViewById(R.id.toolbar);
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,R.id.zikrFragment,
-        R.id.quranFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.zikrFragment,
+                R.id.quranFragment, R.id.pregInfoFragment, R.id.moreFragment).build();
         mNavController = NavHostFragment.findNavController(this);
-        NavigationUI.setupWithNavController(toolbar,mNavController,mAppBarConfig);
+        NavigationUI.setupWithNavController(toolbar, mNavController, mAppBarConfig);
 
     }
 
@@ -130,14 +131,37 @@ public class HomeFragment extends Fragment{
             public void onChanged(PrayerTiming prayerTiming) {
 //                Log.d("prayer", "onChanged: city" + prayerTiming.getCity());
                 //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
-                if (prayerTiming != null && !prayerTiming.equals("")){
+                if (prayerTiming != null && !prayerTiming.equals("")) {
                     Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
                     binding.dateText.setText(prayerTiming.getPrayerTimeEngDate());
-                    adapter.updateList(mCityname,mCountryname,createArrayListOfPrayerTiming(prayerTiming));
+                    adapter.updateList(mCityname, mCountryname, createArrayListOfPrayerTiming(prayerTiming),
+                            checkIfNewLocationToAssignReminders(mCityname,mCountryname));
                 }
             }
         });
     }
+
+    private boolean checkIfNewLocationToAssignReminders(String mCityname, String mCountryname) {
+        boolean returnValue = false;
+        if (!SharedPrefsHelper.getValue(getActivity(), getActivity().getResources().
+                getString(R.string.new_location)).isEmpty()) {
+            Log.d(Constants.PRAYER_TAG, TAG + " checkIfNewLocationToAssignReminders: not empty" +
+                    SharedPrefsHelper.getValue(getActivity(), getActivity().getResources().
+                            getString(R.string.new_location)).split(",")[0] +
+                    SharedPrefsHelper.getValue(getActivity(), getActivity().getResources().
+                            getString(R.string.new_location)).split(",")[1]);
+            if ((SharedPrefsHelper.getValue(getActivity(), getActivity().getResources().
+                    getString(R.string.new_location)).split(",")[0].equals(mCityname)) &&
+                    (SharedPrefsHelper.getValue(getActivity(), getActivity().getResources().
+                            getString(R.string.new_location)).split(",")[1].equals(mCountryname))) {
+                SharedPrefsHelper.storeValue(getActivity(), getActivity().getResources().
+                        getString(R.string.new_location), "");
+                returnValue = true;
+            }
+        }
+        return returnValue;
+    }
+
 
     private ArrayList<PrayerTimingItem> createArrayListOfPrayerTiming(PrayerTiming prayerTiming) {
 

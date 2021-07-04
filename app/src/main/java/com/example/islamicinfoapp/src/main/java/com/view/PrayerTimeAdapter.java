@@ -31,6 +31,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
     private Context mContext;
     private String mCityName,mCountryName;
     private static final String TAG = PrayerTimeAdapter.class.getSimpleName();
+    private boolean new_loc = false;
 
     public PrayerTimeAdapter(Context context, ArrayList<PrayerTimingItem> mPrayerTimeList) {
         Log.d(Constants.PRAYER_TAG, TAG + " PrayerTimeAdapter: " + mPrayerTimeList.size());
@@ -38,10 +39,12 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
         this.mPrayerTimeList = mPrayerTimeList;
     }
 
-    public void updateList(String cityname, String countryname,ArrayList<PrayerTimingItem> arrayListOfPrayerTiming) {
+    public void updateList(String cityname, String countryname, ArrayList<PrayerTimingItem>
+            arrayListOfPrayerTiming, boolean new_location) {
         mCityName = cityname;
         mCountryName = countryname;
         this.mPrayerTimeList = arrayListOfPrayerTiming;
+        new_loc = new_location;
         Log.d(Constants.PRAYER_TAG, TAG + " updateList: " + mPrayerTimeList.size() + mCityName);
         notifyDataSetChanged();
     }
@@ -62,13 +65,10 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        holder.mNamazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
 //                , 0, 0, 0);
         holder.binding.namazTiming.setText(mPrayerTimeList.get(position).getmNamazTime());
-        Log.d(Constants.PRAYER_TAG,TAG +  " onBindViewHolder: checkIfNewLocationToAssignReminders"
-                + checkIfNewLocationToAssignReminders());
-        if(!checkIfNewLocationToAssignReminders()) {
-            Log.d(Constants.PRAYER_TAG,TAG +  " onBindViewHolder: checkIfNewLocationToAssignReminders" );
+        if(!new_loc) {
+            Log.d(Constants.PRAYER_TAG,TAG +  " onBindViewHolder:new_loc" + new_loc);
             assignReminderImage(holder.binding.namazName.getText().toString(), holder.binding.reminderImage);
         }
-
         holder.binding.reminderImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,25 +160,6 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 
     }
 
-    private boolean checkIfNewLocationToAssignReminders() {
-        boolean returnValue = false;
-        if (!SharedPrefsHelper.getValue(mContext,mContext.getResources().getString(R.string.new_location)).isEmpty()){
-            Log.d(Constants.PRAYER_TAG,TAG + " checkIfNewLocationToAssignReminders: not empty" +
-                    SharedPrefsHelper.getValue(mContext,mContext.getResources().
-                            getString(R.string.new_location)).split(",")[0] +
-                    SharedPrefsHelper.getValue(mContext,mContext.getResources().
-                            getString(R.string.new_location)).split(",")[1]);
-            if ((SharedPrefsHelper.getValue(mContext,mContext.getResources().
-                    getString(R.string.new_location)).split(",")[0].equals(mCityName)) &&
-                    (SharedPrefsHelper.getValue(mContext,mContext.getResources().
-                            getString(R.string.new_location)).split(",")[1].equals(mCountryName))){
-                //SharedPrefsHelper.storeValue(mContext,mContext.getResources().getString(R.string.cityname),"");
-                //SharedPrefsHelper.storeValue(mContext,mContext.getResources().getString(R.string.countryname),"");
-                return true;
-            }
-        }
-        return returnValue;
-    }
 
     private void setReminders(String namazName, String namazTiming, ImageView reminderImage) {
         String sharedPrefsValue = "";

@@ -140,6 +140,7 @@ public class LocListener implements LocationListener {
                 if(sharedPrefsValues.length > 2 && (!sharedPrefsValues[2].isEmpty())) {
                     if (sharedPrefsValues[2].equals("true")) {
                         Utility.cancelReminder(mContext, s);
+                        SharedPrefsHelper.clearSharedPrefs(mContext,s);
                     }
                 }
             }

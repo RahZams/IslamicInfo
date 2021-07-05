@@ -59,6 +59,17 @@ public class SharedPrefsHelper {
        return mSharedPreferences.getAll();
     }
 
+    public static void clearSharedPrefs(Context context,String key){
+        if (mSharedPreferences == null){
+            mSharedPreferences = getPrefs(context);
+        }
+        if (mEditor == null) {
+            mEditor = mSharedPreferences.edit();
+        }
+
+        mEditor.remove(key).commit();
+    }
+
 //    public static void storePendingIntentId(Context mContext, String namazName, int id) {
 //        if (mSharedPreferences == null){
 //            mSharedPreferences = getPrefs(mContext);

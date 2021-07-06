@@ -41,6 +41,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+
 public class LocListener implements LocationListener {
     private Context mContext;
     private LocationManager mLocationManager;
@@ -114,12 +121,38 @@ public class LocListener implements LocationListener {
                     public void onChanged(Integer integer) {
                         Log.d(Constants.PRAYER_TAG, TAG + " onChanged: " + " integer "+ integer);
                         if (integer == 0){
+                            removePreviousLocationDataFromDb(mContext,cityName,countryName,Utility.getDateForDb(new Date()));
                             getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(new Date()));
                             // cancel alarms here
                             cancelAllExistingAlarms();
                             SharedPrefsHelper.storeValue(mContext,mContext.getResources().getString(R.string.new_location),
                                     cityName + "," + countryName);
                         }
+                    }
+                });
+    }
+
+    private void removePreviousLocationDataFromDb(Context mContext, String cityName, String countryName, String dateForDb) {
+        Log.d(Constants.PRAYER_TAG,TAG +  " removePreviousLocationDataFromDb: " + cityName + countryName + dateForDb);
+        Completable completable = QuranDatabase.getInstance(mContext).quranDao().
+                deleteLocationData(cityName);
+        completable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new CompletableObserver() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(Constants.PRAYER_TAG,TAG + " removePreviousLocationDataFromDb onComplete: completed");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d(Constants.PRAYER_TAG,TAG + " removePreviousLocationDataFromDb onError: "
+                                + e.getLocalizedMessage());
                     }
                 });
     }

@@ -45,11 +45,14 @@ public interface QuranDao {
     @Query("DELETE FROM PrayerTiming")
     void deleteAllPrayerTimingData();
 
-    @Query("DELETE FROM PrayerTiming WHERE date(prayerTimeEngDate) < date(:date)")
+    @Query("DELETE FROM PrayerTiming WHERE DateTime(prayerTimeEngDate) < DateTime(:date)")
     Completable deletePrayerTimeData(String date);
 
     @Query("SELECT * FROM PrayerTiming WHERE date(prayerTimeEngDate) < date(:date)")
     LiveData<PrayerTiming> getAllOldRecords(String date);
+
+    @Query("DELETE FROM PrayerTiming WHERE city!=:city")
+    Completable deleteLocationData(String city);
 
     @Query("SELECT * FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:todaysdate")
     LiveData<PrayerTiming> getRecordForToday(String city,String country,String todaysdate);

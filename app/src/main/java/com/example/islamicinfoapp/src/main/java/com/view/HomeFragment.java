@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment {
         toolbar = getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.zikrFragment,
-                R.id.quranFragment, R.id.pregInfoFragment, R.id.moreFragment).build();
+                R.id.pregInfoFragment, R.id.helpFragment).build();
         mNavController = NavHostFragment.findNavController(this);
         NavigationUI.setupWithNavController(toolbar, mNavController, mAppBarConfig);
 

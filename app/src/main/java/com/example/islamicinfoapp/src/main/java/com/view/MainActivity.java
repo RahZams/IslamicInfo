@@ -49,9 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
             //toolbar.setTitle(destination.getLabel());
-            if ((destination.getId() == R.id.homeFragment) || (destination.getId() == R.id.quranFragment)
-            || (destination.getId() == R.id.zikrFragment) || (destination.getId() == R.id.pregInfoFragment)
-            || (destination.getId() == R.id.moreFragment)){
+            if ((destination.getId() == R.id.homeFragment) || (destination.getId() == R.id.zikrFragment)
+                    || (destination.getId() == R.id.pregInfoFragment) || (destination.getId() == R.id.helpFragment)){
                 bottomNavigationView.setVisibility(View.VISIBLE);
 //                appBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,
 //                        R.id.quranFragment,R.id.zikrFragment,R.id.pregInfoFragment,R.id.moreFragment).build();

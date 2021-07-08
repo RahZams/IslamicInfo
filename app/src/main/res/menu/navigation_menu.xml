@@ -9,16 +9,21 @@
         android:title="@string/zikr"
         android:icon="@drawable/ic_tasbeeh"
         android:id="@+id/zikrFragment"/>
-    <item
-        android:title="@string/quran"
-        android:icon="@drawable/ic_quran"
-        android:id="@+id/quranFragment"/>
+<!--    <item-->
+<!--        android:title="@string/quran"-->
+<!--        android:icon="@drawable/ic_quran"-->
+<!--        android:id="@+id/quranFragment"/>-->
     <item
         android:title="@string/pregnancy_info"
         android:icon="@drawable/ic_pregnant_woman_new"
         android:id="@+id/pregInfoFragment"/>
+
     <item
-        android:title="@string/more"
-        android:icon="@drawable/ic_more_new"
-        android:id="@+id/moreFragment"/>
+        android:title="@string/help_title"
+        android:icon="@drawable/ic_help"
+        android:id="@+id/helpFragment"/>
+<!--    <item-->
+<!--        android:title="@string/more"-->
+<!--        android:icon="@drawable/ic_more_new"-->
+<!--        android:id="@+id/moreFragment"/>-->
 </menu>

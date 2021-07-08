@@ -148,7 +148,7 @@ public class ZikrFragment extends Fragment {
         mToolbar = getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
         mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,R.id.zikrFragment,
-                R.id.quranFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+                R.id.pregInfoFragment,R.id.helpFragment).build();
         mNavController = NavHostFragment.findNavController(this);
         NavigationUI.setupWithNavController(mToolbar,mNavController,mAppBarConfig);
 

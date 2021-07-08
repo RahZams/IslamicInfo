@@ -69,13 +69,13 @@ public class MoreFragment extends Fragment {
                 NavigationUI.setupActionBarWithNavController((AppCompatActivity) getActivity(),mNavController);
                 switch (position){
                     case 0:
-                        mNavController.navigate(R.id.action_moreFragment_to_calendarFragment);
+                        //mNavController.navigate(R.id.action_moreFragment_to_calendarFragment);
                         break;
                     case 1:
-                        mNavController.navigate(R.id.action_moreFragment_to_settingsFragment);
+                        //mNavController.navigate(R.id.action_moreFragment_to_settingsFragment);
                         break;
                     case 2:
-                        mNavController.navigate(R.id.action_moreFragment_to_helpFragment);
+                        //mNavController.navigate(R.id.action_moreFragment_to_helpFragment);
                         break;
                         default:
                 }
@@ -91,7 +91,7 @@ public class MoreFragment extends Fragment {
         toolbar = getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment,R.id.zikrFragment,
-                R.id.quranFragment,R.id.pregInfoFragment,R.id.moreFragment).build();
+                R.id.pregInfoFragment,R.id.helpFragment).build();
         mNavController = NavHostFragment.findNavController(this);
         NavigationUI.setupWithNavController(toolbar,mNavController,mAppBarConfig);
 

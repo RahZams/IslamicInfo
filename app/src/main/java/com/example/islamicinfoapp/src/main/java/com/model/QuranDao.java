@@ -24,8 +24,8 @@ public interface QuranDao {
     @Query("SELECT * FROM QuranDbData WHERE name = :name")
     List<QuranDbData> selectAllDuas(String name);
 
-     @Query("SELECT * FROM SurahData")
-    List<SurahData> getAllSurahs();
+//     @Query("SELECT * FROM SurahData")
+//    List<SurahData> getAllSurahs();
 
     @Query("SELECT * FROM SurahData WHERE surahNameEnglish =:surahNameEnglish")
     LiveData<SurahData> getSurahData(String surahNameEnglish);

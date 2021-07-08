@@ -30,6 +30,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/quranFragment"
+        android:name="com.example.islamicinfoapp.src.main.java.com.view.QuranFragment"
+        android:label="@string/quran"
+        tools:layout="@layout/fragment_quran" />
+
+    <fragment
         android:id="@+id/pregInfoFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.PregInfoFragment"
         android:label="@string/preg_title"

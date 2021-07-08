@@ -24,38 +24,41 @@ public interface QuranDao {
     @Query("SELECT * FROM QuranDbData WHERE name = :name")
     List<QuranDbData> selectAllDuas(String name);
 
-     @Query("SELECT * FROM SurahData")
-    List<SurahData> getAllSurahs();
+//     @Query("SELECT * FROM SurahData")
+//    List<SurahData> getAllSurahs();
 
     @Query("SELECT * FROM SurahData WHERE surahNameEnglish =:surahNameEnglish")
     LiveData<SurahData> getSurahData(String surahNameEnglish);
 
-    @Query("DELETE FROM QuranDbData where name =:name")
-    void deleteAllQuranData(String name);
-
-    @Query("DELETE FROM QuranDbData")
-    void deleteAllQuranData();
-
-    @Query("DELETE FROM SurahData")
-    void deleteAllSurahData();
+//    @Query("DELETE FROM QuranDbData where name =:name")
+//    void deleteAllQuranData(String name);
+//
+//    @Query("DELETE FROM QuranDbData")
+//    void deleteAllQuranData();
+//
+//    @Query("DELETE FROM SurahData")
+//    void deleteAllSurahData();
 
     @Query("SELECT * FROM PrayerTiming WHERE city =:city AND country=:country AND prayerTimeEngDate=:date")
     LiveData<PrayerTiming> getPrayerTimingOfCity(String city, String country, String date);
 
-    @Query("DELETE FROM PrayerTiming")
-    void deleteAllPrayerTimingData();
+//    @Query("DELETE FROM PrayerTiming")
+//    void deleteAllPrayerTimingData();
+//
+//    @Query("DELETE FROM PrayerTiming WHERE Date(prayerTimeEngDate) < Date(:date)")
+//    Completable deletePrayerTimesData(String date);
 
-    @Query("DELETE FROM PrayerTiming WHERE DateTime(prayerTimeEngDate) < DateTime(:date)")
-    Completable deletePrayerTimeData(String date);
+    @Query("DELETE FROM PrayerTiming WHERE prayerTimeEngDate != :todaydate AND prayerTimeEngDate != :tomodate")
+    Completable deletePrayerTimeData(String todaydate,String tomodate);
 
-    @Query("SELECT * FROM PrayerTiming WHERE date(prayerTimeEngDate) < date(:date)")
-    LiveData<PrayerTiming> getAllOldRecords(String date);
+//    @Query("SELECT * FROM PrayerTiming WHERE date(prayerTimeEngDate) < date(:date)")
+//    LiveData<PrayerTiming> getAllOldRecords(String date);
 
     @Query("DELETE FROM PrayerTiming WHERE city!=:city")
     Completable deleteLocationData(String city);
 
-    @Query("SELECT * FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:todaysdate")
-    LiveData<PrayerTiming> getRecordForToday(String city,String country,String todaysdate);
+//    @Query("SELECT * FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:todaysdate")
+//    LiveData<PrayerTiming> getRecordForToday(String city,String country,String todaysdate);
 
     @Query("SELECT COUNT(*) FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date")
     LiveData<Integer> getRecordCount(String city, String country, String date);

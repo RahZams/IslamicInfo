@@ -8,6 +8,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
@@ -151,16 +153,24 @@ public class Utility {
     }
 
     public static String createNotificationChannel(Context context) {
+        Uri uri = Uri.parse(
+                "android.resource://" +
+                        context.getPackageName() +
+                        "/" +
+                        R.raw.makkah);
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
         String channelId  = "SERVICE_CHANNEL_ID";
         String channelName = "Service Notification Channel";
+
+
         NotificationChannel notificationChannel = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             notificationChannel = new NotificationChannel(channelId, channelName,
                     NotificationManager.IMPORTANCE_HIGH);
 
             notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            //notificationChannel.setSound(uri, AudioManager.STREAM_NOTIFICATION);
             notificationManager.createNotificationChannel(notificationChannel);
         }
         return channelId;

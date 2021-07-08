@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
@@ -140,7 +141,7 @@ public class ReminderReceiver extends BroadcastReceiver {
         startAppIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,startAppIntent,0);
 
-        Utility.playSound(context);
+        //Utility.playSound(context);
 
         Notification notification = new NotificationCompat.Builder(context,Constants.NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.ic_quran)

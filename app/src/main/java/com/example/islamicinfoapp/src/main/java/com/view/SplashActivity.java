@@ -88,38 +88,57 @@ public class SplashActivity extends AppCompatActivity {
 
 
 
-        QuranDatabase.getInstance(this).quranDao().getAllOldRecords(Utility.getCurrentDate())
-                .observe(this, new Observer<PrayerTiming>() {
+//        QuranDatabase.getInstance(this).quranDao().getAllOldRecords(Utility.getCurrentDate())
+//                .observe(this, new Observer<PrayerTiming>() {
+//                    @Override
+//                    public void onChanged(PrayerTiming prayerTiming) {
+//                        if (prayerTiming != null) {
+//                            Log.d(Constants.SPLASH, TAG + " onChanged: all records" + prayerTiming.getPrayerTimeEngDate());
+//                        }
+//                        else{
+//                            Log.d(Constants.SPLASH, TAG + " onChanged: no records");
+//                        }
+//                    }
+//                });
+
+
+//        Completable deletedrecordsCompletable = QuranDatabase.getInstance(this).quranDao().deletePrayerTimesData(Utility.getCurrentDate());
+//        deletedrecordsCompletable.subscribeOn(Schedulers.io()).
+//                subscribe(new CompletableObserver() {
+//            @Override
+//            public void onSubscribe(@NonNull Disposable d) {
+//
+//            }
+//
+//            @Override
+//            public void onComplete() {
+//                Log.d(Constants.SPLASH,TAG +  " prayertiming delete completable's onComplete: ");
+//            }
+//
+//            @Override
+//            public void onError(@NonNull Throwable e) {
+//                Log.d(Constants.SPLASH,TAG +  " prayertiming delete completable's onError: " + e.getCause() + e.getLocalizedMessage());
+//            }
+//        });
+
+        QuranDatabase.getInstance(this).quranDao().deletePrayerTimeData(Utility.getCurrentDate(),Utility.getTomorrowDateForDb())
+                .subscribeOn(Schedulers.io())
+                .subscribe(new CompletableObserver() {
                     @Override
-                    public void onChanged(PrayerTiming prayerTiming) {
-                        if (prayerTiming != null) {
-                            Log.d(Constants.SPLASH, TAG + " onChanged: all records" + prayerTiming.getPrayerTimeEngDate());
-                        }
-                        else{
-                            Log.d(Constants.SPLASH, TAG + " onChanged: no records");
-                        }
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(Constants.PRAYER_TAG,TAG + " onComplete: deletePrayerTimeData");
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d(Constants.PRAYER_TAG,TAG + " onComplete: deletePrayerTimeData" + e.getLocalizedMessage());
                     }
                 });
-
-
-        Completable deletedrecordsCompletable = QuranDatabase.getInstance(this).quranDao().deletePrayerTimeData(Utility.getCurrentDate());
-        deletedrecordsCompletable.subscribeOn(Schedulers.io()).
-                subscribe(new CompletableObserver() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                Log.d(Constants.SPLASH,TAG +  " prayertiming delete completable's onComplete: ");
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.d(Constants.SPLASH,TAG +  " prayertiming delete completable's onError: " + e.getCause() + e.getLocalizedMessage());
-            }
-        });
 
         //int deletedrecords = QuranDatabase.getInstance(this).quranDao().deletePrayerTimeData(Utility.getCurrentDate());
         //Log.d(Constants.SPLASH,TAG  + " checkIfDataAvailableInDatabase: deleted prayertiming records are: " + deletedrecords);

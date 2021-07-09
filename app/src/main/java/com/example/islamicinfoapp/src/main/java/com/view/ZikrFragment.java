@@ -26,6 +26,7 @@ import android.widget.ExpandableListView;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.DuasViewModel;
 
@@ -121,8 +122,9 @@ public class ZikrFragment extends Fragment {
                         sendStringArgsToItemFrag(mZikr_items.get(groupPosition),getResources().getString(R.string.before_anything));
                         break;
                     case 3:
-                        mDuasViewModel.fetchFromDatabase(getActivity().getResources().getString(R.string.ayat));
-                        observeViewModel(mZikr_items.get(groupPosition));
+                        //mDuasViewModel.fetchFromDatabase(getActivity().getResources().getString(R.string.ayat));
+                        observeViewModel(getActivity().getResources().getString(R.string.ayat),
+                                mZikr_items.get(groupPosition));
                         break;
                     case 4:
                         mNavController = Navigation.findNavController(view);
@@ -161,14 +163,27 @@ public class ZikrFragment extends Fragment {
         mNavController.navigate(action);
     }
 
-    private void observeViewModel(String str) {
-        mDuasViewModel.duasLiveData.observe(this, quranDbData -> {
-            //Log.d("zikr", "observeViewModel: " + quranDbData.get(0).getQuranText());
-            if (quranDbData != null) {
-                sendStringArgsToItemFrag(str, quranDbData.get(0).quranText);
-            }
-        });
+    private void observeViewModel(String name,String str) {
+        QuranDatabase.getInstance(getActivity()).quranDao().selectAllDuas(name).observe(this,
+                new Observer<List<QuranDbData>>() {
+                    @Override
+                    public void onChanged(List<QuranDbData> quranDbData) {
+                        Log.d(Constants.ZIKR_TAG,TAG + " observeViewModel: " + quranDbData.get(0).getQuranText());
+                        if (quranDbData != null) {
+                            sendStringArgsToItemFrag(str, quranDbData.get(0).quranText);
+                        }
+                    }
+                });
     }
+
+//    private void observeViewModel(String str) {
+//        mDuasViewModel.duasLiveData.observe(this, quranDbData -> {
+//            //Log.d("zikr", "observeViewModel: " + quranDbData.get(0).getQuranText());
+//            if (quranDbData != null) {
+//                sendStringArgsToItemFrag(str, quranDbData.get(0).quranText);
+//            }
+//        });
+//    }
 
 
 }

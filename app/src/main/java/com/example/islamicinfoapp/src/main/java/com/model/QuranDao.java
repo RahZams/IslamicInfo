@@ -12,8 +12,8 @@ import io.reactivex.Completable;
 @Dao
 public interface QuranDao {
 
-    @Insert
-    Long insert(QuranDbData quranDbData);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    Completable insert(QuranDbData quranDbData);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(SurahData surahData);
@@ -22,7 +22,7 @@ public interface QuranDao {
     Completable insert(PrayerTiming prayerTiming);
 
     @Query("SELECT * FROM QuranDbData WHERE name = :name")
-    List<QuranDbData> selectAllDuas(String name);
+    LiveData<List<QuranDbData>> selectAllDuas(String name);
 
 //     @Query("SELECT * FROM SurahData")
 //    List<SurahData> getAllSurahs();

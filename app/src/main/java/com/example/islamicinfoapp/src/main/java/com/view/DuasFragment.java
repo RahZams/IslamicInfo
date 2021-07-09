@@ -4,6 +4,7 @@ package com.example.islamicinfoapp.src.main.java.com.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,13 +16,13 @@ import android.view.ViewGroup;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
+import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.DuasViewModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Observer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,9 +36,7 @@ public class DuasFragment extends Fragment {
     RecyclerView mRecyclerView;
     private DuasAdapter adapter = new DuasAdapter(new ArrayList<QuranDbData>());
     private DuasViewModel mDuasViewModel;
-    private String[] mDuasTitle,mEverydayDuaTitle;
-    private String mFrag_name;
-    private List<String> mEverydayDuas;
+    private String[] mDuasTitle;
     private static final String TAG = DuasFragment.class.getSimpleName();
 
     public DuasFragment() {
@@ -55,7 +54,7 @@ public class DuasFragment extends Fragment {
         mDuasViewModel = ViewModelProviders.of(this).get(DuasViewModel.class);
         mDuasTitle = getActivity().getResources().getStringArray(R.array.duas_title);
         //mDuasViewModel.fetchFromRemote();
-        mDuasViewModel.fetchFromDatabase(getContext().getResources().getString(R.string.duaName));
+        //mDuasViewModel.fetchFromDatabase(getContext().getResources().getString(R.string.duaName));
         observeViewModel();
 //        if (getArguments() != null){
 //            mFrag_name = DuasFragmentArgs.fromBundle(getArguments()).getCalling_frag_name();
@@ -77,12 +76,25 @@ public class DuasFragment extends Fragment {
     }
 
     private void observeViewModel() {
-        mDuasViewModel.duasLiveData.observe(this, quranDbData -> {
-            Log.d(Constants.PRAYER_TAG, TAG + "observeViewModel: " + quranDbData.size());
-            if (quranDbData != null) {
-                Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel: " + quranDbData.get(0).getQuranText());
-                adapter.updateList(mDuasTitle, quranDbData);
+        QuranDatabase.getInstance(getActivity()).quranDao().
+                selectAllDuas(getContext().getResources().getString(R.string.duaName)).observe(this, new Observer<List<QuranDbData>>() {
+            @Override
+            public void onChanged(List<QuranDbData> quranDbData) {
+                if (quranDbData != null){
+                    Log.d(Constants.ZIKR_TAG, TAG + " observeViewModel: " + quranDbData.get(0).getQuranText());
+                    adapter.updateList(mDuasTitle,quranDbData);
+                }
             }
         });
     }
+
+//    private void observeViewModel() {
+//        mDuasViewModel.duasLiveData.observe(this, quranDbData -> {
+//            Log.d(Constants.PRAYER_TAG, TAG + "observeViewModel: " + quranDbData.size());
+//            if (quranDbData != null) {
+//                Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel: " + quranDbData.get(0).getQuranText());
+//                adapter.updateList(mDuasTitle, quranDbData);
+//            }
+//        });
+//    }
 }

@@ -94,7 +94,8 @@ public class SurahViewModel extends AndroidViewModel {
                     @Override
                     public void onNext(SurahData surahData) {
                         //Toast.makeText(getApplication(), " on next surah " , Toast.LENGTH_SHORT).show();
-                        Log.d(Constants.SURAH_TAG, TAG + " onNext:surah " + surahData.getDataNumber() + " " + surahData.getSurahNameEnglish());
+                        Log.d(Constants.SURAH_TAG, TAG + " onNext:surah " + surahData.getDataNumber()
+                                + " " + surahData.getSurahNameEnglish());
 //                        mSurahSaveToDBTask = new SurahSaveToDBTask();
 //                        mSurahSaveToDBTask.execute(surahData);
                         insertDataToDb(surahData);
@@ -114,7 +115,7 @@ public class SurahViewModel extends AndroidViewModel {
     }
 
     private void insertDataToDb(SurahData surahData) {
-        Log.d(Constants.SURAH_TAG, "insertDataToDb: ");
+        Log.d(Constants.SURAH_TAG, "insertDataToDb: " + surahData.getDataNumber());
 
         Completable completable = QuranDatabase.getInstance(getApplication()).quranDao().insert(surahData);
         completable.subscribe(new CompletableObserver() {

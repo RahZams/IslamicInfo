@@ -80,7 +80,7 @@ public class SurahItemFragment extends Fragment {
             public void onChanged(SurahData surahData) {
                 Log.d(Constants.SURAH_TAG, TAG + " onChanged: ");
                 if (surahData != null){
-                    Log.d(Constants.SURAH_TAG, Constants.SURAH_TAG + " onChanged: "
+                    Log.d(Constants.SURAH_TAG, Constants.SURAH_TAG + " onChanged: " + surahData.getSurahNameEnglish()
                             + surahData.toString().length());
                     surahItemAdapter.updateList(surahData.getAyahList());
                 }

@@ -1,12 +1,16 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.LongDef;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
@@ -20,6 +24,7 @@ import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDao;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
+import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.DuasViewModel;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.SurahViewModel;
@@ -34,9 +39,6 @@ import okhttp3.internal.Util;
 public class SplashActivity extends AppCompatActivity {
     private DuasViewModel mDuasViewModel;
     private SurahViewModel mSurahViewModel;
-    private AsyncTask<Void,Void,Void> mduasDeleteTask;
-    private QuranDao mQuranDao;
-    private Utility utility =  new Utility();
     private static final String TAG = SplashActivity.class.getSimpleName();
 
 
@@ -50,16 +52,50 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(SplashActivity.this, LocationActivity.class);
-                checkIfDataAvailableInDatabase();
+                Intent locIntent;
+                if(Utility.checkForNetworkAvailibility(SplashActivity.this)){
+                    checkIfDataAvailableInDatabase();
+                    finish();
+                    if (SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)) ==
+                    getResources().getString(R.string.dont_ask_again)) {
+                        locIntent = new Intent(SplashActivity.this,MainActivity.class);
+                    }
+                    else{
+                        locIntent = new Intent(SplashActivity.this,LocationActivity.class);
+                    }
+                    startActivity(locIntent);
+                }
+                else{
+                    showAlertDialog(SplashActivity.this,R.drawable.ic_no_network
+                            ,getResources().getString(R.string.no_internet),getResources().getString(R.string.no_internet_message),
+                            getResources().getString(R.string.ok_button_text));
+                }
 //                mduasDeleteTask =  new DeleteTask();
 //                mduasDeleteTask.execute();
-                finish();
-                startActivity(mainIntent);
-
+                //finish();
+                //startActivity(mainIntent);
             }
         },10*1000);
+    }
 
+    private void showAlertDialog(Context context, int drawable, String title, String message, String buttonText){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setCancelable(false);
+        builder.setIcon(drawable);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.setPositiveButton(buttonText, (dialog, which) -> {
+            Intent intent = new Intent(Settings.ACTION_SETTINGS);
+            dialog.dismiss();
+            SplashActivity.this.finish();
+            startActivity(intent);
+        });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.setOnShowListener(dialog -> {
+            alertDialog.getButton(DialogInterface.BUTTON_POSITIVE).setTextColor(context.getResources().getColor(R.color.colorPrimary));
+        });
+        alertDialog.show();
     }
 
     private void checkIfDataAvailableInDatabase() {
@@ -126,7 +162,6 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribe(new CompletableObserver() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
                     }
 
                     @Override

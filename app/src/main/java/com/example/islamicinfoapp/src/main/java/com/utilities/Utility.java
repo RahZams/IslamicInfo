@@ -1,12 +1,16 @@
 package com.example.islamicinfoapp.src.main.java.com.utilities;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -19,7 +23,10 @@ import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.Receivers.ReminderReceiver;
@@ -34,7 +41,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Utility {
-    private ConnectivityManager mConnectivityManager;
     private static final String TAG = Utility.class.getSimpleName();
 
     public static String getCurrentDate() {
@@ -187,12 +193,13 @@ public class Utility {
         return notification;
     }
 
-    public boolean checkForNetworkAvailibility(Context context) {
-        mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return mConnectivityManager.getActiveNetworkInfo()!= null && mConnectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
+    public static boolean checkForNetworkAvailibility(Context context) {
+        ConnectivityManager connectivityManager;
+        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo()!= null && connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
     }
 
-    public void redirectingToProvideConnection(Context context, int ic_drawable) {
+    public static void redirectingToProvideConnection(Context context, int ic_drawable) {
         Intent intent = null;
         if (ic_drawable == R.drawable.ic_no_network){
             intent = new Intent(Settings.ACTION_SETTINGS);
@@ -212,7 +219,6 @@ public class Utility {
         else {
             return true;
         }
-
     }
 
     public static String changeTimeFormat(String timeData) {

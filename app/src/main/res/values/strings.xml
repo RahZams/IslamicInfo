@@ -60,8 +60,9 @@
     <string name="location_perm_denied">Permission Denied</string>
     <string name="loc_explanation_message">Without this permission, the app is unable to provide the prayer timing for the specified location.</string>
     <string name="retry">RE-TRY</string>
-    <string name="default_city">makkah</string>
-    <string name="default_country">saudi arabia</string>
+    <string name="default_city">Mecca</string>
+    <string name="loc_permission">Location Permission</string>
+    <string name="default_country">Saudi Arabia</string>
     <string name="dont_ask_again">dont ask again</string>
     <string name="min_text_length_surah">67</string>
     <string name="fajr">Fajr</string>

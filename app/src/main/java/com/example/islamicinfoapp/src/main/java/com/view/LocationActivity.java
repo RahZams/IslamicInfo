@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.utilities.LocListener;
+import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 
 import butterknife.BindView;
@@ -103,11 +104,15 @@ public class LocationActivity extends AppCompatActivity implements LocListener.C
                     ,getResources().getString(R.string.loc_explanation_message),getResources().getString(R.string.retry));
                 }
                 else{
+                    Log.d(TAG, "onRequestPermissionsResult: " + grantResults[0]);
                     Toast.makeText(this, "dont ask again", Toast.LENGTH_SHORT).show();
+                    SharedPrefsHelper.storeValue(this,getResources().getString(R.string.loc_permission),
+                            getResources().getString(R.string.dont_ask_again));
 //                    Intent intent = new Intent(this,MainActivity.class);
 //                    intent.putExtra(getResources().getString(R.string.dont_ask_again),getResources().getString(R.string.dont_ask_again));
 //                    startActivity(intent);
                     mLocListener.onLocationChanged(null);
+
                 }
             }
         }

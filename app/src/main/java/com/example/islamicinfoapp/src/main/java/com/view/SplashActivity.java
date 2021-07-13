@@ -55,14 +55,17 @@ public class SplashActivity extends AppCompatActivity {
                 Intent locIntent;
                 if(Utility.checkForNetworkAvailibility(SplashActivity.this)){
                     checkIfDataAvailableInDatabase();
-                    finish();
-                    if (SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)) ==
-                    getResources().getString(R.string.dont_ask_again)) {
+                    if ((!Utility.checkForLocationConnection(SplashActivity.this)) &&
+                            SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)) ==
+                                    getResources().getString(R.string.dont_ask_again)) {
                         locIntent = new Intent(SplashActivity.this,MainActivity.class);
+                        locIntent.putExtra(getResources().getString(R.string.cityname),getResources().getString(R.string.default_city));
+                        locIntent.putExtra(getResources().getString(R.string.countryname),getResources().getString(R.string.default_country));
                     }
                     else{
                         locIntent = new Intent(SplashActivity.this,LocationActivity.class);
                     }
+                    SplashActivity.this.finish();
                     startActivity(locIntent);
                 }
                 else{

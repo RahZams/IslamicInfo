@@ -13,6 +13,8 @@
         android:paddingRight="@dimen/padding_left_right"
         android:paddingTop="@dimen/padding_top_bottom"
         android:paddingBottom="@dimen/padding_top_bottom"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textStyle="bold"/>
 
@@ -26,6 +28,7 @@
         android:paddingRight="@dimen/padding_left_right"
         android:paddingTop="@dimen/padding_top_bottom"
         android:paddingBottom="@dimen/padding_top_bottom"
+        android:textSize="@dimen/sub_text_size"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"/>
 
 </LinearLayout>

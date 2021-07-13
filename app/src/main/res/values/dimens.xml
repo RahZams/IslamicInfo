@@ -13,6 +13,7 @@
     <dimen name="contact_margin_top">40dp</dimen>
     <dimen name="circle_stroke_width">1dp</dimen>
     <dimen name="text_size">25dp</dimen>
+    <dimen name="sub_text_size">20dp</dimen>
     <dimen name="location_button_margin_top">80dp</dimen>
     <dimen name="padding_prayer_item">1dp</dimen>
     <dimen name="content_padding">7dp</dimen>

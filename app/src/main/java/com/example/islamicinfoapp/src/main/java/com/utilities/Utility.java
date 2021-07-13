@@ -211,7 +211,7 @@ public class Utility {
         context.startActivity(intent);
     }
 
-    public boolean checkForLocationConnection(Context context) {
+    public static boolean checkForLocationConnection(Context context) {
         LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
         if(!(lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) && !(lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER))){
             return false;

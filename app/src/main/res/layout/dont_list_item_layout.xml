@@ -14,8 +14,10 @@
         android:text="@string/dont_title"
         android:paddingRight="@dimen/padding_left_right"
         android:paddingLeft="@dimen/padding_left_right"
+        android:textSize="@dimen/text_size"
         android:paddingBottom="@dimen/padding_top_bottom"
-        android:paddingTop="@dimen/padding_top_bottom"/>
+        android:paddingTop="@dimen/padding_top_bottom"
+        android:textColor="@color/black"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -26,6 +28,7 @@
         android:paddingLeft="@dimen/padding_left_right"
         android:paddingRight="@dimen/padding_left_right"
         android:text="@string/item_text"
+        android:textSize="@dimen/sub_text_size"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:visibility="gone"/>
 

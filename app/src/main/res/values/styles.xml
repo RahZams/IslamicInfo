@@ -18,7 +18,7 @@
     </style>
 
     <style name="SplashTextTheme" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:textSize">70dp</item>
+        <item name="android:textSize">50dp</item>
         <item name="android:fontFamily">serif-monospace</item>
         <item name="android:textStyle">bold|italic</item>
         <item name="color">@color/colorPrimaryDark</item>

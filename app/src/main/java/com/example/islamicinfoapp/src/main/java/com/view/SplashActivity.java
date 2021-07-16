@@ -1,8 +1,10 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,7 @@ import android.util.Log;
 import androidx.annotation.LongDef;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -59,9 +62,11 @@ public class SplashActivity extends AppCompatActivity {
                 Intent locIntent;
                 if(Utility.checkForNetworkAvailibility(SplashActivity.this)){
                     checkIfDataAvailableInDatabase();
-                    if ((!Utility.checkForLocationConnection(SplashActivity.this)) &&
-                            SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)) ==
-                                    getResources().getString(R.string.dont_ask_again)) {
+                    if (Utility.checkForLocationConnection(SplashActivity.this) &&
+                            (ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                                    PackageManager.PERMISSION_GRANTED) &&
+                            SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)).equals(
+                                    getResources().getString(R.string.dont_ask_again))) {
                         locIntent = new Intent(SplashActivity.this,MainActivity.class);
                         locIntent.putExtra(getResources().getString(R.string.cityname),getResources().getString(R.string.default_city));
                         locIntent.putExtra(getResources().getString(R.string.countryname),getResources().getString(R.string.default_country));

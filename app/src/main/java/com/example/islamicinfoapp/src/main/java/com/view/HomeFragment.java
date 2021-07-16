@@ -137,6 +137,9 @@ public class HomeFragment extends Fragment {
                     adapter.updateList(mCityname, mCountryname, createArrayListOfPrayerTiming(prayerTiming),
                             checkIfNewLocationToAssignReminders(mCityname,mCountryname));
                 }
+                else{
+
+                }
             }
         });
     }

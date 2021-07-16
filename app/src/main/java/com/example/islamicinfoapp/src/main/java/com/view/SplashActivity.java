@@ -49,6 +49,10 @@ public class SplashActivity extends AppCompatActivity {
         //binding.splashImage.setImageResource(R.drawable.splash_image_modifed);
         mDuasViewModel = ViewModelProviders.of(this).get(DuasViewModel.class);
         mSurahViewModel = ViewModelProviders.of(this).get(SurahViewModel.class);
+        startNextActivity();
+    }
+
+    private void startNextActivity() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

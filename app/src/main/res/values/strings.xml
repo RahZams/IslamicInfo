@@ -103,6 +103,7 @@
     <string name="before">before</string>
     <string name="equals">equals</string>
     <string name="new_location">new_location</string>
+    <string name="app_name_splash">Islamic Info</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

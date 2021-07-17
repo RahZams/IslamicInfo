@@ -11,6 +11,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.LocationManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -411,6 +414,20 @@ public class Utility {
                     namazName + "pendingIntent" + pendingIntent);
             alarmManager.cancel(pendingIntent);
             pendingIntent.cancel();
+        }
+    }
+
+    public static Bitmap convertToBitmap(Drawable drawable) {
+        Bitmap bitmap;
+        try {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                    Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } catch(OutOfMemoryError e){
+            return null;
         }
     }
 }

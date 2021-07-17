@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -222,8 +223,12 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //            default:
 //                break;
 //        }
-        if (reminderImage.getDrawable().getConstantState().
-                equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
+//        if(((BitmapDrawable)reminderImage.getDrawable()).getBitmap().equals(((BitmapDrawable)mContext.getResources().
+//                getDrawable(R.drawable.ic_notifications_off)).getBitmap())){
+        if (Utility.convertToBitmap(reminderImage.getDrawable()).equals
+                (Utility.convertToBitmap(mContext.getResources().getDrawable(R.drawable.ic_notifications_off)))){
+//        if (reminderImage.getDrawable().getConstantState().
+//                equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
             Log.d(Constants.PRAYER_TAG, TAG + " onClick:if set" + Utility.getCurrentDate() + "namazname" + namazName);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));

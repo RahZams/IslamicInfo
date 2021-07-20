@@ -38,7 +38,7 @@ public class PregInfoFragment extends Fragment {
 
     Toolbar mToolbar;
 
-    int[] preg_info_images = new int[]{R.drawable.ic_duas, R.drawable.ic_import_contacts_black_24dp,
+    int[] preg_info_images = new int[]{R.drawable.ic_dua, R.drawable.ic_import_contacts_black_24dp,
             R.drawable.ic_do, R.drawable.ic_dont, R.drawable.ic_preg_info};
     ArrayList<PregInfoItem> preg_info_list;
     String[] preg_info_item_name;

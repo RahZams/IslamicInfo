@@ -7,7 +7,7 @@
         android:id="@+id/homeFragment" />
     <item
         android:title="@string/zikr"
-        android:icon="@drawable/taz_2"
+        android:icon="@drawable/zikr_tasbeeh"
         android:id="@+id/zikrFragment"/>
 <!--    <item-->
 <!--        android:title="@string/quran"-->

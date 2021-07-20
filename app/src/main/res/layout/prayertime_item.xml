@@ -55,8 +55,7 @@
             android:layout_marginStart="@dimen/contact_margin_top"
             android:layout_marginEnd="@dimen/padding_left_right"
             android:contentDescription="@string/reminder"
-            android:padding="@dimen/padding_top_bottom"
-            app:srcCompat="@drawable/ic_notifications_off" />
+            android:padding="@dimen/padding_top_bottom"/>
 
     </LinearLayout>
 </LinearLayout>

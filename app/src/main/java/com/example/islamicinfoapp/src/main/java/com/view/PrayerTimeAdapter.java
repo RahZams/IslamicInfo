@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.islamicinfoapp.R;
@@ -66,6 +67,7 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //        holder.mNamazName.setCompoundDrawablesWithIntrinsicBounds(mPrayerTimeList.get(position).getmNamazImage()
 //                , 0, 0, 0);
         holder.binding.namazTiming.setText(mPrayerTimeList.get(position).getmNamazTime());
+        holder.binding.reminderImage.setImageDrawable(mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
         if(!new_loc) {
             Log.d(Constants.PRAYER_TAG,TAG +  " onBindViewHolder:new_loc" + new_loc);
             assignReminderImage(holder.binding.namazName.getText().toString(), holder.binding.reminderImage);
@@ -223,12 +225,17 @@ public class PrayerTimeAdapter extends RecyclerView.Adapter<PrayerTimeAdapter.Pr
 //            default:
 //                break;
 //        }
-//        if(((BitmapDrawable)reminderImage.getDrawable()).getBitmap().equals(((BitmapDrawable)mContext.getResources().
+//        if(((BitmapDrawable)reminderImage.getDrawable()).getBitmap().sameAs(((BitmapDrawable)mContext.getResources().
 //                getDrawable(R.drawable.ic_notifications_off)).getBitmap())){
-        if (Utility.convertToBitmap(reminderImage.getDrawable()).equals
-                (Utility.convertToBitmap(mContext.getResources().getDrawable(R.drawable.ic_notifications_off)))){
-//        if (reminderImage.getDrawable().getConstantState().
-//                equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off).getConstantState())){
+//        if (Utility.convertToBitmap(reminderImage.getDrawable()) ==
+//                (Utility.convertToBitmap(mContext.getResources().getDrawable(R.drawable.ic_notifications_off)))){
+        Log.d(TAG, "setReminders: " + reminderImage.getDrawable() + " " +
+                mContext.getResources().getDrawable(R.drawable.ic_notifications_off));
+        //if ((Integer) reminderImage.getTag() == R.drawable.ic_notifications_off){
+        //if(reminderImage.getDrawable().equals(ContextCompat.getDrawable(mContext,R.drawable.ic_notifications_off))){
+//        if (reminderImage.getDrawable().equals(mContext.getResources().getDrawable(R.drawable.ic_notifications_off))){
+        if (reminderImage.getDrawable().getConstantState().equals(mContext.getResources().
+                getDrawable(R.drawable.ic_notifications_off).getConstantState())){
             Log.d(Constants.PRAYER_TAG, TAG + " onClick:if set" + Utility.getCurrentDate() + "namazname" + namazName);
             reminderImage.setImageDrawable
                     (mContext.getResources().getDrawable(R.drawable.ic_notifications_on));

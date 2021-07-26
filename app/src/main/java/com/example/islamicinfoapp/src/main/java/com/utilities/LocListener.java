@@ -104,15 +104,11 @@ public class LocListener implements LocationListener {
             }
         }
         saveCityCountryToSharedPrefs(cityName,countryName);
-        checkAndCreateNewAlarms();
     }
 
     private void saveCityCountryToSharedPrefs(String cityName, String countryName) {
         SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.cityname),cityName);
         SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.countryname),countryName);
-    }
-
-    private void checkAndCreateNewAlarms() {
     }
 
     private void checkIfDataAvailableInDatabase(String cityName, String countryName) {

@@ -188,7 +188,7 @@ public class DuasViewModel extends AndroidViewModel {
     }
 
     private void makeMergeApiCalls(Observable<DuaApiData> firstApiCall, Observable<DuaApiData> secondApiCall) {
-        Toast.makeText(getApplication(), "fetch from remote", Toast.LENGTH_SHORT).show();
+        Log.d(Constants.ZIKR_TAG,TAG +  "fetch from remote");
         //Observable<DuaApiData> firstDuaPartOne = quranApi.getFirstDuaPartOne();
         //Observable<DuaApiData> firstDuaPartTwo = quranApi.getFirstDuaPartTwo();
         Observable.merge(firstApiCall,secondApiCall)

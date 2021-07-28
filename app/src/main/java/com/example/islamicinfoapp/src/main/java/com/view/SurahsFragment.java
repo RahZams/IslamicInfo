@@ -67,11 +67,11 @@ public class SurahsFragment extends Fragment {
         mExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(getActivity(), "" +
-                        mSurahChildItem.get(mSurahHeaderItemList.get(groupPosition)).get(childPosition), Toast.LENGTH_SHORT).show();
                 mSurahName = mSurahChildItem.get(mSurahHeaderItemList.get(groupPosition)).get(childPosition);
                 mSurahName = mSurahName.split(" ")[1];
-                Log.d(Constants.SURAH_TAG, TAG + " onChildClick: " + "mSurahName: "  + mSurahName);
+                Log.d(Constants.SURAH_TAG, TAG + " onChildClick: " + " mSurahChildItem.get(mSurahHeaderItemList.get(groupPosition)).get(childPosition)" +
+                        mSurahChildItem.get(mSurahHeaderItemList.get(groupPosition)).get(childPosition) +
+                        " mSurahName: "  + mSurahName);
                 NavController navController = Navigation.findNavController(v);
                 SurahsFragmentDirections.Action_surahsFragment_to_surahItemFragment action =
                         SurahsFragmentDirections.action_surahsFragment_to_surahItemFragment(mSurahName);

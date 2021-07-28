@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.islamicinfoapp.R;
 import com.example.islamicinfoapp.databinding.FragmentHomeBinding;
@@ -86,6 +87,7 @@ public class HomeFragment extends Fragment {
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
         //binding.cityName.setText(mCityname + "," +
         binding.cityName.setText(mCityname);
+        Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.loc_not_found) , Toast.LENGTH_LONG).show();
         //binding.dateText.setText(Utility.getCurrentDate());
 //   m     mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());

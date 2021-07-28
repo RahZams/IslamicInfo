@@ -12,6 +12,7 @@ import androidx.navigation.Navigation;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.islamicinfoapp.BuildConfig;
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +32,7 @@ import butterknife.ButterKnife;
  */
 public class ContactUsFragment extends Fragment {
 
+    private static final String TAG = ContactUsFragment.class.getSimpleName();
     @BindView(R.id.help_text)
     EditText mEditText;
 
@@ -51,12 +54,13 @@ public class ContactUsFragment extends Fragment {
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Toast.makeText(getActivity(), "beforeTextChanged", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "beforeTextChanged", Toast.LENGTH_SHORT).show();
+                Log.d(Constants.HELP_TAG,TAG + " beforeTextChanged: ");
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Toast.makeText(getActivity(), "onTextChanged", Toast.LENGTH_SHORT).show();
+                Log.d(Constants.HELP_TAG,TAG + "onTextChanged");
                 if (!s.toString().equals("") && !(s.toString().length() <= 0) && !s.toString().equals(" ")){
                     mButton.setClickable(true);
                     mButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary));

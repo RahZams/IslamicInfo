@@ -21,4 +21,6 @@ public class Constants {
     public static final String SURAHITEM = "surah_item";
     public static final String ZIKR_TAG = "zikr";
     public static final String LOC_TAG = "location";
+    public static final String PREG_TAG = "preg";
+    public static final String HELP_TAG = "help";
 }

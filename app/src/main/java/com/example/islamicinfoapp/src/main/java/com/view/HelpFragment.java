@@ -18,6 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 
 import com.example.islamicinfoapp.BuildConfig;
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.HelpItem;
 
 import java.util.ArrayList;
@@ -48,6 +50,7 @@ public class HelpFragment extends Fragment {
     int mHelpImages[] = {R.drawable.ic_help_contact, R.drawable.ic_feedback, R.drawable.ic_preg_info};
     ArrayList<HelpItem> mHelpTextList;
     String[] mHelpText;
+    private static final String TAG = HelpFragment.class.getSimpleName();
 
 
     public HelpFragment() {
@@ -101,7 +104,8 @@ public class HelpFragment extends Fragment {
         builder.setMessage(R.string.feedback_dialog_message);
         builder.setCancelable(false);
         builder.setPositiveButton(R.string.feedback_positive_text, (dialog, which) -> {
-            Toast.makeText(getActivity(), "send feedback", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "send feedback", Toast.LENGTH_SHORT).show();
+            Log.d(Constants.HELP_TAG,TAG +  " createFeedbackDialog: send feedback");
             Uri uri = Uri.parse("mailto:" + getResources().getString(R.string.feedback_email));
             Intent intent = new Intent(Intent.ACTION_SENDTO,uri);
             //intent.setData(Uri.parse("mailto:"));

@@ -55,13 +55,32 @@ public class Utility {
 
     public static boolean compareTwoTimings(String firstTime, String secondTime){
         DateTimeFormatter dateTimeFormatter = null;
+        Log.d(Constants.PRAYER_TAG,TAG +  "compareTwoTimings: " + "firstTime" + firstTime
+                + "secondTime" + secondTime);
         boolean afterTime = false;
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             dateTimeFormatter = DateTimeFormatter.ofPattern("h:mm a", Locale.ENGLISH);
             LocalTime firstlocalTime = LocalTime.parse(firstTime, dateTimeFormatter);
             LocalTime secondlocalTime = LocalTime.parse(secondTime, dateTimeFormatter);
+            Log.d(TAG, "compareTwoTimings: " + "firstlocalTime" + firstlocalTime +
+                    "secondlocalTime" + secondlocalTime);
             if (firstlocalTime.isAfter(secondlocalTime)) {
                 afterTime = true;
+            }
+        }
+        else{
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+            try {
+                Date first = sdf.parse(firstTime);
+                Date second = sdf.parse(secondTime);
+                Log.d(Constants.PRAYER_TAG,TAG +  " compareTwoTimings: " + "first" + first + "second" + second);
+                if (first.after(second)){
+                    Log.d(Constants.PRAYER_TAG,TAG +  "compareTwoTimings: if");
+                    afterTime = true;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
         return afterTime;

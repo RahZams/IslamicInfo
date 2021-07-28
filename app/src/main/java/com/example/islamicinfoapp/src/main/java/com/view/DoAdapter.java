@@ -1,6 +1,7 @@
 package com.example.islamicinfoapp.src.main.java.com.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.DoItem;
 
 import java.util.List;
 
 class DoAdapter extends RecyclerView.Adapter<DoAdapter.DoItemViewHolder> {
 
+    private static final String TAG = DoAdapter.class.getSimpleName();
     private Context mContext;
     private List<DoItem> mDoItemList;
 
@@ -49,16 +52,16 @@ class DoAdapter extends RecyclerView.Adapter<DoAdapter.DoItemViewHolder> {
         holder.mDoTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "holder mdotitle onclick" + holder.mDoText.getVisibility(), Toast.LENGTH_SHORT).show();
+                Log.d(Constants.PREG_TAG,TAG +  " onClick: " + "holder mdotitle onclick" + holder.mDoText.getVisibility());
                 if (holder.mDoText.getVisibility() == View.GONE) {
-                    Toast.makeText(mContext, "gone", Toast.LENGTH_SHORT).show();
+                    Log.d(Constants.PREG_TAG,TAG + " gone");
                     holder.mDoText.setText(doItem.getmDoItemText());
                     holder.mDoText.setVisibility(View.VISIBLE);
                     holder.mDoTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                             R.drawable.ic_arrow_drop_up, 0);
                 }
                 else if (holder.mDoText.getVisibility() == View.VISIBLE){
-                    Toast.makeText(mContext, "visible", Toast.LENGTH_SHORT).show();
+                    Log.d(Constants.PREG_TAG,TAG +  " onClick: " + " visible");
                     holder.mDoText.setVisibility(View.GONE);
                     holder.mDoTitle.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                             R.drawable.ic_arrow_drop_down, 0);

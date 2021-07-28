@@ -104,6 +104,7 @@
     <string name="equals">equals</string>
     <string name="new_location">new_location</string>
     <string name="app_name_splash">Islamic Info</string>
+    <string name="loc_not_found">Current location could not be fetched.Hence,displaying the prayer timing of Holy City Mecca</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

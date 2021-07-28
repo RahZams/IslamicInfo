@@ -72,8 +72,8 @@ public class LocListener implements LocationListener {
         if (location == null){
             cityName = mContext.getResources().getString(R.string.default_city);
             countryName = mContext.getResources().getString(R.string.default_country);
-            checkIfDataAvailableInDatabase(cityName,countryName);
-            callMainActivityCallback.callMainAcitivity(cityName,countryName);
+//            checkIfDataAvailableInDatabase(cityName,countryName);
+//            callMainActivityCallback.callMainAcitivity(cityName,countryName);
             //getPrayerTimesDataFromApi(cityName, countryName);
         }
         //Log.d("prayer", "onLocationChanged: " + location.toString());
@@ -92,17 +92,21 @@ public class LocListener implements LocationListener {
                 countryName = addresses.get(0).getCountryName();
                 //getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(Utility.convertStringToDate("03/03/2021")));
                 //getPrayerTimesDataFromApi(cityName,countryName,Utility.getDateForApi(Utility.convertStringToDate("30/03/2021")));
-                checkIfDataAvailableInDatabase(cityName,countryName);
-                callMainActivityCallback.callMainAcitivity(cityName,countryName);
+//                checkIfDataAvailableInDatabase(cityName,countryName);
+//                callMainActivityCallback.callMainAcitivity(cityName,countryName);
              //   getPrayerTimesDataFromApi(cityName, countryName);
                 Log.d(Constants.PRAYER_TAG, TAG + " onLocationChanged: " + cityName + " " + countryName);
                 //SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.cityname),cityName);
                 //SharedPrefsHelper.storeValue(mContext,mContext.getString(R.string.countryname),countryName);
-                Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "city:" + cityName + " country:" + countryName, Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+//        cityName = "Kolkata";
+//        countryName = "India";
+        checkIfDataAvailableInDatabase(cityName,countryName);
+        callMainActivityCallback.callMainAcitivity(cityName,countryName);
         saveCityCountryToSharedPrefs(cityName,countryName);
     }
 
@@ -112,6 +116,8 @@ public class LocListener implements LocationListener {
     }
 
     private void checkIfDataAvailableInDatabase(String cityName, String countryName) {
+        Log.d(Constants.PRAYER_TAG,TAG + " checkIfDataAvailableInDatabase: " + "cityName" + cityName
+        + "countryName" + countryName);
         QuranDatabase.getInstance(mContext).quranDao().getRecordCount(cityName,countryName,Utility.getDateForDb(new Date()))
                 .observe((LifecycleOwner) mContext, new Observer<Integer>() {
                     @Override
@@ -256,7 +262,7 @@ public class LocListener implements LocationListener {
                 // for Activity#requestPermissions for more details.
                 return;
             }
-            Toast.makeText(mContext, "provider" + provider, Toast.LENGTH_SHORT).show();
+            Log.d(Constants.PRAYER_TAG, TAG + " findLocation: " + "provider" + provider);
             //Log.d("prayer", "findLocation: " + "provider" + provider);
             Location location = mLocationManager.getLastKnownLocation(provider);
             if (location == null){

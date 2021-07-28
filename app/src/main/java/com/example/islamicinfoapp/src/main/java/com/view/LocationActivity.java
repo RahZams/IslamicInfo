@@ -92,20 +92,21 @@ public class LocationActivity extends AppCompatActivity implements LocListener.C
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION )
                         == PackageManager.PERMISSION_GRANTED){
-                    Toast.makeText(this, "granted", Toast.LENGTH_SHORT).show();
+                    Log.d(Constants.LOC_TAG,TAG +  " onRequestPermissionsResult: " + "granted");
+                    //Toast.makeText(this, "granted", Toast.LENGTH_SHORT).show();
                     mLocListener.findLocation();
                 }
             }
             else if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_DENIED){
                 if (ActivityCompat.shouldShowRequestPermissionRationale
                         (this,Manifest.permission.ACCESS_FINE_LOCATION)){
-                    Toast.makeText(this, "denied", Toast.LENGTH_SHORT).show();
+                    Log.d(Constants.LOC_TAG,TAG +  " onRequestPermissionsResult: " + "denied");
                     mLocListener.showAlertDialog(LocationActivity.this,0,getResources().getString(R.string.location_perm_denied)
                     ,getResources().getString(R.string.loc_explanation_message),getResources().getString(R.string.retry));
                 }
                 else{
-                    Log.d(TAG, "onRequestPermissionsResult: " + grantResults[0]);
-                    Toast.makeText(this, "dont ask again", Toast.LENGTH_SHORT).show();
+                    Log.d(Constants.LOC_TAG,TAG + " onRequestPermissionsResult: " +
+                            "dont ask again" + grantResults[0]);
                     SharedPrefsHelper.storeValue(this,getResources().getString(R.string.loc_permission),
                             getResources().getString(R.string.dont_ask_again));
 //                    Intent intent = new Intent(this,MainActivity.class);

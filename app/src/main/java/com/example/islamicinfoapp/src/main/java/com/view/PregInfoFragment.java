@@ -14,6 +14,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.PregInfoItem;
 import java.util.ArrayList;
 
@@ -42,6 +44,7 @@ public class PregInfoFragment extends Fragment {
             R.drawable.ic_do, R.drawable.ic_dont, R.drawable.ic_preg_info};
     ArrayList<PregInfoItem> preg_info_list;
     String[] preg_info_item_name;
+    private static final String TAG = PregInfoFragment.class.getSimpleName();
 
     public PregInfoFragment() {
         // Required empty public constructor
@@ -67,12 +70,13 @@ public class PregInfoFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(view.getContext(), "onitemclick", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), "onitemclick", Toast.LENGTH_SHORT).show();
+                Log.d(Constants.PREG_TAG,TAG +  " onItemClick: ");
                 NavController mNavController = Navigation.findNavController(view);
                 //Navigation.findNavController(view).navigate(R.id.action_pregInfoFragment_to_navigation);
                 NavigationUI.setupActionBarWithNavController((AppCompatActivity) getActivity(),mNavController);
                 //FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                Toast.makeText(view.getContext(), "position" + position, Toast.LENGTH_SHORT).show();
+                Log.d(Constants.PREG_TAG,TAG +  " onItemClick: position" + position);
                 switch (position) {
                     case 0:
 //                        PregInfoFragmentDirections.Action_pregInfoFragment_to_duasFragment action =

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IslamicInfoApp</string>
+    <string name="app_name">IslamicInfo</string>
     <string name="package_name">com.example.islamicinfoapp</string>
     <string name="home">Home</string>
     <string name="zikr">Zikr</string>

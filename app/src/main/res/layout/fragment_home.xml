@@ -48,7 +48,7 @@
             android:textSize="@dimen/padding_help_top_bottom"
             android:layout_marginStart="@dimen/padding_left_right"
             android:layout_marginTop="@dimen/content_padding"
-            android:text="@string/no_data"
+            android:text="@string/no_data_available"
             android:textColor="@color/black"/>
 
 

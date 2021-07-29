@@ -105,6 +105,8 @@
     <string name="new_location">new_location</string>
     <string name="app_name_splash">Islamic Info</string>
     <string name="loc_not_found">Current location could not be fetched.Hence,displaying the prayer timing of Holy City Mecca</string>
+    <string name="no_data_available">Prayer timing currently not available for the selected city</string>
+    <string name="no_data">no data</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

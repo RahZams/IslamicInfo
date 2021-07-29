@@ -87,14 +87,13 @@ public class HomeFragment extends Fragment {
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
         //binding.cityName.setText(mCityname + "," +
         binding.cityName.setText(mCityname);
-        Toast.makeText(getActivity(),getActivity().getResources().getString(R.string.loc_not_found) , Toast.LENGTH_LONG).show();
         //binding.dateText.setText(Utility.getCurrentDate());
 //   m     mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());
-        adapter = new PrayerTimeAdapter(getContext(), mPrayerTimeList);
-        observeViewModel(mCityname, mCountryname, binding);
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.recyclerview.setAdapter(adapter);
+//        adapter = new PrayerTimeAdapter(getContext(), mPrayerTimeList);
+        observeViewModel(mCityname, mCountryname, binding,mPrayerTimeList);
+//        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+//        binding.recyclerview.setAdapter(adapter);
         //Intent intent = new Intent(getContext(), ReminderService.class);
         //getContext().startService(intent);
         return view;
@@ -125,7 +124,7 @@ public class HomeFragment extends Fragment {
 //        });
 //    }
 
-    private void observeViewModel(String mCityname, String mCountryname, FragmentHomeBinding binding) {
+    private void observeViewModel(String mCityname, String mCountryname, FragmentHomeBinding binding, ArrayList<PrayerTimingItem> mPrayerTimeList) {
         Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel: " + Utility.getCurrentDate() + mCityname + mCountryname);
         QuranDatabase.getInstance(getActivity()).quranDao().getPrayerTimingOfCity(mCityname, mCountryname,
                 Utility.getCurrentDate()).observe(this, new Observer<PrayerTiming>() {
@@ -136,11 +135,16 @@ public class HomeFragment extends Fragment {
                 if (prayerTiming != null && !prayerTiming.equals("")) {
                     Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
                     binding.dateText.setText(prayerTiming.getPrayerTimeEngDate());
+                    binding.noData.setVisibility(View.GONE);
+                    binding.recyclerview.setVisibility(View.VISIBLE);
+                    adapter = new PrayerTimeAdapter(getContext(), mPrayerTimeList);
+                    binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+                    binding.recyclerview.setAdapter(adapter);
                     adapter.updateList(mCityname, mCountryname, createArrayListOfPrayerTiming(prayerTiming),
                             checkIfNewLocationToAssignReminders(mCityname,mCountryname));
                 }
                 else{
-
+                    binding.noData.setText(getActivity().getResources().getString(R.string.no_data_available));
                 }
             }
         });

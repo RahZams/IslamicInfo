@@ -106,12 +106,17 @@
     <string name="app_name_splash">Islamic Info</string>
     <string name="loc_not_found">Current location could not be fetched.Hence,displaying the prayer timing of Holy City Mecca</string>
     <string name="no_data_available">Prayer timing currently not available for the selected city</string>
+    <string name="gallery">Gallery</string>
+    <string name="app_info">App Info</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="feedback_title">Send Feedback</string>
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>
         <item>Do</item>
         <item>Dont</item>
         <item>Important Facts</item>
+        <item>Gallery</item>
     </string-array>
 
     <string-array name="more_item_name">

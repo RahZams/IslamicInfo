@@ -41,7 +41,7 @@ public class PregInfoFragment extends Fragment {
     Toolbar mToolbar;
 
     int[] preg_info_images = new int[]{R.drawable.ic_dua, R.drawable.ic_import_contacts_black_24dp,
-            R.drawable.ic_do, R.drawable.ic_dont, R.drawable.ic_preg_info};
+            R.drawable.ic_do, R.drawable.ic_dont, R.drawable.ic_preg_info, R.drawable.ic_gallery};
     ArrayList<PregInfoItem> preg_info_list;
     String[] preg_info_item_name;
     private static final String TAG = PregInfoFragment.class.getSimpleName();
@@ -91,20 +91,27 @@ public class PregInfoFragment extends Fragment {
 //                        fragmentTransaction.replace(R.id.nav_host_fragment,new SurahsFragment()).
 //                                addToBackStack(null).commit();
                         break;
+
                     case 2:
                         mNavController.navigate(R.id.action_pregInfoFragment_to_doFragment);
 //                        fragmentTransaction.replace(R.id.nav_host_fragment,new DoFragment()).
 //                                addToBackStack(null).commit();
                         break;
+
                     case 3:
                         mNavController.navigate(R.id.action_pregInfoFragment_to_dontFragment);
 //                        fragmentTransaction.replace(R.id.nav_host_fragment,new DontFragment()).
 //                                addToBackStack(null).commit();
                         break;
+
                     case 4:
                         mNavController.navigate(R.id.action_pregInfoFragment_to_impPregFactsFragment);
 //                        fragmentTransaction.replace(R.id.nav_host_fragment,new ImpPregFactsFragment()).
 //                                addToBackStack(null).commit();
+                        break;
+
+                    case 5:
+                        mNavController.navigate(R.id.action_pregInfoFragment_to_galleryFragment);
                         break;
                     default:
                 }

@@ -61,7 +61,11 @@
             android:id="@+id/action_pregInfoFragment_to_impPregFactsFragment"
             app:destination="@id/impPregFactsFragment"
             app:popUpTo="@id/pregInfoFragment"/>
-<!--        <action-->
+        <action
+            android:id="@+id/action_pregInfoFragment_to_galleryFragment"
+            app:destination="@id/galleryFragment"
+            app:popUpTo="@id/pregInfoFragment"/>
+        <!--        <action-->
 <!--            android:id="@+id/action_pregInfoFragment_to_moreFragment"-->
 <!--            app:destination="@id/moreFragment" />-->
     </fragment>
@@ -135,17 +139,17 @@
     <fragment
         android:id="@+id/appInfoFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.AppInfoFragment"
-        android:label="App Info"
+        android:label="@string/app_info"
         tools:layout="@layout/fragment_app_info" />
     <fragment
         android:id="@+id/contactUsFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.ContactUsFragment"
-        android:label="Contact Us"
+        android:label="@string/contact_us"
         tools:layout="@layout/fragment_contact_us" />
     <fragment
         android:id="@+id/feedbackFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.FeedbackFragment"
-        android:label="Send Feedback"
+        android:label="@string/feedback_title"
         tools:layout="@layout/fragment_feedback" />
     <fragment
         android:id="@+id/surahItemFragment"
@@ -178,7 +182,12 @@
             app:argType="string"
             />
     </fragment>
-<!--    <dialog-->
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.islamicinfoapp.src.main.java.com.view.GalleryFragment"
+        android:label="@string/gallery"
+        tools:layout="@layout/fragment_gallery" />
+    <!--    <dialog-->
 <!--        android:id="@+id/notifDialogFragment"-->
 <!--        android:name="com.example.islamicinfoapp.src.main.java.com.view.NotifDialogFragment"-->
 <!--        android:label="fragment_notif_dialog"-->

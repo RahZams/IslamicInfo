@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -110,9 +111,12 @@ public class PregInfoFragment extends Fragment {
 //                                addToBackStack(null).commit();
                         break;
 
-                    case 5:
-                        mNavController.navigate(R.id.action_pregInfoFragment_to_galleryFragment);
-                        break;
+//                    case 5:
+//                        if (mNavController.getCurrentDestination().getId() == R.id.pregInfoFragment) {
+//                            Log.d(Constants.PREG_TAG,TAG +  " onItemClick: case 5" );
+//                            mNavController.navigate(R.id.action_pregInfoFragment_to_galleryFragment3);
+//                        }
+//                        break;
                     default:
                 }
             }

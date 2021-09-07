@@ -61,10 +61,6 @@
             android:id="@+id/action_pregInfoFragment_to_impPregFactsFragment"
             app:destination="@id/impPregFactsFragment"
             app:popUpTo="@id/pregInfoFragment"/>
-        <action
-            android:id="@+id/action_pregInfoFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:popUpTo="@id/pregInfoFragment"/>
         <!--        <action-->
 <!--            android:id="@+id/action_pregInfoFragment_to_moreFragment"-->
 <!--            app:destination="@id/moreFragment" />-->
@@ -185,7 +181,7 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.GalleryFragment"
-        android:label="@string/gallery"
+        android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery" />
     <!--    <dialog-->
 <!--        android:id="@+id/notifDialogFragment"-->

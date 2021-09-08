@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/app_name"
+        android:layout_marginTop="@dimen/padding_left_right"
         android:text="@string/app_name"
         android:gravity="center"
         android:textSize="@dimen/text_size"
@@ -30,11 +31,13 @@
         android:paddingBottom="@dimen/padding_left_right"/>
 
     <ImageView
+        android:id="@+id/app_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/app_image"
-        android:src="@drawable/prayer_times_small"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/padding_left_right"
+        android:layout_marginRight="@dimen/padding_left_right"
         android:contentDescription="@string/app_name"
-        android:layout_gravity="center"/>
+        android:src="@drawable/app_info_image" />
 
 </LinearLayout>

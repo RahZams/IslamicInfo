@@ -113,7 +113,8 @@ public class PregInfoFragment extends Fragment {
 
                     case 5:
                         if (mNavController.getCurrentDestination().getId() == R.id.pregInfoFragment) {
-                            Log.d(Constants.PREG_TAG,TAG +  " onItemClick: case 5" );                        }
+                            Log.d(Constants.PREG_TAG,TAG +  " onItemClick: case 5" );
+                        }
                         break;
                     default:
                 }

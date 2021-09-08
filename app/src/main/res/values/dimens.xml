@@ -21,4 +21,8 @@
     <dimen name="padding_switch_top_bottom">30dp</dimen>
     <dimen name="padding_top">5dp</dimen>
     <dimen name="dialog_stroke_width">2dp</dimen>
+    <dimen name="padding_value">5dp</dimen>
+    <dimen name="margin_value">5dp</dimen>
+    <dimen name="elevation">3dp</dimen>
+    <dimen name="imageview_dimen">200dp</dimen>
 </resources>

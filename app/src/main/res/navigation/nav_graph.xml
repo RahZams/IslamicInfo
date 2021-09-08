@@ -63,8 +63,8 @@
             app:popUpTo="@id/pregInfoFragment"/>
         <action
             android:id="@+id/action_pregInfoFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment"
-            app:popUpTo="@id/pregInfoFragment" />
+            app:destination="@+id/galleryFragment"
+            app:popUpTo="@id/pregInfoFragment"/>
         <!--        <action-->
 <!--            android:id="@+id/action_pregInfoFragment_to_moreFragment"-->
 <!--            app:destination="@id/moreFragment" />-->

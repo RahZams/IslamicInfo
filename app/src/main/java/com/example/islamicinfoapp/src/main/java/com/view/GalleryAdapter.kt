@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.gallery_item.view.*
 
 class GalleryAdapter(val context: Context?, val list:ArrayList<Bitmap>)
     : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GalleryViewHolder {
         return GalleryViewHolder(LayoutInflater.from(context).
         inflate(R.layout.gallery_item,parent,false))

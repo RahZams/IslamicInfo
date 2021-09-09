@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.islamicinfoapp.R
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
@@ -18,8 +19,9 @@ class GalleryFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_gallery, container, false)
-        recyclerview.layoutManager = GridLayoutManager(activity,2)
-        val adapter = GalleryAdapter(context,getItemsList())
+        gal_recyclerview?.layoutManager = GridLayoutManager(activity,2)
+        val galleryadapter = GalleryAdapter(context,getItemsList())
+        gal_recyclerview?.adapter = galleryadapter
         return view
     }
 

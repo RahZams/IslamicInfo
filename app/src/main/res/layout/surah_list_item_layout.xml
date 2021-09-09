@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:text="@string/surah_title"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textSize="@dimen/text_size"
         android:textStyle="bold" />
 
 </LinearLayout>

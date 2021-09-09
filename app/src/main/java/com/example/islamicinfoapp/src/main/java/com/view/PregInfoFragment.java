@@ -112,9 +112,10 @@ public class PregInfoFragment extends Fragment {
                         break;
 
                     case 5:
-                        if (mNavController.getCurrentDestination().getId() == R.id.pregInfoFragment) {
-                            Log.d(Constants.PREG_TAG,TAG +  " onItemClick: case 5" );
-                        }
+                        mNavController.navigate(R.id.action_pregInfoFragment_to_galleryFragment);
+//                        if (mNavController.getCurrentDestination().getId() == R.id.pregInfoFragment) {
+//                            Log.d(Constants.PREG_TAG,TAG +  " onItemClick: case 5" );
+//                        }
                         break;
                     default:
                 }

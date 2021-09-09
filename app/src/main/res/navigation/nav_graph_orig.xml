@@ -34,13 +34,13 @@
         android:name="com.example.islamicinfoapp.src.main.java.com.view.PregInfoFragment"
         android:label="@string/preg_title"
         tools:layout="@layout/fragment_preg_info" >
-        <!--        <action-->
-        <!--            android:id="@+id/action_pregInfoFragment_to_navigation"-->
-        <!--            app:destination="@id/navigation" />-->
-        <!--        <action-->
-        <!--            android:id="@+id/action_pregInfoFragment_to_moreFragment2"-->
-        <!--            app:destination="@id/moreFragment"-->
-        <!--            app:popUpTo="@id/homeFragment"/>-->
+<!--        <action-->
+<!--            android:id="@+id/action_pregInfoFragment_to_navigation"-->
+<!--            app:destination="@id/navigation" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_pregInfoFragment_to_moreFragment2"-->
+<!--            app:destination="@id/moreFragment"-->
+<!--            app:popUpTo="@id/homeFragment"/>-->
         <action
             android:id="@+id/action_pregInfoFragment_to_duasFragment"
             app:destination="@id/duasFragment"
@@ -66,29 +66,29 @@
             app:destination="@id/galleryFragment"
             app:popUpTo="@id/pregInfoFragment" />
         <!--        <action-->
-        <!--            android:id="@+id/action_pregInfoFragment_to_moreFragment"-->
-        <!--            app:destination="@id/moreFragment" />-->
+<!--            android:id="@+id/action_pregInfoFragment_to_moreFragment"-->
+<!--            app:destination="@id/moreFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/duasFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.DuasFragment"
         android:label="@string/duas_title"
         tools:layout="@layout/fragment_duas" >
-        <!--        <argument android:name="calling_frag_name"-->
-        <!--            app:argType="string">-->
-        <!--        </argument>-->
-        <!--        <action-->
-        <!--            android:id="@+id/action_duasFragment_to_pregInfoFragment"-->
-        <!--            app:destination="@id/pregInfoFragment"/>-->
+<!--        <argument android:name="calling_frag_name"-->
+<!--            app:argType="string">-->
+<!--        </argument>-->
+<!--        <action-->
+<!--            android:id="@+id/action_duasFragment_to_pregInfoFragment"-->
+<!--            app:destination="@id/pregInfoFragment"/>-->
     </fragment>
     <fragment
         android:id="@+id/surahsFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.SurahsFragment"
         android:label="@string/surah_title"
         tools:layout="@layout/fragment_surahs" >
-        <!--        <action-->
-        <!--            android:id="@+id/action_surahsFragment_to_pregInfoFragment"-->
-        <!--            app:destination="@id/pregInfoFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_surahsFragment_to_pregInfoFragment"-->
+<!--            app:destination="@id/pregInfoFragment" />-->
         <action
             android:id="@+id/action_surahsFragment_to_surahItemFragment"
             app:destination="@id/surahItemFragment" />
@@ -99,27 +99,27 @@
         android:name="com.example.islamicinfoapp.src.main.java.com.view.DoFragment"
         android:label="@string/do_title"
         tools:layout="@layout/fragment_do" >
-        <!--        <action-->
-        <!--            android:id="@+id/action_doFragment_to_pregInfoFragment"-->
-        <!--            app:destination="@id/pregInfoFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_doFragment_to_pregInfoFragment"-->
+<!--            app:destination="@id/pregInfoFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/dontFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.DontFragment"
         android:label="@string/dont_title"
         tools:layout="@layout/fragment_dont" >
-        <!--        <action-->
-        <!--            android:id="@+id/action_dontFragment_to_pregInfoFragment"-->
-        <!--            app:destination="@id/pregInfoFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_dontFragment_to_pregInfoFragment"-->
+<!--            app:destination="@id/pregInfoFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/impPregFactsFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.ImpPregFactsFragment"
         android:label="@string/more_preg_title"
         tools:layout="@layout/fragment_imp_preg_facts" >
-        <!--        <action-->
-        <!--            android:id="@+id/action_impPregFactsFragment_to_pregInfoFragment"-->
-        <!--            app:destination="@id/pregInfoFragment" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_impPregFactsFragment_to_pregInfoFragment"-->
+<!--            app:destination="@id/pregInfoFragment" />-->
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
@@ -185,46 +185,46 @@
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.example.islamicinfoapp.src.main.java.com.view.GalleryFragment"
-        android:label="@string/gallery"
+        android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery" />
     <!--    <dialog-->
-    <!--        android:id="@+id/notifDialogFragment"-->
-    <!--        android:name="com.example.islamicinfoapp.src.main.java.com.view.NotifDialogFragment"-->
-    <!--        android:label="fragment_notif_dialog"-->
-    <!--        tools:layout="@layout/fragment_notif_dialog">-->
-    <!--        <arguments/>-->
-    <!--    </dialog>-->
+<!--        android:id="@+id/notifDialogFragment"-->
+<!--        android:name="com.example.islamicinfoapp.src.main.java.com.view.NotifDialogFragment"-->
+<!--        android:label="fragment_notif_dialog"-->
+<!--        tools:layout="@layout/fragment_notif_dialog">-->
+<!--        <arguments/>-->
+<!--    </dialog>-->
 
     <!--    <navigation-->
-    <!--        android:id="@+id/navigation"-->
-    <!--        app:startDestination="@id/duasFragment" >-->
-    <!--        <fragment-->
-    <!--            android:id="@+id/duasFragment"-->
-    <!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.DuasFragment"-->
-    <!--            android:label="Duas"-->
-    <!--            tools:layout="@layout/fragment_duas" />-->
-    <!--        <fragment-->
-    <!--            android:id="@+id/surahsFragment"-->
-    <!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.SurahsFragment"-->
-    <!--            android:label="Surahs"-->
-    <!--            tools:layout="@layout/fragment_surahs" />-->
-    <!--        <fragment-->
-    <!--            android:id="@+id/doFragment"-->
-    <!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.DoFragment"-->
-    <!--            android:label="Do's"-->
-    <!--            tools:layout="@layout/fragment_do" />-->
-    <!--        <fragment-->
-    <!--            android:id="@+id/dontFragment"-->
-    <!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.DontFragment"-->
-    <!--            android:label="Don't"-->
-    <!--            tools:layout="@layout/fragment_dont" />-->
-    <!--        <fragment-->
-    <!--            android:id="@+id/impPregFactsFragment"-->
-    <!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.ImpPregFactsFragment"-->
-    <!--            android:label="Imp Facts"-->
-    <!--            tools:layout="@layout/fragment_imp_preg_facts" />-->
-    <!--        <action-->
-    <!--            android:id="@+id/action_global_pregInfoFragment"-->
-    <!--            app:destination="@id/pregInfoFragment" />-->
-    <!--    </navigation>-->
+<!--        android:id="@+id/navigation"-->
+<!--        app:startDestination="@id/duasFragment" >-->
+<!--        <fragment-->
+<!--            android:id="@+id/duasFragment"-->
+<!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.DuasFragment"-->
+<!--            android:label="Duas"-->
+<!--            tools:layout="@layout/fragment_duas" />-->
+<!--        <fragment-->
+<!--            android:id="@+id/surahsFragment"-->
+<!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.SurahsFragment"-->
+<!--            android:label="Surahs"-->
+<!--            tools:layout="@layout/fragment_surahs" />-->
+<!--        <fragment-->
+<!--            android:id="@+id/doFragment"-->
+<!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.DoFragment"-->
+<!--            android:label="Do's"-->
+<!--            tools:layout="@layout/fragment_do" />-->
+<!--        <fragment-->
+<!--            android:id="@+id/dontFragment"-->
+<!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.DontFragment"-->
+<!--            android:label="Don't"-->
+<!--            tools:layout="@layout/fragment_dont" />-->
+<!--        <fragment-->
+<!--            android:id="@+id/impPregFactsFragment"-->
+<!--            android:name="com.example.islamicinfoapp.src.main.java.com.View.ImpPregFactsFragment"-->
+<!--            android:label="Imp Facts"-->
+<!--            tools:layout="@layout/fragment_imp_preg_facts" />-->
+<!--        <action-->
+<!--            android:id="@+id/action_global_pregInfoFragment"-->
+<!--            app:destination="@id/pregInfoFragment" />-->
+<!--    </navigation>-->
 </navigation>

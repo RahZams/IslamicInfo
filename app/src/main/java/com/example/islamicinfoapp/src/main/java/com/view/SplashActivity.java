@@ -21,12 +21,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.islamicinfoapp.R;
-import com.example.islamicinfoapp.databinding.ActivitySplashBinding;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
-import com.example.islamicinfoapp.src.main.java.com.model.PrayerTiming;
-import com.example.islamicinfoapp.src.main.java.com.model.QuranDao;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
-import com.example.islamicinfoapp.src.main.java.com.model.QuranDbData;
 import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
 import com.example.islamicinfoapp.src.main.java.com.utilities.Utility;
 import com.example.islamicinfoapp.src.main.java.com.viewmodel.DuasViewModel;
@@ -48,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivitySplashBinding binding = DataBindingUtil.setContentView(this,R.layout.activity_splash);
+        setContentView(R.layout.activity_splash);
         //binding.splashImage.setImageResource(R.drawable.splash_image_modifed);
         mDuasViewModel = ViewModelProviders.of(this).get(DuasViewModel.class);
         mSurahViewModel = ViewModelProviders.of(this).get(SurahViewModel.class);

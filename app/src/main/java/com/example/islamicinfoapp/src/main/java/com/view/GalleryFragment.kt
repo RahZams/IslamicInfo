@@ -3,22 +3,26 @@ package com.example.islamicinfoapp.src.main.java.com.view
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.islamicinfoapp.R
+import com.example.islamicinfoapp.src.main.java.com.model.Constants
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 class GalleryFragment : Fragment() {
     val MAX_IMAGE_SIZE = 200
+    val TAG = GalleryFragment::class.simpleName
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_gallery, container, false)
+        val view = inflater.inflate(R.layout.fragment_gallery, container, false)
         gal_recyclerview?.layoutManager = GridLayoutManager(activity,2)
         val galleryadapter = GalleryAdapter(context,getItemsList())
         gal_recyclerview?.adapter = galleryadapter
@@ -59,6 +63,7 @@ class GalleryFragment : Fragment() {
         list.add(scaleDown(R.drawable.quote_5,MAX_IMAGE_SIZE,true))
         list.add(scaleDown(R.drawable.quote_6,MAX_IMAGE_SIZE,true))
         list.add(scaleDown(R.drawable.quote_7,MAX_IMAGE_SIZE,true))
+        Log.d(Constants.PREG_TAG, "$TAG getItemsList: ${list.size}"  )
         return list
     }
 

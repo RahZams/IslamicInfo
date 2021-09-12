@@ -58,7 +58,6 @@ public class DoFragment extends Fragment {
             InputStream inputStream = getActivity().getAssets().open("do_preg.txt");
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-
             while ((mTitleLine = bufferedReader.readLine())!= null && (mTextLine = bufferedReader.readLine())!= null){
                 mDoItemsList.add(new DoItem(mTitleLine,mTextLine));
             }

@@ -6,10 +6,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.WindowInsets;
+import android.view.WindowManager;
 
 import androidx.annotation.LongDef;
 import androidx.appcompat.app.AlertDialog;
@@ -48,7 +51,18 @@ public class SplashActivity extends AppCompatActivity {
         //binding.splashImage.setImageResource(R.drawable.splash_image_modifed);
         mDuasViewModel = ViewModelProviders.of(this).get(DuasViewModel.class);
         mSurahViewModel = ViewModelProviders.of(this).get(SurahViewModel.class);
+        hideStatusBar();
         startNextActivity();
+    }
+
+    private void hideStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+           getWindow().getInsetsController().hide(WindowInsets.Type.statusBars());
+        }
+        else{
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
     }
 
     private void startNextActivity() {

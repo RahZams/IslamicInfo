@@ -18,15 +18,27 @@
         <action
             android:id="@+id/action_zikrFragment_to_surahItemFragment"
             app:destination="@id/surahItemFragment"
-            app:popUpTo="@id/zikrFragment"/>
+            app:popUpTo="@id/zikrFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_zikrFragment_to_zikrItemFragment"
             app:destination="@id/zikrItemFragment"
-            app:popUpTo="@id/zikrFragment"/>
+            app:popUpTo="@id/zikrFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_zikrFragment_to_zikrDuaFragment"
             app:destination="@id/zikrDuaFragment"
-            app:popUpTo="@id/zikrFragment"/>
+            app:popUpTo="@id/zikrFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -44,27 +56,51 @@
         <action
             android:id="@+id/action_pregInfoFragment_to_duasFragment"
             app:destination="@id/duasFragment"
-            app:popUpTo="@id/pregInfoFragment"/>
+            app:popUpTo="@id/pregInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_pregInfoFragment_to_surahsFragment"
             app:destination="@id/surahsFragment"
-            app:popUpTo="@id/pregInfoFragment"/>
+            app:popUpTo="@id/pregInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_pregInfoFragment_to_doFragment"
             app:destination="@id/doFragment"
-            app:popUpTo="@id/pregInfoFragment"/>
+            app:popUpTo="@id/pregInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_pregInfoFragment_to_dontFragment"
             app:destination="@id/dontFragment"
-            app:popUpTo="@id/pregInfoFragment"/>
+            app:popUpTo="@id/pregInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_pregInfoFragment_to_impPregFactsFragment"
             app:destination="@id/impPregFactsFragment"
-            app:popUpTo="@id/pregInfoFragment"/>
+            app:popUpTo="@id/pregInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_pregInfoFragment_to_galleryFragment"
             app:destination="@id/galleryFragment"
-            app:popUpTo="@id/pregInfoFragment" />
+            app:popUpTo="@id/pregInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <!--        <action-->
         <!--            android:id="@+id/action_pregInfoFragment_to_moreFragment"-->
         <!--            app:destination="@id/moreFragment" />-->
@@ -91,7 +127,11 @@
         <!--            app:destination="@id/pregInfoFragment" />-->
         <action
             android:id="@+id/action_surahsFragment_to_surahItemFragment"
-            app:destination="@id/surahItemFragment" />
+            app:destination="@id/surahItemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
 
     </fragment>
     <fragment
@@ -128,13 +168,25 @@
         tools:layout="@layout/fragment_help" >
         <action
             android:id="@+id/action_helpFragment_to_contactUsFragment"
-            app:destination="@id/contactUsFragment" />
+            app:destination="@id/contactUsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_helpFragment_to_feedbackFragment"
-            app:destination="@id/feedbackFragment" />
+            app:destination="@id/feedbackFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_helpFragment_to_appInfoFragment"
-            app:destination="@id/appInfoFragment" />
+            app:destination="@id/appInfoFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/appInfoFragment"

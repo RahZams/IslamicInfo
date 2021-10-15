@@ -85,12 +85,14 @@ public class HomeFragment extends Fragment {
         mCityname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.cityname));
         mCountryname = getActivity().getIntent().getStringExtra(getActivity().getString(R.string.countryname));
         mPrayerTimeViewModel = ViewModelProviders.of(this).get(PrayerTimeViewModel.class);
+
         //binding.cityName.setText(mCityname + "," +
-        binding.cityName.setText(mCityname);
+        //binding.cityName.setText(mCityname);
         //binding.dateText.setText(Utility.getCurrentDate());
 //   m     mCityCountryName.setText(mCityname + "," + mCountryname);
 //        mDateView.setText(Utility.getCurrentDate());
 //        adapter = new PrayerTimeAdapter(getContext(), mPrayerTimeList);
+        binding.progressbar.setVisibility(View.VISIBLE);
         observeViewModel(mCityname, mCountryname, binding,mPrayerTimeList);
 //        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 //        binding.recyclerview.setAdapter(adapter);
@@ -105,6 +107,8 @@ public class HomeFragment extends Fragment {
         Log.d(Constants.PRAYER_TAG, TAG + " onViewCreated: ");
         toolbar = getActivity().findViewById(R.id.toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().
+                setTitle(getActivity().getResources().getString(R.string.home_title));
         mAppBarConfig = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.zikrFragment,
                 R.id.pregInfoFragment, R.id.helpFragment).build();
         mNavController = NavHostFragment.findNavController(this);
@@ -134,9 +138,12 @@ public class HomeFragment extends Fragment {
                 //Log.d("prayer", "onChanged: "  + (prayerTiming == null || prayerTiming.toString().equals(""))? "null":prayerTiming.getCity());
                 if (prayerTiming != null && !prayerTiming.equals("")) {
                     Log.d(Constants.PRAYER_TAG, TAG + " observeViewModel onChanged: " + mCityname + prayerTiming.getCity());
-                    binding.dateText.setText(prayerTiming.getPrayerTimeEngDate());
+                    binding.scrollview.setVisibility(View.VISIBLE);
+                    binding.progressbar.setVisibility(View.GONE);
                     binding.noData.setVisibility(View.GONE);
                     binding.recyclerview.setVisibility(View.VISIBLE);
+                    binding.cityName.setText(mCityname);
+                    binding.dateText.setText(prayerTiming.getPrayerTimeEngDate());
                     adapter = new PrayerTimeAdapter(getContext(), mPrayerTimeList);
                     binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
                     binding.recyclerview.setAdapter(adapter);
@@ -144,6 +151,11 @@ public class HomeFragment extends Fragment {
                             checkIfNewLocationToAssignReminders(mCityname,mCountryname));
                 }
                 else{
+                    binding.progressbar.setVisibility(View.GONE);
+                    binding.scrollview.setVisibility(View.VISIBLE);
+                    binding.cityName.setText(mCityname);
+                    binding.noData.setVisibility(View.VISIBLE);
+                    binding.recyclerview.setVisibility(View.GONE);
                     binding.noData.setText(getActivity().getResources().getString(R.string.no_data_available));
                 }
             }

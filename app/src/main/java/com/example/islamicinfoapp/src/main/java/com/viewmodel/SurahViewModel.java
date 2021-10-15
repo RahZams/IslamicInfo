@@ -27,23 +27,27 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 public class SurahViewModel extends AndroidViewModel {
     //public MutableLiveData<SurahData> mSurahDataMutableLiveData = new MutableLiveData<>();
     private QuranApi mQuranApi;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private static final String TAG = SurahViewModel.class.getSimpleName();
+    int count;
     //private SurahSaveToDBTask mSurahSaveToDBTask;
     //private SurahRetrieveTask mSurahRetrieveTask;
 
     public SurahViewModel(@NonNull Application application) {
         super(application);
+
         mQuranApi = QuranApiService.getRetrofitInstance(getApplication().getResources().getString(R.string.dua_surah_base_url),
                 SurahData.class, new SurahDataDeserializer())
                 .create(QuranApi.class);
     }
 
     public void fetchFromRemote() {
+        count = 0;
         Log.d(Constants.SURAH_TAG, TAG + " fetchFromRemote: ");
 //        makeMergeCalls(mQuranApi.getSurahYusuf(),mQuranApi.getSurahYunus(),mQuranApi.getSurahYaseen()
 //        ,mQuranApi.getSurahWaaqia(),mQuranApi.getSurahQadr(),mQuranApi.getSurahNasr(),mQuranApi.getSurahNahl()
@@ -78,44 +82,85 @@ public class SurahViewModel extends AndroidViewModel {
 //        });
     }
 
+    private void makeThreadSleep() {
+        try{
+            Thread.sleep(2000);
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
     private void makeMergeCalls(Observable<SurahData> surahOne, Observable<SurahData> surahTwo,
                                 Observable<SurahData> surahThree, Observable<SurahData> surahFour,
                                 Observable<SurahData> surahFive, Observable<SurahData> surahSix) {
-        Log.d(Constants.SURAH_TAG, TAG + " makeMergeCalls: " + surahOne);
+        Log.d(Constants.SURAH_TAG, TAG  + " makeMergeCalls: " + "surahOne" + surahOne + "surahTwo" + surahTwo
+        + "surahThree" + surahThree + "surahFour" + surahFour + "surahFive" + surahFive + "surahSix" + surahSix);
+//        Observable.merge(Arrays.asList(surahOne, surahTwo, surahThree, surahFour, surahFive, surahSix))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(Schedulers.newThread())
+//                .retry()
+//                .subscribe(new Observer<SurahData>() {
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        mCompositeDisposable.add(d);
+//                    }
+//
+//                    @Override
+//                    public void onNext(SurahData surahData) {
+//                        //Toast.makeText(getApplication(), " on next surah " , Toast.LENGTH_SHORT).show();
+//                        Log.d(Constants.SURAH_TAG, TAG  + " makeMergeCalls: onNext:surah " + surahData.getDataNumber()
+//                                + " " + surahData.getSurahNameEnglish());
+////                        mSurahSaveToDBTask = new SurahSaveToDBTask();
+////                        mSurahSaveToDBTask.execute(surahData);
+//                        insertDataToDb(surahData);
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.d(Constants.SURAH_TAG, TAG  + " makeMergeCalls: onError: " +
+//                                "message" + e.getMessage() + "cause" + e.getCause());
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
+
+        makeThreadSleep();
         Observable.merge(Arrays.asList(surahOne, surahTwo, surahThree, surahFour, surahFive, surahSix))
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(new Observer<SurahData>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        mCompositeDisposable.add(d);
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+
                     }
 
                     @Override
-                    public void onNext(SurahData surahData) {
-                        //Toast.makeText(getApplication(), " on next surah " , Toast.LENGTH_SHORT).show();
-                        Log.d(Constants.SURAH_TAG, TAG + " onNext:surah " + surahData.getDataNumber()
-                                + " " + surahData.getSurahNameEnglish());
-//                        mSurahSaveToDBTask = new SurahSaveToDBTask();
-//                        mSurahSaveToDBTask.execute(surahData);
+                    public void onNext(@io.reactivex.annotations.NonNull SurahData surahData) {
+                        count = count + 1;
+                        Log.d(Constants.SURAH_TAG, TAG  + " makeMergeCalls: onNext:surah " + surahData.getDataNumber()
+                                                        + " " + surahData.getSurahNameEnglish() + " count" + count);
                         insertDataToDb(surahData);
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        Log.d(Constants.SURAH_TAG, TAG +" onError: " + e.getMessage());
-
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                                               Log.d(Constants.SURAH_TAG, TAG  + " makeMergeCalls: onError: " +
+                                                       "message" + e.getMessage() + "cause" + e.getCause());
                     }
 
                     @Override
                     public void onComplete() {
-
+                        //Log.d(Constants.SURAH_TAG, TAG  + " makeMergeCalls: onComplete: " + count);
                     }
                 });
     }
 
     private void insertDataToDb(SurahData surahData) {
-        Log.d(Constants.SURAH_TAG, "insertDataToDb: " + surahData.getDataNumber());
+        Log.d(Constants.SURAH_TAG, TAG + " insertDataToDb: " + surahData.getDataNumber());
 
         Completable completable = QuranDatabase.getInstance(getApplication()).quranDao().insert(surahData);
         completable.subscribe(new CompletableObserver() {
@@ -126,12 +171,13 @@ public class SurahViewModel extends AndroidViewModel {
 
             @Override
             public void onComplete() {
-                Log.d(Constants.SURAH_TAG, "onComplete: ");
+                count = count + 1;
+                Log.d(Constants.SURAH_TAG, TAG + " insertDataToDb: " + " onComplete: " + count);
             }
 
             @Override
             public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-                Log.d(Constants.SURAH_TAG, "onError: " + e.getLocalizedMessage() + " " + e.getCause());
+                Log.d(Constants.SURAH_TAG, TAG + " insertDataToDb: " + "onError: message:" + e.getLocalizedMessage() + " cause: " + e.getCause());
             }
         });
     }

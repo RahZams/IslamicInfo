@@ -97,8 +97,8 @@ public class ZikrFragment extends Fragment {
                         mSurahName.split(" ")[1] : mSurahName.split(" ")[3];
                 Log.d(Constants.ZIKR_TAG, TAG + " onChildClick: " + mSurahName);
                 mNavController = Navigation.findNavController(view);
-                ZikrFragmentDirections.Action_zikrFragment_to_surahItemFragment action =
-                        ZikrFragmentDirections.action_zikrFragment_to_surahItemFragment(mSurahName);
+                ZikrFragmentDirections.ActionZikrFragmentToSurahItemFragment action =
+                        ZikrFragmentDirections.actionZikrFragmentToSurahItemFragment(mSurahName);
                 mNavController.navigate(action);
                 return true;
             }
@@ -132,8 +132,8 @@ public class ZikrFragment extends Fragment {
 //                                ZikrFragmentDirections.action_zikrFragment_to_duasFragment
 //                                        (getResources().getString(R.string.zikr_frag_name));
 //                        mNavController.navigate(action);
-                        ZikrFragmentDirections.Action_zikrFragment_to_zikrDuaFragment action =
-                                ZikrFragmentDirections.action_zikrFragment_to_zikrDuaFragment
+                        ZikrFragmentDirections.ActionZikrFragmentToZikrDuaFragment action =
+                                ZikrFragmentDirections.actionZikrFragmentToZikrDuaFragment
                                         (mZikr_items.get(groupPosition));
                         mNavController.navigate(action);
                         break;
@@ -158,8 +158,8 @@ public class ZikrFragment extends Fragment {
 
     private void sendStringArgsToItemFrag(String title, String text) {
         mNavController = Navigation.findNavController(getView());
-        ZikrFragmentDirections.Action_zikrFragment_to_zikrItemFragment action =
-                ZikrFragmentDirections.action_zikrFragment_to_zikrItemFragment(title,text);
+        ZikrFragmentDirections.ActionZikrFragmentToZikrItemFragment action =
+                ZikrFragmentDirections.actionZikrFragmentToZikrItemFragment(title,text);
         mNavController.navigate(action);
     }
 

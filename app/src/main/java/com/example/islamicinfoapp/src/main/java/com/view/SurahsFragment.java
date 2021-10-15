@@ -73,8 +73,8 @@ public class SurahsFragment extends Fragment {
                         mSurahChildItem.get(mSurahHeaderItemList.get(groupPosition)).get(childPosition) +
                         " mSurahName: "  + mSurahName);
                 NavController navController = Navigation.findNavController(v);
-                SurahsFragmentDirections.Action_surahsFragment_to_surahItemFragment action =
-                        SurahsFragmentDirections.action_surahsFragment_to_surahItemFragment(mSurahName);
+                SurahsFragmentDirections.ActionSurahsFragmentToSurahItemFragment action =
+                        SurahsFragmentDirections.actionSurahsFragmentToSurahItemFragment(mSurahName);
                 navController.navigate(action);
                 NavigationUI.setupActionBarWithNavController((AppCompatActivity) getActivity(), navController);
                 return true;

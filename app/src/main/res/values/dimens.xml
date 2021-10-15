@@ -25,4 +25,6 @@
     <dimen name="margin_value">5dp</dimen>
     <dimen name="elevation">3dp</dimen>
     <dimen name="imageview_dimen">200dp</dimen>
+    <dimen name="progressbar_width">120dp</dimen>
+    <dimen name="progressbar_height">700dp</dimen>
 </resources>

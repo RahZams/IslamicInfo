@@ -31,6 +31,7 @@ import retrofit2.Response;
 
 public class SurahViewModel extends AndroidViewModel {
     //public MutableLiveData<SurahData> mSurahDataMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<Boolean> isRemoteFetched = new MutableLiveData<>();
     private QuranApi mQuranApi;
     private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
     private static final String TAG = SurahViewModel.class.getSimpleName();
@@ -48,6 +49,7 @@ public class SurahViewModel extends AndroidViewModel {
 
     public void fetchFromRemote() {
         count = 0;
+        Log.d("MY_APP","Inside FetchFromRemote");
         Log.d(Constants.SURAH_TAG, TAG + " fetchFromRemote: ");
 //        makeMergeCalls(mQuranApi.getSurahYusuf(),mQuranApi.getSurahYunus(),mQuranApi.getSurahYaseen()
 //        ,mQuranApi.getSurahWaaqia(),mQuranApi.getSurahQadr(),mQuranApi.getSurahNasr(),mQuranApi.getSurahNahl()
@@ -140,7 +142,7 @@ public class SurahViewModel extends AndroidViewModel {
 
                     @Override
                     public void onNext(@io.reactivex.annotations.NonNull SurahData surahData) {
-                        count = count + 1;
+                        //count = count + 1;
                         Log.d(Constants.SURAH_TAG, TAG  + " makeMergeCalls: onNext:surah " + surahData.getDataNumber()
                                                         + " " + surahData.getSurahNameEnglish() + " count" + count);
                         insertDataToDb(surahData);
@@ -173,6 +175,11 @@ public class SurahViewModel extends AndroidViewModel {
             public void onComplete() {
                 count = count + 1;
                 Log.d(Constants.SURAH_TAG, TAG + " insertDataToDb: " + " onComplete: " + count);
+                if(count == Integer.parseInt(getApplication().getString(R.string.surah_total_count)))
+                {
+                    Log.d("MY_APP","count:"+count);
+                    isRemoteFetched.postValue(true);
+                }
             }
 
             @Override
@@ -185,6 +192,7 @@ public class SurahViewModel extends AndroidViewModel {
     @Override
     protected void onCleared() {
         super.onCleared();
+        count = 0;
         //mCompositeDisposable.clear();
     }
 

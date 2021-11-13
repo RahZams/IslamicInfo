@@ -20,6 +20,12 @@
         android:textSize="50dp"
         android:textStyle="bold|italic" />
 
+    <ProgressBar
+        android:id="@+id/prog_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
     <ImageView
         android:id="@+id/splash_image"
         android:layout_width="wrap_content"

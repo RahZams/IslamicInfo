@@ -13,6 +13,7 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.WindowInsets;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.LongDef;
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +25,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.islamicinfoapp.R;
+import com.example.islamicinfoapp.src.main.java.com.interfaces.FetchCompleteListener;
 import com.example.islamicinfoapp.src.main.java.com.model.Constants;
 import com.example.islamicinfoapp.src.main.java.com.model.QuranDatabase;
 import com.example.islamicinfoapp.src.main.java.com.utilities.SharedPrefsHelper;
@@ -42,7 +44,8 @@ public class SplashActivity extends AppCompatActivity {
     private DuasViewModel mDuasViewModel;
     private SurahViewModel mSurahViewModel;
     private static final String TAG = SplashActivity.class.getSimpleName();
-
+    private Intent locIntent;
+    private boolean isInternetAvailalbe = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,24 @@ public class SplashActivity extends AppCompatActivity {
         mDuasViewModel = ViewModelProviders.of(this).get(DuasViewModel.class);
         mSurahViewModel = ViewModelProviders.of(this).get(SurahViewModel.class);
         hideStatusBar();
-        startNextActivity();
+        /*setFetchCompleteListener(new FetchCompleteListener() {
+            @Override
+            public void onFetchComplete(boolean isSuccess) {
+                Toast.makeText(getApplicationContext(), "isSuccess:"+isSuccess , Toast.LENGTH_LONG).show();
+            }
+        });*/
+
+        mSurahViewModel.isRemoteFetched.observe(this,
+                isFetched -> {
+                    Log.d("MY_APP","is remote FETCHED:"+isFetched);
+                    Toast.makeText(getApplicationContext(),
+                "Remote fetched:"+isFetched, Toast.LENGTH_LONG).show();
+                    gotoNextActivity();
+        });
+
+        //startNextActivity();
+        fetchData();
+
     }
 
     private void hideStatusBar() {
@@ -63,6 +83,45 @@ public class SplashActivity extends AppCompatActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
+    }
+    private void gotoNextActivity(){
+        isInternetAvailalbe = Utility.checkForNetworkAvailibility(SplashActivity.this);
+        Log.d("MY_APP","isInternetAvailalbe:"+isInternetAvailalbe);
+        if(isInternetAvailalbe) {
+            SplashActivity.this.finish();
+            startActivity(locIntent);
+        }
+    }
+    private void fetchData(){
+        Log.d("MY_APP","Inside fetchData");
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.d("MY_APP","Inside run method");
+                if(Utility.checkForNetworkAvailibility(SplashActivity.this)){
+                    isInternetAvailalbe=true;
+                    checkIfDataAvailableInDatabase();
+                    if (Utility.checkForLocationConnection(SplashActivity.this) &&
+                            (ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                                    PackageManager.PERMISSION_GRANTED) &&
+                            SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)).equals(
+                                    getResources().getString(R.string.dont_ask_again))) {
+                        locIntent = new Intent(SplashActivity.this,MainActivity.class);
+                        locIntent.putExtra(getResources().getString(R.string.cityname),getResources().getString(R.string.default_city));
+                        locIntent.putExtra(getResources().getString(R.string.countryname),getResources().getString(R.string.default_country));
+                    }
+                    else{
+                        locIntent = new Intent(SplashActivity.this,LocationActivity.class);
+                    }
+                }
+                else{
+                    isInternetAvailalbe = false;
+                    showAlertDialog(SplashActivity.this,R.drawable.ic_no_network
+                            ,getResources().getString(R.string.no_internet),getResources().getString(R.string.no_internet_message),
+                            getResources().getString(R.string.ok_button_text));
+                }
+            }
+        },500);
     }
 
     private void startNextActivity() {
@@ -97,7 +156,7 @@ public class SplashActivity extends AppCompatActivity {
                 //finish();
                 //startActivity(mainIntent);
             }
-        },10*1000);
+        },3*1000);
     }
 
     private void showAlertDialog(Context context, int drawable, String title, String message, String buttonText){
@@ -120,20 +179,88 @@ public class SplashActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void checkIfDataAvailableInDatabase() {
+        Log.d("MY_APP"," Inside checkIfDataAvailableInDatabase");
         Log.d(Constants.SPLASH, TAG + " onChanged:current date :  " + Utility.getCurrentDate());
-        QuranDatabase.getInstance(this).quranDao().getSurahDataCount().observe(this, new Observer<Integer>() {
+        Thread surahThread = new Thread() {
+            @Override
+            public void run() {
+                int surahCount = QuranDatabase.getInstance(SplashActivity.this).quranDao().getSurahCount();
+                if(surahCount != 30){
+                    Log.d("MY_APP","30 Sura's not available in DB");
+                    mSurahViewModel.fetchFromRemote();
+                }else {
+                    Log.d("MY_APP","30 Sura's AVAILABLE in DB");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Utility.checkForLocationConnection(SplashActivity.this) &&
+                                    (ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                                            PackageManager.PERMISSION_GRANTED) &&
+                                    SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)).equals(
+                                            getResources().getString(R.string.dont_ask_again))) {
+                                locIntent = new Intent(SplashActivity.this,MainActivity.class);
+                                locIntent.putExtra(getResources().getString(R.string.cityname),getResources().getString(R.string.default_city));
+                                locIntent.putExtra(getResources().getString(R.string.countryname),getResources().getString(R.string.default_country));
+                            }
+                            else{
+                                locIntent = new Intent(SplashActivity.this,LocationActivity.class);
+                            }
+                            gotoNextActivity();
+                        }
+                    },3000);
+                }
+            }
+        };
+        surahThread.start();
+        /*QuranDatabase.getInstance(this).quranDao().getSurahDataCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer surah_count) {
                 Log.d(Constants.SPLASH, TAG + " onChanged:surah data count is :  " + surah_count);
                 if (surah_count != Integer.valueOf(getString(R.string.surah_total_count))){
                     Log.d(Constants.SPLASH, TAG + " onChanged: integer is not 30");
                     mSurahViewModel.fetchFromRemote();
+                }else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (Utility.checkForLocationConnection(SplashActivity.this) &&
+                                    (ActivityCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                                            PackageManager.PERMISSION_GRANTED) &&
+                                    SharedPrefsHelper.getValue(SplashActivity.this,getResources().getString(R.string.loc_permission)).equals(
+                                            getResources().getString(R.string.dont_ask_again))) {
+                                locIntent = new Intent(SplashActivity.this,MainActivity.class);
+                                locIntent.putExtra(getResources().getString(R.string.cityname),getResources().getString(R.string.default_city));
+                                locIntent.putExtra(getResources().getString(R.string.countryname),getResources().getString(R.string.default_country));
+                            }
+                            else{
+                                locIntent = new Intent(SplashActivity.this,LocationActivity.class);
+                            }
+                            gotoNextActivity();
+                        }
+                    },3000);
                 }
             }
-        });
+        });*/
 
-        QuranDatabase.getInstance(this).quranDao().getQuranDataCount().observe(this, new Observer<Integer>() {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                int duaCount = QuranDatabase.getInstance(SplashActivity.this).quranDao().getDuwaCount();
+                if(duaCount == 0){
+                    Log.d("MY_APP","No duwa's available in DB. Fetching from server");
+                    mDuasViewModel.fetchFromRemote();
+                }
+            }
+        };
+        thread.start();
+
+        /*QuranDatabase.getInstance(this).quranDao().getQuranDataCount().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 Log.d(Constants.SPLASH, TAG + " onChanged:quranDataCount is :" + integer);
@@ -142,7 +269,7 @@ public class SplashActivity extends AppCompatActivity {
                     mDuasViewModel.fetchFromRemote();
                 }
             }
-        });
+        });*/
 
 
 
@@ -189,6 +316,7 @@ public class SplashActivity extends AppCompatActivity {
                     @Override
                     public void onComplete() {
                         Log.d(Constants.PRAYER_TAG,TAG + " onComplete: deletePrayerTimeData");
+                        //fetchCompleteListener.onFetchComplete(true);
                     }
 
                     @Override

@@ -66,8 +66,14 @@ public interface QuranDao {
     @Query("SELECT COUNT(*) FROM SurahData")
     LiveData<Integer> getSurahDataCount();
 
+    @Query("SELECT COUNT(*) FROM SurahData")
+    int getSurahCount();
+
     @Query("SELECT COUNT(*) FROM QuranDbData")
     LiveData<Integer> getQuranDataCount();
+
+    @Query("SELECT COUNT(*) FROM QuranDbData")
+    int getDuwaCount();
 
 //    @Query("SELECT EXISTS(SELECT * FROM PrayerTiming WHERE city=:city AND country=:country AND prayerTimeEngDate=:date)")
 //    boolean isExists(String city, String country, String date);

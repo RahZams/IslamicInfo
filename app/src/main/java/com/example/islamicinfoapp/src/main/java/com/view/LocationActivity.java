@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.islamicinfoapp.R;
@@ -33,16 +34,18 @@ public class LocationActivity extends AppCompatActivity implements LocListener.C
     private Utility utility = new Utility();
     private LocListener mLocListener;
     private static final String TAG = LocationActivity.class.getSimpleName();
-
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
         ButterKnife.bind(this);
-
+        progressBar.setVisibility(View.GONE);
         mLocationText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 Log.d(Constants.LOC_TAG,TAG +  " onClick: ");
                 mLocListener = new LocListener(LocationActivity.this);
                 if (utility.checkForNetworkAvailibility(LocationActivity.this)){
@@ -92,6 +95,8 @@ public class LocationActivity extends AppCompatActivity implements LocListener.C
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION )
                         == PackageManager.PERMISSION_GRANTED){
+                    //disable the button so that it cannot be pressed again
+                    mLocationText.setEnabled(false);
                     Log.d(Constants.LOC_TAG,TAG +  " onRequestPermissionsResult: " + "granted");
                     //Toast.makeText(this, "granted", Toast.LENGTH_SHORT).show();
                     mLocListener.findLocation();
@@ -132,6 +137,7 @@ public class LocationActivity extends AppCompatActivity implements LocListener.C
             intent.putExtra(getString(R.string.cityname),city);
             intent.putExtra(getString(R.string.countryname),country);
             LocationActivity.this.finish();
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
 }

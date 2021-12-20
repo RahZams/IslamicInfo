@@ -3,7 +3,7 @@
     <data>
             <variable
                 name="dua"
-                type="com.example.islamicinfoapp.src.main.java.com.model.QuranDbData"/>
+                type="com.islamicinfo.src.main.java.com.model.QuranDbData"/>
         </data>
 
     <LinearLayout

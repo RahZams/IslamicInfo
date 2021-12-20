@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".src.main.java.com.view.HelpFragment">
+    tools:context="com.islamicinfo.src.main.java.com.view.HelpFragment">
 
 <ListView
     android:layout_width="match_parent"

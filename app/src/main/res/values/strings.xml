@@ -50,7 +50,8 @@
     <string name="zikr_frag_name">zikr</string>
     <string name="preg_frag_name">preg</string>
     <string name="location_text">Fetch My Current Location</string>
-    <string name="dua_surah_base_url">https://api.alquran.cloud/v1/</string>
+    <string name="dua_surah_base_url">https://api.quran.com/api/v4/quran/verses/</string>
+<!--    <string name="dua_surah_base_url">https://api.alquran.cloud/v1/</string>-->
     <string name="prayer_times_base_url">https://api.aladhan.com/v1/</string>
     <string name="prayer_time_calculation_method">4</string>
     <string name="prayer_time">05:01 AM</string>
@@ -110,6 +111,11 @@
     <string name="app_info">App Info</string>
     <string name="contact_us">Contact Us</string>
     <string name="feedback_title">Send Feedback</string>
+    <string name="loading_location_details">Fetching your location details\.\.\.</string>
+    <string name="toast_message_mecca">Prayertiming details could not be fetched for your current location due to some reasons.
+        Hence,providing prayertiming details for our holy city Mecca</string>
+    <string name="send_query_text">Send Query</string>
+
     <string-array name="preg_info_item_name">
         <item>Duas</item>
         <item>Surahs</item>

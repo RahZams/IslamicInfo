@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".src.main.java.com.view.SplashActivity">
+    tools:context="com.islamicinfo.src.main.java.com.view.SplashActivity">
 
     <TextView
         android:id="@+id/splash_text"

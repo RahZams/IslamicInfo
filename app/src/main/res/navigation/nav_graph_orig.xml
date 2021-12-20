@@ -7,12 +7,12 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.HomeFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.HomeFragment"
         android:label="@string/home_title" />
 
     <fragment
         android:id="@+id/zikrFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.ZikrFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.ZikrFragment"
         android:label="@string/zikr"
         tools:layout="@layout/fragment_zikr">
         <action
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/pregInfoFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.PregInfoFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.PregInfoFragment"
         android:label="@string/preg_title"
         tools:layout="@layout/fragment_preg_info" >
 <!--        <action-->
@@ -71,7 +71,7 @@
     </fragment>
     <fragment
         android:id="@+id/duasFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.DuasFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.DuasFragment"
         android:label="@string/duas_title"
         tools:layout="@layout/fragment_duas" >
 <!--        <argument android:name="calling_frag_name"-->
@@ -83,7 +83,7 @@
     </fragment>
     <fragment
         android:id="@+id/surahsFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.SurahsFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.SurahsFragment"
         android:label="@string/surah_title"
         tools:layout="@layout/fragment_surahs" >
 <!--        <action-->
@@ -96,7 +96,7 @@
     </fragment>
     <fragment
         android:id="@+id/doFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.DoFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.DoFragment"
         android:label="@string/do_title"
         tools:layout="@layout/fragment_do" >
 <!--        <action-->
@@ -105,7 +105,7 @@
     </fragment>
     <fragment
         android:id="@+id/dontFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.DontFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.DontFragment"
         android:label="@string/dont_title"
         tools:layout="@layout/fragment_dont" >
 <!--        <action-->
@@ -114,7 +114,7 @@
     </fragment>
     <fragment
         android:id="@+id/impPregFactsFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.ImpPregFactsFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.ImpPregFactsFragment"
         android:label="@string/more_preg_title"
         tools:layout="@layout/fragment_imp_preg_facts" >
 <!--        <action-->
@@ -123,7 +123,7 @@
     </fragment>
     <fragment
         android:id="@+id/helpFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.HelpFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.HelpFragment"
         android:label="@string/help_title"
         tools:layout="@layout/fragment_help" >
         <action
@@ -138,22 +138,22 @@
     </fragment>
     <fragment
         android:id="@+id/appInfoFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.AppInfoFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.AppInfoFragment"
         android:label="@string/app_info"
         tools:layout="@layout/fragment_app_info" />
     <fragment
         android:id="@+id/contactUsFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.ContactUsFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.ContactUsFragment"
         android:label="@string/contact_us"
         tools:layout="@layout/fragment_contact_us" />
     <fragment
         android:id="@+id/feedbackFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.FeedbackFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.FeedbackFragment"
         android:label="@string/feedback_title"
         tools:layout="@layout/fragment_feedback" />
     <fragment
         android:id="@+id/surahItemFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.SurahItemFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.SurahItemFragment"
         tools:layout="@layout/fragment_surah_item"
         android:label="Surah {surahname}">
         <argument
@@ -163,7 +163,7 @@
     </fragment>
     <fragment
         android:id="@+id/zikrItemFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.ZikrItemFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.ZikrItemFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_zikr_item" >
         <argument
@@ -175,7 +175,7 @@
     </fragment>
     <fragment
         android:id="@+id/zikrDuaFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.ZikrDuaFragment"
+        android:name="com.islamicinfo.src.main.java.com.view.ZikrDuaFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_zikr_dua">
         <argument android:name="title"
@@ -184,7 +184,7 @@
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
-        android:name="com.example.islamicinfoapp.src.main.java.com.view.GalleryFragment"
+        android:name="com.example.islamicinfo.src.main.java.com.view.GalleryFragment"
         android:label="fragment_gallery"
         tools:layout="@layout/fragment_gallery" />
     <!--    <dialog-->

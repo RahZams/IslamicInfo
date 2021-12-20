@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_vertical"
-    tools:context=".src.main.java.com.view.AppInfoFragment">
+    tools:context="com.islamicinfo.src.main.java.com.view.AppInfoFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
